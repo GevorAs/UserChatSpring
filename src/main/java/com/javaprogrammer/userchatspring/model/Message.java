@@ -3,6 +3,7 @@ package com.javaprogrammer.userchatspring.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 
 @Data
@@ -18,10 +19,10 @@ public class Message {
     private int id;
     @Column
     private String text;
-    @Column(name = "from_id")
-    private int fromId;
-    @Column(name = "to_id")
-    private int toId;
+    @ManyToOne
+    private User fromId;
+    @ManyToOne
+    private User toId;
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
     private MessageStatus messageStatus;

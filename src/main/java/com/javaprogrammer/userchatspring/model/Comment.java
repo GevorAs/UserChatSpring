@@ -16,10 +16,10 @@ public class Comment {
     @Column
     @GeneratedValue
     private int id;
-    @Column(name = "user_id")
-    private int userId;
-    @Column(name = "post_id")
-    private int postId;
+    @ManyToOne
+    private User userId;
+    @ManyToOne
+    private Post postId;
     @Column(name = "create_date")
     private String createDate;
     @Column(name = "file_upload")
