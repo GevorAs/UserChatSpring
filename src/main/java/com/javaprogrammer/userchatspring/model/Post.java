@@ -26,5 +26,6 @@ public class Post {
     @Column(name = "pic_url_post")
     private String picture;
     @Column(name = "status")
+    @Enumerated(EnumType.STRING)
     private ActiveStatus activeStatus;
 }

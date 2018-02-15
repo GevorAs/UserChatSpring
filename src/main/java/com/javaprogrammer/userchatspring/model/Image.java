@@ -23,6 +23,7 @@ public class Image {
     @Column(name = "create_date")
     private String createDate;
     @Column(name = "status")
+    @Enumerated(EnumType.STRING)
     private ActiveStatus activeStatus;
 
 }

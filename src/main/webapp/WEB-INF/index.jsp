@@ -1,3 +1,4 @@
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags/form" %>
 <%--
   Created by IntelliJ IDEA.
   User: Arianna
@@ -8,9 +9,14 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Home</title>
+    <title>Login</title>
 </head>
 <body>
+<spring:form action="/login" method="post">
+    <input type="email" name="email">
+    <input type="password" name="password">
+    <input type="submit" value="login">
+</spring:form>
 
 </body>
 </html>

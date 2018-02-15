@@ -22,5 +22,6 @@ public class Like {
     @ManyToOne
     private  User userId;
     @Column(name = "status_like")
+    @Enumerated(EnumType.STRING)
     private LikeStatus likeStatus;
 }
