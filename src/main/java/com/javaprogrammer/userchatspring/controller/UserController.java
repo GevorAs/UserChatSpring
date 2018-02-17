@@ -25,31 +25,26 @@ public class UserController {
     @Autowired
     CommentRepository commentRepository;
 
-
     @GetMapping(value = "/userPage")
     public String loginPageControler(ModelMap map, HttpSession session) {
         User user = (User) session.getAttribute("user");
 
-        StringBuilder stringBuilder=new StringBuilder();
-        if (!requestRepository.findAllByToId(user.getId()).isEmpty()){
-            String info="New Request<br>";
+        StringBuilder stringBuilder = new StringBuilder();
+        if (requestRepository.existsByToId(user.getId())) {
+            String info = "New Request<br>";
             stringBuilder.append(info);
         }
-        if (!messageRepository.findAllByToIdAndMessageStatus(user.getId(), MessageStatus.NEW).isEmpty()) {
+        if (messageRepository.existsByToIdAndMessageStatus(user.getId(), MessageStatus.NEW)) {
             String info = "New Message<br>";
             stringBuilder.append(info);
         }
         map.addAttribute("posts", postRepository.findAllByUserId(user.getId()));
-
         map.addAttribute("info", stringBuilder.toString());
-
         return "userPage";
-
     }
 
     @GetMapping("/friends")
     public String friends(ModelMap map) {
-
         return null;
     }
 

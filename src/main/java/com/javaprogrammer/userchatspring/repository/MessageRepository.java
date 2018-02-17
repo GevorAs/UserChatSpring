@@ -8,4 +8,5 @@ import java.util.List;
 
 public interface MessageRepository extends JpaRepository<Message,Integer> {
     List<Message> findAllByToIdAndMessageStatus(int id,MessageStatus messageStatus);
+    boolean existsByToIdAndMessageStatus(int id,MessageStatus messageStatus);
 }
