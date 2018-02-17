@@ -48,7 +48,7 @@ public class LoginRegisterController {
             } else if (user.getUserType().equals(UserType.MODERATOR) && !user.getActiveStatus().equals(ActiveStatus.DELETED)) {
                 return "redirect:/moderator";
             } else if (!user.getActiveStatus().equals(ActiveStatus.DELETED)) {
-                return "redirect:/user";
+                return "redirect:/userPage";
             }
         }
         return "redirect:/loginPage?message=" + "please input valid login or password";
@@ -101,7 +101,7 @@ public class LoginRegisterController {
         userRepository.save(user);
         user.setPassword(null);
         session.setAttribute("user",user);
-        return "redirect:/user";
+        return "redirect:/userPage";
 
     }
 

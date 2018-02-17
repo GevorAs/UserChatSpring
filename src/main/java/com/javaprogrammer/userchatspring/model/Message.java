@@ -19,10 +19,10 @@ public class Message {
     private int id;
     @Column
     private String text;
-    @ManyToOne
-    private User fromId;
-    @ManyToOne
-    private User toId;
+    @Column(name = "from_id")
+    private int fromId;
+    @Column(name = "to_id")
+    private int toId;
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
     private MessageStatus messageStatus;

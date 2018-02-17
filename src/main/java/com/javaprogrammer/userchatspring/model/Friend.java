@@ -16,8 +16,8 @@ public class Friend {
     @Column
     @GeneratedValue
     private int id;
-    @ManyToOne
-    private User userId;
-    @ManyToOne
-    private User friendId;
+    @Column(name = "user_id")
+    private int userId;
+    @Column(name = "friend_id")
+    private int friendId;
 }

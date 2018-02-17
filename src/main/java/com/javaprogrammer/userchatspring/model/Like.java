@@ -17,10 +17,10 @@ public class Like {
     @Column
     @GeneratedValue
     private int id;
-    @ManyToOne
-    private Post postId;
-    @ManyToOne
-    private  User userId;
+    @Column(name = "post_id")
+    private int postId;
+    @Column(name = "user_id")
+    private int userId;
     @Column(name = "status_like")
     @Enumerated(EnumType.STRING)
     private LikeStatus likeStatus;

@@ -18,7 +18,7 @@ public class Post {
     @GeneratedValue
     private int id;
     @ManyToOne
-    private User userId;
+    private User user;
     @Column(name = "text")
     private String text;
     @Column(name = "file_upload_post")

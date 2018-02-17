@@ -18,8 +18,8 @@ public class Request {
     @Column
     @GeneratedValue
     private int id;
-    @ManyToOne
-    private User fromId;
-    @ManyToOne
-    private User toId;
+    @Column(name = "from_id")
+    private int fromId;
+    @Column(name = "to_id")
+    private int toId;
 }
