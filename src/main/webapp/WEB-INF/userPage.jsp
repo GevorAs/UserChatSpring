@@ -8,6 +8,7 @@
 <body>
 <% User user= (User) request.getSession().getAttribute("user");%>
 <span>Welcome</span>
+<img src="/getResource?filename=<%=user.getPicture()%>" alt="Image" width="30">
 <%=user.getName()%>
 <%=user.getSurname()%>
 ${info}
