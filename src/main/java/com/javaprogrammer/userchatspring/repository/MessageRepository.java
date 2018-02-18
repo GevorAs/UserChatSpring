@@ -3,10 +3,13 @@ package com.javaprogrammer.userchatspring.repository;
 import com.javaprogrammer.userchatspring.model.Message;
 import com.javaprogrammer.userchatspring.model.MessageStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
 public interface MessageRepository extends JpaRepository<Message,Integer> {
-    List<Message> findAllByToIdAndMessageStatus(int id,MessageStatus messageStatus);
-    boolean existsByToIdAndMessageStatus(int id,MessageStatus messageStatus);
+    Integer countByToIdAndMessageStatus(int id,MessageStatus messageStatus);
+@Query(value = "select * from message where (from_id=:fromId and to_id=:toId) or (from_id=:toId and to_id=:fromId)",nativeQuery = true)
+   List<Message> customGetMessagesByUserAndFriend(@Param("fromId")int fromId,@Param("toId")int toId );
 }

@@ -8,4 +8,5 @@ import java.util.List;
 
 public interface RequestRepository extends JpaRepository<Request,Integer> {
   boolean existsByToId(int id);
+  Integer countByToId(int id);
 }
