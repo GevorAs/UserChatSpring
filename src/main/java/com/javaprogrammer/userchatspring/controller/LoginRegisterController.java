@@ -37,16 +37,11 @@ public class LoginRegisterController {
             userRepository.save(user);
         }
         User user = userRepository.getByEmailAndPassword(email, password);
-
-
-        if (user != null&&user.getId()!=0) {
+        if (user != null && user.getId() != 0) {
             user.setUserStatus(UserStatus.ONLINE);
             userRepository.save(user);
             user.setPassword(null);
-
-//            session.setAttribute("user", user);
-            map.addAttribute("user",user);
-
+            map.addAttribute("user", user);
             if (user.getUserType().equals(UserType.ADMIN)) {
                 return "redirect:/admin";
             } else if (user.getUserType().equals(UserType.MODERATOR) && !user.getActiveStatus().equals(ActiveStatus.DELETED)) {
@@ -70,7 +65,7 @@ public class LoginRegisterController {
     }
 
     @PostMapping("/register")
-    public String registerUser(@Valid @ModelAttribute("userRegister") User user, BindingResult result, @RequestParam("pic") MultipartFile multipartFile,ModelMap map) throws IOException {
+    public String registerUser(@Valid @ModelAttribute("userRegister") User user, BindingResult result, @RequestParam("pic") MultipartFile multipartFile, ModelMap map) throws IOException {
         StringBuilder sb = new StringBuilder();
         String pattern = "(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{8,}";
 
@@ -103,8 +98,7 @@ public class LoginRegisterController {
         user.setPicture(picname);
         userRepository.save(user);
         user.setPassword(null);
-map.addAttribute("user",user);
-//        session.setAttribute("user", user);
+        map.addAttribute("user", user);
         return "redirect:/userPage";
 
     }

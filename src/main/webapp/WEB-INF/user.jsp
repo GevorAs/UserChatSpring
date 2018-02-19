@@ -36,31 +36,36 @@
             </li>
 
             <li>
-                <a class="header-menu-tab" href="#3"><span class="icon fontawesome-envelope scnd-font-color"></span>Messages</a>
-                <a class="header-menu-number" href="#4">5</a>
+                <a class="header-menu-tab" href="/messages"><span
+                        class="icon fontawesome-envelope scnd-font-color"></span>Messages</a>
+                <a class="header-menu-number" href="#4">${newMessage}</a>
             </li>
+
             <li>
-                <a class="header-menu-tab" href="#5"><span class="icon fontawesome-star-empty scnd-font-color"></span>Favorites</a>
+                <a class="header-menu-tab" href="/requests"><span
+                        class="icon fontawesome-star-empty scnd-font-color"></span>Request</a>
+                <a class="header-menu-number" href="#4">${newRequest}</a>
             </li>
+            <%--<li>--%>
+            <%--<a class="header-menu-tab" href="#5"><span class="icon fontawesome-star-empty scnd-font-color"></span>Favorites</a>--%>
+            <%--</li>--%>
             <li>
                 <a class="header-menu-tab" href="/logout"><span
-                        class="icon entypo-cog scnd-font-color"></span>Logout</a>
+                        class="icon entypo-paper-plane scnd-font-color"></span>Logout</a>
             </li>
         </ul>
-
         <div class="profile-menu">
             <p>
                 <a href="/userPage">
                 <span class="scnd-font-color">
                     <span class="profile-picture small-profile-picture">
+                    <%--<img width="40px" alt="<%=user.getName()%>" src="/getResource?filename=<%=user.getPicture()%>">--%>
                     <img width="40px" alt="${user.name}" src="/getResource?filename=${user.picture}">
                     </span>
                 </span>
                 </a>
             </p>
-
         </div>
-
     </header>
 
     <!-- LEFT-CONTAINER -->

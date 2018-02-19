@@ -1,4 +1,3 @@
-<%@ page import="com.javaprogrammer.userchatspring.model.User" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
@@ -15,6 +14,8 @@
 </head>
 <body>
 <div id="frame">
+    <a class="header-menu-tab" href="/userPage" >Home</a>
+    <a class="header-menu-tab" href="/logout">Logut</a>
     <div id="sidepanel">
         <div id="profile">
             <div class="wrap">
@@ -44,8 +45,8 @@
             </div>
         </div>
         <div id="search">
-            <label for=""><i class="fa fa-search" aria-hidden="true"></i></label>
-            <input type="text" placeholder="Search contacts..."/>
+            <label for="555"><i class="fa fa-search" aria-hidden="true"></i></label>
+            <input type="text" id="555" placeholder="Search contacts..."/>
         </div>
         <div id="contacts">
             <ul>
@@ -96,17 +97,16 @@
             <%-----------------------AJAX-----------------------------------------------------%>
         </div>
 
-        <div class="message-input">
+        <div class="message-input" id="222">
             <div class="wrap">
-                <form action="/sendMessage" method="post">
-                    <input type="text" placeholder="Write your message..." name="text"/>
-                    <input type="hidden" name="friendId" id="f">
-                    <%--<input  type="submit" value="add">--%>
-                    <i class="fa fa-paperclip attachment" aria-hidden="true"> </i>
-                    <button type="submit" ><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
-
-
-                </form>
+                <spring:form action="/sendMessage" method="post" modelAttribute="emptyMessage" id="1111"  enctype="multipart/form-data">
+                    <spring:input type="text" path="text" placeholder="Write your message..." name="text"/>
+                    <spring:input path="fromId" value="${user.id}" type="hidden"/>
+                    <%--<i class="fa fa-paperclip attachment" aria-hidden="true">--%>
+                        <input type="file" name="messageFile" title=" ">
+                    <%--</i>--%>
+                    <button type="submit"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+                </spring:form>
             </div>
         </div>
 
@@ -118,37 +118,57 @@
 <script src="../front/chat/js/index.js"></script>
 <script>
     var x;
-    if (!${friendIdStr.equals(" ")}) {
-        getMessages(${friendIdStr})
-    }
+    var id=${friendIdForMessage.id};
+    if (${friendIdForMessage.id!=""}) {
 
+        getMessages(id)
+    }
     function getMessages(id) {
-        document.getElementById("f").value = id
-        console.log(document.getElementById("f").value)
+
 
         if (x) {
             clearInterval(x);
+            inter(id);
             x = setInterval(function () {
                 inter(id)
-            }, 1000);
+            }, 5000);
         } else {
+            inter(id);
             x = setInterval(function () {
                 inter(id)
-            }, 1000);
+            }, 5000);
         }
-
-
     }
-
     function inter(id) {
-        jQuery.ajax({
+       $.ajax({
             url: "http://localhost:8080/getMessages?id=" + id,
             success: function (result) {
                 $("#concatProfil").html(result);
             }
         })
-
     }
+// --------------------------------------------------------------------------------------------------------
+
+
+    $("#1111").submit(function(e){
+
+        e.preventDefault();  // <--------stops the form submission
+        var fd = new FormData($("#1111")[0]);
+        // fd.append('groupName', 'xxx');
+
+        $.ajax({
+            url: "/sendMessage",
+            type: "POST",
+            data: fd,
+            enctype: 'multipart/form-data',
+            processData: false,
+            contentType: false,
+            cache: false,
+            success: function (result) {
+                $("#222").html(result);
+            }
+        });
+    });
 
 </script>
 
