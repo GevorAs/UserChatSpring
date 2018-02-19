@@ -18,7 +18,6 @@ import javax.servlet.http.HttpSession;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.LinkedList;
 import java.util.List;
 
 @Controller
@@ -29,17 +28,16 @@ public class MainController {
     @GetMapping(value = "/logout")
     public String logout(HttpSession session) {
         User user = (User) session.getAttribute("user");
-        User one = userRepository.getOne(user.getId());
-        one.setUserStatus(UserStatus.OFFLINE);
-        userRepository.save(one);
+        user.setUserStatus(UserStatus.OFFLINE);
+        userRepository.save(user);
         session.invalidate();
-        return "redirect:/";
+        return "redirect:/loginPage";
 
     }
 
     @GetMapping(value = "/getResource")
     public void getResource(HttpServletResponse response, @RequestParam("filename") String filename) throws IOException {
-        try (InputStream inputStream = new FileInputStream("/home/intern/Desktop/nk@r/" + filename)) {
+        try (InputStream inputStream = new FileInputStream("D:\\ADMIN\\picStringDemo\\" + filename)) {
             response.setContentType(MediaType.ALL_VALUE);
             IOUtils.copy(inputStream, response.getOutputStream());
         }
@@ -49,11 +47,11 @@ public class MainController {
     @GetMapping(value = "/searchUser")
     public String search(@RequestParam("userNameForSearch") String searchName, ModelMap map, HttpSession session) {
         User user = (User) session.getAttribute("user");
-        List<User> customFindUsersbyNameOrSurname = new LinkedList<>();
+        List<User> customFindUsersbyNameOrSurname = null;
         String[] nameStrArr = searchName.split(" ");
         if (user.getUserType().equals(UserType.USER)) {
             if (nameStrArr.length == 1) {
-                List<User> users = userRepository.customFindUsersbyNameOrSurname(nameStrArr[0], " ");
+                List<User> users = userRepository.customFindUsersbyNameOrSurname(nameStrArr[0], "");
                 for (User user1 : users) {
                     if (user1.getActiveStatus().equals(ActiveStatus.ACTIVE)) {
                         customFindUsersbyNameOrSurname.add(user1);
@@ -70,7 +68,7 @@ public class MainController {
             }
         } else {
             if (nameStrArr.length == 1) {
-                customFindUsersbyNameOrSurname = userRepository.customFindUsersbyNameOrSurname(nameStrArr[0], " l");
+                customFindUsersbyNameOrSurname = userRepository.customFindUsersbyNameOrSurname(nameStrArr[0], "");
             } else if (nameStrArr.length == 2) {
                 customFindUsersbyNameOrSurname = userRepository.customFindUsersbyNameOrSurname(nameStrArr[0], nameStrArr[1]);
             }
