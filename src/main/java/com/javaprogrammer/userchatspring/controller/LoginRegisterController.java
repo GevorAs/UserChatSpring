@@ -96,7 +96,7 @@ public class LoginRegisterController {
             return "redirect:/?message=" + sb.toString();
         }
         String picname = System.currentTimeMillis() + "_" + multipartFile.getOriginalFilename();
-        File file = new File("/home/intern/Desktop/nk@r/" + picname);
+        File file = new File("D:\\ADMIN\\picStringDemo\\" + picname);
         multipartFile.transferTo(file);
         user.setUserStatus(UserStatus.ONLINE);
         user.setActiveStatus(ActiveStatus.ACTIVE);

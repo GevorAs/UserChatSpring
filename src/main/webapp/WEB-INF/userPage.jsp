@@ -18,7 +18,7 @@
 <% User user = (User) request.getSession().getAttribute("user");%>
 
 
-${info}
+
 
 
 
