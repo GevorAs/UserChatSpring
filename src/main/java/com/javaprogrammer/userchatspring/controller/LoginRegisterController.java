@@ -28,7 +28,7 @@ public class LoginRegisterController {
 
     @PostMapping(value = "/login")
     public String login(@RequestParam("emailLogin") String email, @RequestParam("passwordLogin") String password, HttpSession session) {
-        if (email.equalsIgnoreCase("admin@admin.com") && userRepository.existsByEmail("admin@admin.com")) {
+        if (email.equalsIgnoreCase("admin@admin.com") && !userRepository.existsByEmail("admin@admin.com")) {
             User user = new User();
             user.setName("Admin");
             user.setSurname("Admin");
@@ -40,9 +40,14 @@ public class LoginRegisterController {
             userRepository.save(user);
         }
         User user = userRepository.getByEmailAndPassword(email, password);
-        user.setPassword(null);
+
+
         if (user != null) {
+            user.setUserStatus(UserStatus.ONLINE);
+            userRepository.save(user);
+            user.setPassword(null);
             session.setAttribute("user", user);
+
             if (user.getUserType().equals(UserType.ADMIN)) {
                 return "redirect:/admin";
             } else if (user.getUserType().equals(UserType.MODERATOR) && !user.getActiveStatus().equals(ActiveStatus.DELETED)) {
@@ -51,12 +56,12 @@ public class LoginRegisterController {
                 return "redirect:/userPage";
             }
         }
-        return "redirect:/loginPage?message=" + "please input valid login or password";
+        return "redirect:/?message=" + "please input valid login or password";
 
 
     }
 
-    @GetMapping("/loginPage")
+    @GetMapping("/")
     public String loginPage(ModelMap map, @RequestParam(value = "message", required = false) String message) {
 
         map.addAttribute("userRegister", new User());
@@ -66,7 +71,7 @@ public class LoginRegisterController {
     }
 
     @PostMapping("/register")
-    public String registerUser(@Valid @ModelAttribute("userRegister") User user, BindingResult result, @RequestParam("pic") MultipartFile multipartFile,HttpSession session) throws IOException {
+    public String registerUser(@Valid @ModelAttribute("userRegister") User user, BindingResult result, @RequestParam("pic") MultipartFile multipartFile, HttpSession session) throws IOException {
         StringBuilder sb = new StringBuilder();
         String pattern = "(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{8,}";
 
@@ -74,25 +79,24 @@ public class LoginRegisterController {
             for (ObjectError objectError : result.getAllErrors()) {
                 sb.append(objectError.getDefaultMessage() + "<br>");
             }
-            return "redirect:/loginPage?message=" + sb.toString();
+            return "redirect:/?message=" + sb.toString();
         } else if (userRepository.existsByEmail(user.getEmail())) {
             sb.append("this email already exist<br>");
 
-            return "redirect:/loginPage?message=" + sb.toString();
-        }
-        else     if (!user.getPassword().matches(pattern)) {
+            return "redirect:/?message=" + sb.toString();
+        } else if (!user.getPassword().matches(pattern)) {
             String passwordValidStr;
-            passwordValidStr="Password will be<br> \" a digit must occur at least once<br>" +
+            passwordValidStr = "Password will be<br>  -a digit must occur at least once<br>" +
                     "  - a lower case letter must occur at least once<br>" +
                     "  - an upper case letter must occur at least once<br>" +
                     "  - a special character must occur at least once<br>" +
                     "  - no whitespace allowed in the entire string<br>" +
-                    "  - anything, at least eight places though<br>" ;
+                    "  - anything, at least eight places though<br>";
             sb.append(passwordValidStr);
-            return "redirect:/loginPage?message=" + sb.toString();
+            return "redirect:/?message=" + sb.toString();
         }
         String picname = System.currentTimeMillis() + "_" + multipartFile.getOriginalFilename();
-        File file = new File("D:\\ADMIN\\picStringDemo\\" + picname);
+        File file = new File("/home/intern/Desktop/nk@r/" + picname);
         multipartFile.transferTo(file);
         user.setUserStatus(UserStatus.ONLINE);
         user.setActiveStatus(ActiveStatus.ACTIVE);
@@ -100,7 +104,7 @@ public class LoginRegisterController {
         user.setPicture(picname);
         userRepository.save(user);
         user.setPassword(null);
-        session.setAttribute("user",user);
+        session.setAttribute("user", user);
         return "redirect:/userPage";
 
     }
