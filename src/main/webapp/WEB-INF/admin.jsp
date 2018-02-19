@@ -15,10 +15,10 @@
 
 </head>
 <body>
-<% User user = (User) request.getSession().getAttribute("user");%>
 
 
-${info}
+
+
 
 
 
@@ -59,7 +59,7 @@ ${info}
                 <a href="/userPage">
                 <span class="scnd-font-color">
                     <span class="profile-picture small-profile-picture">
-                    <img width="40px" alt="<%=user.getName()%>" src="/getResource?filename=<%=user.getPicture()%>">
+                    <img width="40px" alt="${user.name}" src="/getResource?filename=${user.picture}">
                     </span>
                 </span>
                 </a>
@@ -117,10 +117,10 @@ ${info}
         <div class="profile block"> <!-- PROFILE (MIDDLE-CONTAINER) -->
             <a class="add-button" href="#28"><span class="icon entypo-plus scnd-font-color"></span></a>
             <div class="profile-picture big-profile-picture clear">
-                <img width="150px" alt="<%=user.getName()%>"
-                     src="/getResource?filename=<%=user.getPicture()%>">
+                <img width="150px" alt="${user.name}"
+                     src="/getResource?filename=${user.picture}">
             </div>
-            <h1 class="user-name"><%=user.getName()%> <%=user.getSurname()%>
+            <h1 class="user-name">${user.name} ${user.surname}
             </h1>
             <div class="profile-description">
                 <p class="scnd-font-color">Lorem ipsum dolor sit amet consectetuer adipiscing</p>

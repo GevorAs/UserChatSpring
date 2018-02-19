@@ -16,7 +16,6 @@
 
 </head>
 <body>
-<% User user = (User) request.getSession().getAttribute("user");%>
 
 
 
@@ -54,7 +53,7 @@
                 <a href="/userPage">
                 <span class="scnd-font-color">
                     <span class="profile-picture small-profile-picture">
-                    <img width="40px" alt="<%=user.getName()%>" src="/getResource?filename=<%=user.getPicture()%>">
+                    <img width="40px" alt="${user.name}" src="/getResource?filename=${user.picture}">
                     </span>
                 </span>
                 </a>
@@ -164,16 +163,16 @@
                 <div id="contacts">
 
                     <ul>
-                        <c:forEach items="${otherUsersFriends}" var="user">
+                        <c:forEach items="${otherUsersFriends}" var="otherUser">
 
-                            <c:if test="${user.userStatus.toString()=='ONLINE'}">
-                                <a href="/user?otherUserId=${user.id}">
+                            <c:if test="${otherUser.userStatus.toString()=='ONLINE'}">
+                                <a href="/user?otherUserId=${otherUser.id}">
                                     <li class="contact">
                                         <div class="wrap">
                                             <span class="contact-status online"></span>
-                                            <img src="/getResource?filename=${user.picture}">
+                                            <img src="/getResource?filename=${otherUser.picture}">
                                             <div class="meta">
-                                                <p class="name"> ${user.name} ${user.surname}</p>
+                                                <p class="name"> ${otherUser.name} ${otherUser.surname}</p>
                                             </div>
                                         </div>
                                     </li>
@@ -181,14 +180,14 @@
                             </c:if>
 
 
-                            <c:if test="${user.userStatus.toString()=='OFFLINE'}">
-                                <a href="/user?otherUserId=${user.id}">
+                            <c:if test="${otherUser.userStatus.toString()=='OFFLINE'}">
+                                <a href="/user?otherUserId=${otherUser.id}">
                                     <li class="contact">
                                         <div class="wrap">
                                             <span class="contact-status busy"></span>
-                                            <img src="/getResource?filename=${user.picture}">
+                                            <img src="/getResource?filename=${otherUser.picture}">
                                             <div class="meta">
-                                                <p class="name"> ${user.name} ${user.surname}</p>
+                                                <p class="name"> ${otherUser.name} ${otherUser.surname}</p>
                                             </div>
                                         </div>
                                     </li>

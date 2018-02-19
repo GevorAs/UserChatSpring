@@ -1,18 +1,23 @@
 package com.javaprogrammer.userchatspring.controller;
 
-import com.javaprogrammer.userchatspring.model.*;
+import com.javaprogrammer.userchatspring.model.Friend;
+import com.javaprogrammer.userchatspring.model.MessageStatus;
+import com.javaprogrammer.userchatspring.model.Post;
+import com.javaprogrammer.userchatspring.model.User;
 import com.javaprogrammer.userchatspring.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
-import javax.servlet.http.HttpSession;
 import java.util.LinkedList;
 import java.util.List;
 
 @Controller
+@SessionAttributes("user")
 public class UserController {
     @Autowired
     private UserRepository userRepository;
@@ -28,8 +33,7 @@ public class UserController {
     CommentRepository commentRepository;
 
     @GetMapping(value = "/userPage")
-    public String loginPageControler(ModelMap map, HttpSession session) {
-        User user = (User) session.getAttribute("user");
+    public String loginPageControler(ModelMap map,@SessionAttribute("user")User user) {
         String newRequest=null;
         String newMessage = null;
         if (requestRepository.countByToId(user.getId()) != 0) {
@@ -42,7 +46,7 @@ public class UserController {
         map.addAttribute("posts", postRepository.findAllByUserId(user.getId()));
         map.addAttribute("newMessage", newMessage);
         map.addAttribute("newRequest", newRequest);
-
+//            map.addAttribute("user",user11);
         return "userPage";
     }
 

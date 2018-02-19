@@ -12,9 +12,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -22,17 +23,17 @@ import java.util.LinkedList;
 import java.util.List;
 
 @Controller
+@SessionAttributes("user")
 public class MainController {
     @Autowired
     private UserRepository userRepository;
 
     @GetMapping(value = "/logout")
-    public String logout(HttpSession session) {
-        User user = (User) session.getAttribute("user");
+    public String logout(@SessionAttribute("user")User user,ModelMap map) {
         User one = userRepository.getOne(user.getId());
         one.setUserStatus(UserStatus.OFFLINE);
         userRepository.save(one);
-        session.invalidate();
+        map.addAttribute("user",new User());
         return "redirect:/";
 
     }
@@ -46,9 +47,10 @@ public class MainController {
 
     }
 
+
     @GetMapping(value = "/searchUser")
-    public String search(@RequestParam("userNameForSearch") String searchName, ModelMap map, HttpSession session) {
-        User user = (User) session.getAttribute("user");
+    public String search(@RequestParam("userNameForSearch") String searchName, ModelMap map, @SessionAttribute("user")User user) {
+
         List<User> customFindUsersbyNameOrSurname = new LinkedList<>();
         String[] nameStrArr = searchName.split(" ");
         if (user.getUserType().equals(UserType.USER)) {

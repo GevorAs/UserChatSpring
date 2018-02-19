@@ -10,24 +10,21 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.File;
 import java.io.IOException;
 
 @Controller
+@SessionAttributes("user")
 public class LoginRegisterController {
     @Autowired
     private UserRepository userRepository;
 
     @PostMapping(value = "/login")
-    public String login(@RequestParam("emailLogin") String email, @RequestParam("passwordLogin") String password, HttpSession session) {
+    public String login(@RequestParam("emailLogin") String email, @RequestParam("passwordLogin") String password, ModelMap map) {
         if (email.equalsIgnoreCase("admin@admin.com") && !userRepository.existsByEmail("admin@admin.com")) {
             User user = new User();
             user.setName("Admin");
@@ -42,11 +39,13 @@ public class LoginRegisterController {
         User user = userRepository.getByEmailAndPassword(email, password);
 
 
-        if (user != null) {
+        if (user != null&&user.getId()!=0) {
             user.setUserStatus(UserStatus.ONLINE);
             userRepository.save(user);
             user.setPassword(null);
-            session.setAttribute("user", user);
+
+//            session.setAttribute("user", user);
+            map.addAttribute("user",user);
 
             if (user.getUserType().equals(UserType.ADMIN)) {
                 return "redirect:/admin";
@@ -71,7 +70,7 @@ public class LoginRegisterController {
     }
 
     @PostMapping("/register")
-    public String registerUser(@Valid @ModelAttribute("userRegister") User user, BindingResult result, @RequestParam("pic") MultipartFile multipartFile, HttpSession session) throws IOException {
+    public String registerUser(@Valid @ModelAttribute("userRegister") User user, BindingResult result, @RequestParam("pic") MultipartFile multipartFile,ModelMap map) throws IOException {
         StringBuilder sb = new StringBuilder();
         String pattern = "(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{8,}";
 
@@ -104,7 +103,8 @@ public class LoginRegisterController {
         user.setPicture(picname);
         userRepository.save(user);
         user.setPassword(null);
-        session.setAttribute("user", user);
+map.addAttribute("user",user);
+//        session.setAttribute("user", user);
         return "redirect:/userPage";
 
     }

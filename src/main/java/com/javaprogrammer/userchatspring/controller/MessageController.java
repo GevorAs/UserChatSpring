@@ -4,7 +4,9 @@ import com.javaprogrammer.userchatspring.model.Friend;
 import com.javaprogrammer.userchatspring.model.Message;
 import com.javaprogrammer.userchatspring.model.MessageStatus;
 import com.javaprogrammer.userchatspring.model.User;
-import com.javaprogrammer.userchatspring.repository.*;
+import com.javaprogrammer.userchatspring.repository.FriendRepository;
+import com.javaprogrammer.userchatspring.repository.MessageRepository;
+import com.javaprogrammer.userchatspring.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -13,7 +15,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
-import javax.servlet.http.HttpSession;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -31,8 +32,7 @@ public class MessageController {
 
 
     @GetMapping("/messages")
-    public String messagesPage(ModelMap map, HttpSession session, @RequestParam(value = "friendIdStr", required = false) String friendIdStr) {
-        User user = (User) session.getAttribute("user");
+    public String messagesPage(ModelMap map, @SessionAttribute("user")User user, @RequestParam(value = "friendIdStr", required = false) String friendIdStr) {
         List<Friend> friends = friendRepository.serchAllFriends(user.getId());
         List<User> userFriends = new LinkedList<>();
 
@@ -55,8 +55,7 @@ public class MessageController {
     }
 
     @GetMapping("/getMessages")
-    public String getMessages(@RequestParam("id") String idStr, ModelMap map, HttpSession session) {
-        User user = (User) session.getAttribute("user");
+    public String getMessages(@RequestParam("id") String idStr, ModelMap map,@SessionAttribute("user")User user) {
         int friendId = Integer.parseInt(idStr);
         List<Message> chat = messageRepository.customGetMessagesByUserAndFriend(user.getId(), friendId);
         for (Message message : chat) {
@@ -73,9 +72,8 @@ public class MessageController {
 
 
     @PostMapping("/sendMessage")
-    public String sendMessage(@RequestParam("friendId") String friendIdStr, @RequestParam("text") String text, ModelMap map, HttpSession session) {
+    public String sendMessage(@RequestParam("friendId") String friendIdStr, @RequestParam("text") String text, ModelMap map, @SessionAttribute("user")User user) {
         int friendId = Integer.parseInt(friendIdStr);
-        User user = (User) session.getAttribute("user");
         Message message = new Message();
         message.setText(text);
         message.setFromId(user.getId());
