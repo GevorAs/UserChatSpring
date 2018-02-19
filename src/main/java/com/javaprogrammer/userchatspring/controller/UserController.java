@@ -1,16 +1,14 @@
 package com.javaprogrammer.userchatspring.controller;
 
-import com.javaprogrammer.userchatspring.model.*;
+import com.javaprogrammer.userchatspring.model.MessageStatus;
+import com.javaprogrammer.userchatspring.model.User;
 import com.javaprogrammer.userchatspring.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
-import java.util.LinkedList;
-import java.util.List;
 
 @Controller
 public class UserController {
@@ -30,19 +28,18 @@ public class UserController {
     @GetMapping(value = "/userPage")
     public String loginPageControler(ModelMap map, HttpSession session) {
         User user = (User) session.getAttribute("user");
-        String newRequest=null;
-        String newMessage = null;
-        if (requestRepository.countByToId(user.getId()) != 0) {
-            newRequest = "" + requestRepository.countByToId(user.getId());
 
+        StringBuilder stringBuilder = new StringBuilder();
+        if (requestRepository.existsByToId(user.getId())) {
+            String info = "New Request<br>";
+            stringBuilder.append(info);
         }
-        if (messageRepository.countByToIdAndMessageStatus(user.getId(), MessageStatus.NEW) != 0) {
-            newMessage = "" + messageRepository.countByToIdAndMessageStatus(user.getId(), MessageStatus.NEW);
+        if (messageRepository.existsByToIdAndMessageStatus(user.getId(), MessageStatus.NEW)) {
+            String info = "New Message<br>";
+            stringBuilder.append(info);
         }
         map.addAttribute("posts", postRepository.findAllByUserId(user.getId()));
-        map.addAttribute("newMessage", newMessage);
-        map.addAttribute("newRequest", newRequest);
-
+        map.addAttribute("info", stringBuilder.toString());
         return "userPage";
     }
 
@@ -50,30 +47,5 @@ public class UserController {
     public String friends(ModelMap map) {
         return null;
     }
-
-    @GetMapping(value = "/user")
-    public String goToOtherUserPage(@RequestParam("otherUserId") int id, ModelMap map) {
-        List<Post> allPostOtherUser = postRepository.findAllByUserId(id);
-
-        List<Friend> friends = friendRepository.serchAllFriends(id);
-        List<User> otherUsersFriends = new LinkedList<>();
-        for (Friend friend : friends) {
-            if (friend.getFriendId() == id) {
-                User one = userRepository.getOne(friend.getUserId());
-                otherUsersFriends.add(one);
-            } else {
-                User one = userRepository.getOne(friend.getFriendId());
-                otherUsersFriends.add(one);
-            }
-
-        }
-        map.addAttribute("otherUser", userRepository.getOne(id));
-        map.addAttribute("allPostOtherUser", allPostOtherUser);
-        map.addAttribute("otherUsersFriends", otherUsersFriends);
-        return "user";
-
-
-    }
-
 
 }

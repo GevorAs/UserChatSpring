@@ -28,7 +28,4 @@ public class Post {
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
     private ActiveStatus activeStatus;
-    @Column(name = "created_date")
-    private  String createdDate;
-
 }
