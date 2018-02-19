@@ -18,10 +18,6 @@
 <% User user = (User) request.getSession().getAttribute("user");%>
 
 
-
-
-
-
 <div class="main-container">
 
     <!-- HEADER -->
@@ -38,16 +34,18 @@
             </li>
 
             <li>
-                <a class="header-menu-tab" href="/messages"><span class="icon fontawesome-envelope scnd-font-color"></span>Messages</a>
+                <a class="header-menu-tab" href="/messages"><span
+                        class="icon fontawesome-envelope scnd-font-color"></span>Messages</a>
                 <a class="header-menu-number" href="#4">${newMessage}</a>
             </li>
 
             <li>
-                <a class="header-menu-tab" href="/requests"><span class="icon fontawesome-star-empty scnd-font-color"></span>Request</a>
+                <a class="header-menu-tab" href="/requests"><span
+                        class="icon fontawesome-star-empty scnd-font-color"></span>Request</a>
                 <a class="header-menu-number" href="#4">${newRequest}</a>
             </li>
             <%--<li>--%>
-                <%--<a class="header-menu-tab" href="#5"><span class="icon fontawesome-star-empty scnd-font-color"></span>Favorites</a>--%>
+            <%--<a class="header-menu-tab" href="#5"><span class="icon fontawesome-star-empty scnd-font-color"></span>Favorites</a>--%>
             <%--</li>--%>
             <li>
                 <a class="header-menu-tab" href="/logout"><span
@@ -127,14 +125,11 @@
             </div>
             <ul class="profile-options horizontal-list">
                 <li><a class="comments" href="#40"><p><span class="icon fontawesome-comment-alt scnd-font-color"></span>23
-                </li>
-                </p></a>
+                </p></a></li>
                 <li><a class="views" href="#41"><p><span class="icon fontawesome-eye-open scnd-font-color"></span>841
-                </li>
-                </p></a>
+                </p></a></li>
                 <li><a class="likes" href="#42"><p><span class="icon fontawesome-heart-empty scnd-font-color"></span>49
-                </li>
-                </p></a>
+                </p></a></li>
             </ul>
         </div>
 
@@ -165,8 +160,8 @@
             <div id="sidepanel">
 
                 <div id="search">
-                    <label for=""><i class="fa fa-search" aria-hidden="true"></i></label>
-                    <input type="text" placeholder="Search contacts..." oninput="searchAjax(this)"/>
+                    <label for="1111"><i class="fa fa-search" aria-hidden="true"></i></label>
+                    <input type="text" id="1111" placeholder="Search contacts..." oninput="searchAjax(this)"/>
                 </div>
                 <div id="contacts">
 
