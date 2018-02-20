@@ -69,10 +69,10 @@ public class MessageController {
 
 
     @PostMapping("/sendMessage")
-    public HttpServletResponse sendMessage(@ModelAttribute("emptyMessage") Message message, @RequestParam("messageFile") MultipartFile multipartFile, @SessionAttribute("friendIdForMessage") User friend, HttpServletResponse response) throws IOException {
+    public String sendMessage(@ModelAttribute("emptyMessage") Message message, @RequestParam("messageFile") MultipartFile multipartFile,@SessionAttribute("user")User user, @SessionAttribute("friendIdForMessage") User friend,ModelMap map ) throws IOException {
         if (!multipartFile.getOriginalFilename().equals("")) {
             String filename = System.currentTimeMillis() + "_" + multipartFile.getOriginalFilename();
-            File file = new File("D:\\ADMIN\\picStringDemo\\" + filename);
+            File file = new File("/home/intern/Desktop/nk@r/" + filename);
             multipartFile.transferTo(file);
             message.setFile(filename);
             message.setToId(friend.getId());
@@ -83,7 +83,19 @@ public class MessageController {
             message.setMessageStatus(MessageStatus.NEW);
             messageRepository.save(message);
         }
-        return response;
+
+
+        List<Message> chat = messageRepository.customGetMessagesByUserAndFriend(user.getId(), friend.getId());
+        for (Message message111 : chat) {
+            if ((message111.getToId() == user.getId()) && message111.getMessageStatus().equals(MessageStatus.NEW)) {
+                message111.setMessageStatus(MessageStatus.OLD);
+                messageRepository.save(message111);
+            }
+        }
+        map.addAttribute("chat", chat);
+        map.addAttribute("friendIdForMessage", userRepository.getOne(friend.getId()));
+        return "messageAjax";
+
     }
 
 

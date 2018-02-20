@@ -11,7 +11,7 @@
 
     <link rel="stylesheet" href="../front/userpage/css/style.css">
     <link rel="stylesheet" href="../front/userpage/css/style1.css">
-
+    <link rel="stylesheet" href="../front/button/css/style2.css">
 
 </head>
 <body>
@@ -39,7 +39,7 @@
             </li>
 
             <li>
-                <a class="header-menu-tab" href="/requests"><span
+                <a class="header-menu-tab" href="#" onclick="getRequests()"><span
                         class="icon fontawesome-star-empty scnd-font-color"></span>Request</a>
                 <a class="header-menu-number" href="#4">${newRequest}</a>
             </li>
@@ -117,7 +117,7 @@
             <div class="profile-picture big-profile-picture clear">
                 <%--<img width="150px" alt="<%=user.getName()%>"--%>
                 <img width="150px" alt="${user.name}"
-                     <%--src="/getResource?filename=<%=user.getPicture()%>">--%>
+                <%--src="/getResource?filename=<%=user.getPicture()%>">--%>
                      src="/getResource?filename=${user.picture}">
             </div>
             <%--<h1 class="user-name"><%=user.getName()%> <%=user.getSurname()%>--%>
@@ -187,6 +187,15 @@
 <script src="../front/userpage/css/index.js"></script>
 <script>
 
+    function getRequests() {
+        jQuery.ajax({
+            url: "http://localhost:8080/requests",
+            success: function (result) {
+                $("#contacts").html(result);
+            }
+        });
+
+    }
 
     function searchAjax(text1) {
         jQuery.ajax({

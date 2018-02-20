@@ -1,20 +1,20 @@
 package com.javaprogrammer.userchatspring.controller;
 
-import com.javaprogrammer.userchatspring.model.Friend;
-import com.javaprogrammer.userchatspring.model.MessageStatus;
-import com.javaprogrammer.userchatspring.model.Post;
-import com.javaprogrammer.userchatspring.model.User;
+import com.javaprogrammer.userchatspring.model.*;
 import com.javaprogrammer.userchatspring.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 @Controller
-@SessionAttributes({"user","newMessage","newRequest","friendIdForMessage"})
+@SessionAttributes({"user", "newMessage", "newRequest", "friendIdForMessage", "friend"})
 
 public class UserController {
     @Autowired
@@ -31,9 +31,9 @@ public class UserController {
     CommentRepository commentRepository;
 
     @GetMapping(value = "/userPage")
-    public String loginPageControler(ModelMap map, @SessionAttribute("user")User user) {
-        String newRequest="";
-        String newMessage ="";
+    public String loginPageControler(ModelMap map, @SessionAttribute("user") User user) {
+        String newRequest = "";
+        String newMessage = "";
         if (requestRepository.countByToId(user.getId()) != 0) {
             newRequest = "" + requestRepository.countByToId(user.getId());
 
@@ -50,9 +50,16 @@ public class UserController {
         return "userPage";
     }
 
-    @GetMapping("/friends")
-    public String friends(ModelMap map) {
-        return null;
+    @GetMapping("/requests")
+    public String requests(ModelMap map, @SessionAttribute("user") User user) {
+        List<Request> allByToId = requestRepository.findAllByToId(user.getId());
+        List<User> friendRequests = new ArrayList<>();
+        for (Request request : allByToId) {
+
+            friendRequests.add(userRepository.getOne(request.getFromId()));
+        }
+        map.addAttribute("friendRequests", friendRequests);
+        return "request";
     }
 
     @GetMapping(value = "/user")
@@ -74,9 +81,24 @@ public class UserController {
         map.addAttribute("otherUser", userRepository.getOne(id));
         map.addAttribute("allPostOtherUser", allPostOtherUser);
         map.addAttribute("otherUsersFriends", otherUsersFriends);
+        map.addAttribute("friend", userRepository.getOne(id));
         return "user";
 
 
+    }
+
+    @GetMapping("/sendRequest")
+    public HttpServletResponse sendRequest(HttpServletResponse response, @SessionAttribute("friend") User friend, @SessionAttribute("user") User user) {
+
+        Request request = new Request();
+        request.setToId(friend.getId());
+        request.setFromId(user.getId());
+        Request request1 = requestRepository.findAllByFromIdAndToId(user.getId(), friend.getId());
+        Request request2 = requestRepository.findAllByToIdAndFromId(user.getId(), friend.getId());
+        if (request1 == null && request2 == null) {
+            requestRepository.save(request);
+        }
+        return response;
     }
 
 

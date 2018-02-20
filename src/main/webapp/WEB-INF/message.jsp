@@ -100,7 +100,7 @@
         <div class="message-input" id="222">
             <div class="wrap">
                 <spring:form action="/sendMessage" method="post" modelAttribute="emptyMessage" id="1111"  enctype="multipart/form-data">
-                    <spring:input type="text" path="text" placeholder="Write your message..." name="text"/>
+                    <spring:input type="text" id="8888" path="text" placeholder="Write your message..." name="text"/>
                     <spring:input path="fromId" value="${user.id}" type="hidden"/>
                     <%--<i class="fa fa-paperclip attachment" aria-hidden="true">--%>
                         <input type="file" name="messageFile" title=" ">
@@ -118,25 +118,28 @@
 <script src="../front/chat/js/index.js"></script>
 <script>
     var x;
+
+
+    var currentFriendId;
     var id=${friendIdForMessage.id};
     if (${friendIdForMessage.id!=""}) {
 
         getMessages(id)
     }
     function getMessages(id) {
-
+currentFriendId=id;
 
         if (x) {
             clearInterval(x);
             inter(id);
             x = setInterval(function () {
                 inter(id)
-            }, 5000);
+            }, 1000);
         } else {
             inter(id);
             x = setInterval(function () {
                 inter(id)
-            }, 5000);
+            }, 1000);
         }
     }
     function inter(id) {
@@ -155,7 +158,6 @@
         e.preventDefault();  // <--------stops the form submission
         var fd = new FormData($("#1111")[0]);
         // fd.append('groupName', 'xxx');
-
         $.ajax({
             url: "/sendMessage",
             type: "POST",
@@ -165,9 +167,10 @@
             contentType: false,
             cache: false,
             success: function (result) {
-                $("#222").html(result);
+                $("#concatProfil").html(result);
             }
         });
+        document.getElementById("8888").value="";
     });
 
 </script>

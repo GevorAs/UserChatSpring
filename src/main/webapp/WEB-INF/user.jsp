@@ -116,7 +116,7 @@
     <!-- MIDDLE-CONTAINER -->
     <div class="middle-container container">
         <div class="profile block"> <!-- PROFILE (MIDDLE-CONTAINER) -->
-            <a class="add-button" href="#28"><span class="icon entypo-plus scnd-font-color"></span></a>
+            <span onclick="sendRequest()"><a class="add-button" href="#" ><span class="icon entypo-plus scnd-font-color"></span></a></span>
             <div class="profile-picture big-profile-picture clear">
                 <img width="150px" alt="${otherUser.name}"
                      src="/getResource?filename=${otherUser.picture}">
@@ -215,7 +215,20 @@
 
 <script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
 <script src="../front/userpage/css/index.js"></script>
+<script>
 
+
+
+
+    function sendRequest() {
+        $.ajax({
+            url: "http://localhost:8080/sendRequest",
+            success: function (result) {
+                $("#").html(result);
+            }
+        })
+    }
+</script>
 
 </body>
 

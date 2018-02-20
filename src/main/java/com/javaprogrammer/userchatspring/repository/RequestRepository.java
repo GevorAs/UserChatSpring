@@ -7,6 +7,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface RequestRepository extends JpaRepository<Request,Integer> {
-  boolean existsByToId(int id);
   Integer countByToId(int id);
+
+  Request  findAllByFromIdAndToId(int fromId,int toId);
+  Request  findAllByToIdAndFromId(int toId,int fromId);
+  List<Request> findAllByToId(int toId);
+
+
 }
