@@ -34,7 +34,6 @@ public class MessageController {
 
     @GetMapping("/messages")
     public String messagesPage(ModelMap map, @SessionAttribute("user") User user) {
-
         List<Friend> friends = friendRepository.serchAllFriends(user.getId());
         List<User> userFriends = new LinkedList<>();
 
@@ -50,7 +49,6 @@ public class MessageController {
         }
         map.addAttribute("emptyMessage", new Message());
         map.addAttribute("userFriends", userFriends);
-
         return "message";
     }
 
@@ -113,11 +111,5 @@ public class MessageController {
 
     }
 
-@GetMapping("getFriendProfileMessage")
-    public String getFriendProfileMessage(@RequestParam("friendIdMessPro") String id,ModelMap map){
-        int idd=Integer.parseInt(id);
-    User one = userRepository.getOne(idd);
-    map.addAttribute("friendProfile",one);
-    return "friendProfileMessage";
-}
+
 }

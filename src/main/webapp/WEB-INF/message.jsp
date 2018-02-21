@@ -14,8 +14,9 @@
 </head>
 <body>
 <div id="frame">
-
-      <div id="sidepanel">
+    <a class="header-menu-tab" href="/userPage">Home</a>
+    <a class="header-menu-tab" href="/logout">Logut</a>
+    <div id="sidepanel">
         <div id="profile">
             <div class="wrap">
                 <img id="profile-img" src="http://emilcarlsson.se/assets/mikeross.png" class="online" alt=""/>
@@ -53,7 +54,7 @@
 
                     <c:if test="${userfriend.userStatus.toString()=='ONLINE'}">
 
-                        <li class="contact" onclick="getMessages(${userfriend.id});getFriendProfile(${userfriend.id})">
+                        <li class="contact" onclick="getMessages(${userfriend.id})">
                             <div class="wrap">
                                 <span class="contact-status online"></span>
                                 <img src="/getPic?filename=${userfriend.picture}">
@@ -68,7 +69,7 @@
 
                     <c:if test="${userfriend.userStatus.toString()=='OFFLINE'}">
 
-                        <li class="contact" onclick="getMessages(${userfriend.id});getFriendProfile(${userfriend.id})">
+                        <li class="contact" onclick="getMessages(${userfriend.id})">
                             <div class="wrap">
                                 <span class="contact-status busy"></span>
                                 <img src="/getPic?filename=${userfriend.picture}">
@@ -85,25 +86,16 @@
 
             </ul>
         </div>
-
         <div id="bottom-bar">
-            <a  href="/userPage"> <button id="addcontact"><i class="fa fa-cog fa-fw" aria-hidden="true"></i> <span>HOME</span>
-            </button></a>
-            <a href="/logout">  <button id="settings"><i class="fa fa-cog fa-fw" aria-hidden="true"></i> <span>LOGOUT</span></button>
-            </a>
+            <button id="addcontact"><i class="fa fa-user-plus fa-fw" aria-hidden="true"></i> <span>Add contact</span>
+            </button>
+            <button id="settings"><i class="fa fa-cog fa-fw" aria-hidden="true"></i> <span>Settings</span></button>
         </div>
     </div>
     <div class="content">
-        <%--<div id="concatProfil">--%>
-            <%--&lt;%&ndash;---------------------AJAX---------------------------------------------------&ndash;%&gt;--%>
-        <%--</div>--%>
-            <div class="contact-profile" >
-
-
-            </div>
-            <div class="messages" id="concatProfil">
-
-                </div>
+        <div id="concatProfil">
+            <%-----------------------AJAX-----------------------------------------------------%>
+        </div>
 
         <div class="message-input" id="222">
             <div class="wrap">
@@ -113,15 +105,12 @@
                     <spring:input path="fromId" value="${user.id}" type="hidden"/>
                     <%--<i class="fa fa-paperclip attachment" aria-hidden="true">--%>
 
-
+                    <input type="file" name="messageFile" title="file" >
+                    <input type="file" name="messagePic" title="pic">
                     <%--</i>--%>
                     <button type="submit"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
-
+                </spring:form>
             </div>
-            <input type="file" name="messageFile" title="file" style="float: left;margin-left: 80px"  >
-            <input type="file" name="messagePic" title="pic" >
-            </spring:form>
-
         </div>
 
     </div>
@@ -131,9 +120,6 @@
 
 <script src="../front/chat/js/index.js"></script>
 <script>
-
-
-
     var x;
     var currentFriendId;
     var id =${friendIdForMessage.id};
@@ -176,16 +162,6 @@
                 $("#concatProfil").html(result);
             }
         })
-    }
-
-    function getFriendProfile(friendId) {
-        $.ajax({
-            url: "http://localhost:8080/getFriendProfileMessage?friendIdMessPro=" + friendId,
-            success: function (result) {
-                $(".contact-profile").html(result);
-            }
-        })
-
     }
 
 

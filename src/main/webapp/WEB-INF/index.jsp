@@ -1,5 +1,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags/form" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+
 <html lang="en">
 
 <head>
@@ -23,11 +25,11 @@
         <h1>LOGIN</h1>
         <spring:form action="/login" method="post">
             <div class="group"><i class="fa fa-envelope" aria-hidden="true"></i>
-                <input type="text"  placeholder="E-Mail" name="emailLogin"/>
+                <input type="text" id="email" placeholder="E-Mail" name="emailLogin"/>
                 <label for="email"></label>
             </div>
             <div class="group"><i class="fa fa-unlock-alt" aria-hidden="true"></i>
-                <input type="password"  placeholder="Password" name="passwordLogin"/>
+                <input type="password" id="password" placeholder="Password" name="passwordLogin"/>
                 <label for="password"></label>
             </div>
             <input type="submit" value="LOGIN"/>
@@ -44,11 +46,11 @@
             <h1>REGISTER</h1>
             <spring:form action="/register" modelAttribute="userRegister" method="post" enctype="multipart/form-data">
                 <div class="group"><i class="fa fa-user" aria-hidden="true"></i>
-                    <spring:input type="text"  path="name" placeholder="Name"></spring:input>
+                    <spring:input type="text" id="name" path="name" placeholder="Name"></spring:input>
                     <label for="name"></label>
                 </div>
                 <div class="group"><i class="fa fa-user" aria-hidden="true"></i>
-                    <spring:input type="text"  path="surname" placeholder="surname"></spring:input>
+                    <spring:input type="text" id="name" path="surname" placeholder="surname"></spring:input>
                     <label for="name"></label>
                 </div>
                 <div class="group"><i class="fa fa-envelope" aria-hidden="true"></i>

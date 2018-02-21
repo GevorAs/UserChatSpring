@@ -42,9 +42,9 @@
             </li>
 
             <li>
-                <a  class="header-menu-tab" href="/userPage" ><span
+                <a class="header-menu-tab" href="#"><span
                         class="icon fontawesome-star-empty scnd-font-color"></span>Request</a>
-                <a class="header-menu-number" href="#4" >${newRequest}</a>
+                <a class="header-menu-number" href="#4">${newRequest}</a>
             </li>
             <%--<li>--%>
             <%--<a class="header-menu-tab" href="#5"><span class="icon fontawesome-star-empty scnd-font-color"></span>Favorites</a>--%>
@@ -228,9 +228,6 @@
             }
         })
     }
-
-
-
 </script>
 
 </body>
