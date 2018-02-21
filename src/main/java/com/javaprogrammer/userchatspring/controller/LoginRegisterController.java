@@ -27,7 +27,9 @@ public class LoginRegisterController {
     @Value("${pic.path}")
     private String nkar;
 
+
     @PostMapping(value = "/login")
+
     public String login(@RequestParam("emailLogin") String email, @RequestParam("passwordLogin") String password, ModelMap map) {
         if (email.equalsIgnoreCase("admin@admin.com") && !userRepository.existsByEmail("admin@admin.com")) {
             User user = new User();
@@ -59,14 +61,6 @@ public class LoginRegisterController {
 
     }
 
-    @GetMapping("/")
-    public String loginPage(ModelMap map, @RequestParam(value = "message", required = false) String message) {
-
-        map.addAttribute("userRegister", new User());
-        map.addAttribute("message", message != null ? message : "");
-        return "index";
-
-    }
 
     @PostMapping("/register")
     public String registerUser(@Valid @ModelAttribute("userRegister") User user, BindingResult result, @RequestParam("pic") MultipartFile multipartFile, ModelMap map) throws IOException {

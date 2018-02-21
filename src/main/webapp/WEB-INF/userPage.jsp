@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="../front/userpage/css/style.css">
     <link rel="stylesheet" href="../front/userpage/css/style1.css">
     <link rel="stylesheet" href="../front/button/css/style2.css">
+    <script src="../front/jquery-3.3.1.min.js"></script>
 
 </head>
 <body>
@@ -96,17 +97,10 @@
             </ul>
         </div>
 
-        <div class="media block"> <!-- MEDIA (LEFT-CONTAINER) -->
-            <div id="media-display">
-                <a class="media-btn play" href="#23"><span class="fontawesome-play"></span></a>
-            </div>
-            <div class="media-control-bar">
-                <a class="media-btn play" href="#23"><span class="fontawesome-play scnd-font-color"></span></a>
-                <p class="time-passed">4:15 <span class="time-duration scnd-font-color">/ 9:23</span></p>
-                <a class="media-btn volume" href="#24"><span class="fontawesome-volume-up scnd-font-color"></span></a>
-                <a class="media-btn resize" href="#25"><span class="fontawesome-resize-full scnd-font-color"></span></a>
-            </div>
-        </div>
+
+        <iframe width="300" height="180"
+                src="https://www.youtube.com/embed/nHWppy0lmpU?list=PLIU2NpAyk8O0-a5iVcSEo3hBp_kWF1fdg"
+                frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
     </div>
 
     <!-- MIDDLE-CONTAINER -->
@@ -177,20 +171,20 @@
 </div> <!-- end main-container -->
 
 
-<script
-        src="http://code.jquery.com/jquery-3.3.1.min.js"
-        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-        crossorigin="anonymous">
+<%--<script--%>
+<%--src="http://code.jquery.com/jquery-3.3.1.min.js"--%>
+<%--integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="--%>
+<%--crossorigin="anonymous">--%>
 
-</script>
-<script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
+<%--</script>--%>
+<%--<script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>--%>
 <script src="../front/userpage/css/index.js"></script>
 <script>
 
     // see new requests
     function getRequests() {
         jQuery.ajax({
-            url: "http://localhost:8080/requests",
+            url: "/requests",
             success: function (result) {
                 $("#contacts").html(result);
             }
@@ -201,7 +195,7 @@
     // search ajax
     function searchAjax(text1) {
         jQuery.ajax({
-            url: "http://localhost:8080/searchUser?userNameForSearch=" + text1.value,
+            url: "/searchUser?userNameForSearch=" + text1.value,
             success: function (result) {
                 $("#contacts").html(result);
             }

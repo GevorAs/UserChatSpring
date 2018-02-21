@@ -12,12 +12,10 @@
 
     <link rel="stylesheet" href="../front/userpage/css/style.css">
     <link rel="stylesheet" href="../front/userpage/css/style1.css">
-
+<script src="../front/jquery-3.3.1.min.js"></script>
 
 </head>
 <body>
-
-
 
 
 <div class="main-container">
@@ -100,23 +98,19 @@
             </ul>
         </div>
 
-        <div class="media block"> <!-- MEDIA (LEFT-CONTAINER) -->
-            <div id="media-display">
-                <a class="media-btn play" href="#23"><span class="fontawesome-play"></span></a>
-            </div>
-            <div class="media-control-bar">
-                <a class="media-btn play" href="#23"><span class="fontawesome-play scnd-font-color"></span></a>
-                <p class="time-passed">4:15 <span class="time-duration scnd-font-color">/ 9:23</span></p>
-                <a class="media-btn volume" href="#24"><span class="fontawesome-volume-up scnd-font-color"></span></a>
-                <a class="media-btn resize" href="#25"><span class="fontawesome-resize-full scnd-font-color"></span></a>
-            </div>
-        </div>
+
+        <iframe width="300" height="180"
+                src="https://www.youtube.com/embed/nHWppy0lmpU?list=PLIU2NpAyk8O0-a5iVcSEo3hBp_kWF1fdg"
+                frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+
     </div>
 
     <!-- MIDDLE-CONTAINER -->
     <div class="middle-container container">
         <div class="profile block"> <!-- PROFILE (MIDDLE-CONTAINER) -->
-            <span onclick="sendRequest()"><a class="add-button" href="#" ><span class="icon entypo-plus scnd-font-color"></span></a></span>
+            <span onclick="sendRequest()"><a class="add-button" href="#"><span
+                    class="icon entypo-plus scnd-font-color"></span></a></span>
             <div class="profile-picture big-profile-picture clear">
                 <img width="150px" alt="${otherUser.name}"
                      src="/getPic?filename=${otherUser.picture}">
@@ -212,17 +206,20 @@
     </div> <!-- end right-container -->
 </div> <!-- end main-container -->
 
+<%--<script--%>
+        <%--src="http://code.jquery.com/jquery-3.3.1.min.js"--%>
+        <%--integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="--%>
+        <%--crossorigin="anonymous">--%>
 
-<script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
+<%--</script>--%>
+<%--<script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>--%>
 <script src="../front/userpage/css/index.js"></script>
 <script>
 
 
-
-
     function sendRequest() {
         $.ajax({
-            url: "http://localhost:8080/sendRequest",
+            url: "/sendRequest",
             success: function (result) {
                 $("#").html(result);
             }

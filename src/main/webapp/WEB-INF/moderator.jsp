@@ -192,7 +192,7 @@ ${info}
 
     function searchAjax(text1) {
         jQuery.ajax({
-            url: "http://localhost:8080/searchUser?userNameForSearch=" + text1.value,
+            url: "/searchUser?userNameForSearch=" + text1.value,
             success: function (result) {
                 $("#contacts").html(result);
             }

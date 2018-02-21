@@ -34,6 +34,7 @@ public class MainController {
     @Value("${file.path}")
     private String filePath;
 
+
     @GetMapping(value = "/logout")
     public String logout(@SessionAttribute("user")User user,ModelMap map) {
         User one = userRepository.getOne(user.getId());

@@ -151,7 +151,7 @@
     //   see messages the friend
     function inter(id) {
         $.ajax({
-            url: "http://localhost:8080/getMessages?id=" + id,
+            url: "/getMessages?id=" + id,
             success: function (result) {
                 $("#concatProfil").html(result);
             }
