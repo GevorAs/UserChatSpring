@@ -130,7 +130,7 @@
     function getMessages(id) {
         currentFriendId = id;
 
-        tazaAjax(id);
+
 
 
         if (x) {
@@ -146,12 +146,6 @@
             }, 1000);
         }
     }
-
-          tazaAjax(id){
-          ajax(id)
-
-        erta miam taza jsp vercne et verevi mas@ bere dne @dtex
-        }
 
 
     //   see messages the friend

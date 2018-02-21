@@ -8,6 +8,7 @@ import com.javaprogrammer.userchatspring.repository.FriendRepository;
 import com.javaprogrammer.userchatspring.repository.MessageRepository;
 import com.javaprogrammer.userchatspring.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -30,6 +31,11 @@ public class MessageController {
     private MessageRepository messageRepository;
     @Autowired
     private FriendRepository friendRepository;
+
+    @Value("${pic.path}")
+    private String nkar;
+    @Value("${file.path}")
+    private String filePath;
 
 
     @GetMapping("/messages")
@@ -76,7 +82,7 @@ public class MessageController {
         if (!fileBool||!picBool) {
             if (!fileBool) {
                 String filename = System.currentTimeMillis() + "_" + multipartFile.getOriginalFilename();
-                File file = new File("D:\\ADMIN\\fileSpringDemo\\" + filename);
+                File file = new File(filePath + filename);
                 multipartFile.transferTo(file);
                 message.setFile(filename);
                 message.setToId(friend.getId());
@@ -84,7 +90,7 @@ public class MessageController {
                 messageRepository.save(message);
             }else {
                 String filename = System.currentTimeMillis() + "_" + multipartPic.getOriginalFilename();
-                File file = new File("D:\\ADMIN\\picStringDemo\\" + filename);
+                File file = new File(nkar + filename);
                 multipartPic.transferTo(file);
                 message.setPicture(filename);
                 message.setToId(friend.getId());
