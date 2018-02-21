@@ -1,7 +1,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-
+<h2 style="text-align: center">New Request</h2>
 <spring:form modelAttribute="friendRequests">
     <ul>
         <c:forEach items="${friendRequests}" var="otherUser">

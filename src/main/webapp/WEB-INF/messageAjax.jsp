@@ -13,13 +13,7 @@
 
             <c:if test="${message.fromId == user.id}">
                 <li class="sent">
-
-                    <c:if test="${message.picture!=null}">
-                        <a href="/getPic?filename=${message.picture}" target="_blank"
-                           style="text-decoration: none"> <img src="/getPic?filename=${message.picture}" width="80"
-                                                               style="width: 40px;float: right">
-                        </a>
-                    </c:if>
+                    <img src="/getPic?filename=${message.picture}" width="80" alt="img" style="width: 40px;float: top">
                     <img src="/getPic?filename=${user.picture}" alt=""/>
 
                     <p>${message.text}</p>
@@ -32,11 +26,7 @@
 
             <c:if test="${message.fromId == friendIdForMessage.id}">
                 <li class="replies">
-                    <c:if test="${message.picture!=null}"> <a href="/getPic?filename=${message.picture}" target="_blank"
-                                                              style="text-decoration: none"> <img
-                            src="/getPic?filename=${message.picture}" width="80" style="width: 40px;float: left">
-                    </a>
-                    </c:if>
+                    <img src="/getPic?filename=${message.picture}" width="80" alt="img" style="width: 40px;float: top">
                     <img src="/getPic?filename=${friendIdForMessage.picture}" alt=""/>
                     <p>${message.text}</p>
                     <a href="/getFile?filename=${ message.file}"

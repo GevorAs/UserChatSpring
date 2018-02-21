@@ -141,4 +141,20 @@ public class UserController {
         map.addAttribute("friendRequests", friendRequests);
         return "request";
     }
+
+    @GetMapping("admin")
+    public String adminPage(ModelMap map){
+
+        List<User> allByActiveStatusDeleted = userRepository.findAllByActiveStatus(ActiveStatus.DELETED);
+        map.addAttribute("deleted",allByActiveStatusDeleted);
+        return "admin";
+    }
+
+    @GetMapping("activateUser")
+    public String activateUserButton(@RequestParam("deletedUserId")int id){
+        User one = userRepository.getOne(id);
+        one.setActiveStatus(ActiveStatus.ACTIVE);
+        userRepository.save(one);
+        return "redirect:/admin";
+    }
 }

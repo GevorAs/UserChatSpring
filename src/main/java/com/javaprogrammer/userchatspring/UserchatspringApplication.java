@@ -1,5 +1,7 @@
 package com.javaprogrammer.userchatspring;
 
+import com.javaprogrammer.userchatspring.controller.LoginRegisterController;
+import com.javaprogrammer.userchatspring.controller.UserController;
 import com.javaprogrammer.userchatspring.repository.RequestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -18,6 +20,8 @@ public class UserchatspringApplication extends WebMvcConfigurerAdapter {
 
     public static void main(String[] args) {
         SpringApplication.run(UserchatspringApplication.class, args);
+//LoginRegisterController loginRegisterController=new LoginRegisterController();
+//loginRegisterController.adminRegister();
     }
 
     @Override

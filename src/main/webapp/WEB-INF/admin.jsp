@@ -17,11 +17,6 @@
 <body>
 
 
-
-
-
-
-
 <div class="main-container">
 
     <!-- HEADER -->
@@ -29,7 +24,7 @@
         <ul class="header-menu horizontal-list">
 
             <li>
-                <a class="header-menu-tab" href="/userPage"><span class="icon fontawesome-user scnd-font-color"></span>Home</a>
+                <a class="header-menu-tab" href="/admin"><span class="icon fontawesome-user scnd-font-color"></span>Home</a>
             </li>
 
 
@@ -38,13 +33,15 @@
             </li>
 
             <li>
-                <a class="header-menu-tab" href="/messages"><span class="icon fontawesome-envelope scnd-font-color"></span>Messages</a>
+                <a class="header-menu-tab" href="/messages"><span
+                        class="icon fontawesome-envelope scnd-font-color"></span>Messages</a>
                 <a class="header-menu-number" href="#4">${newMessage}</a>
             </li>
 
             <li>
-                <a class="header-menu-tab" href="/requests"><span class="icon fontawesome-star-empty scnd-font-color"></span>Request</a>
-                <a class="header-menu-number" href="#4">${newRequest}</a>
+                <a class="header-menu-tab" href="/requests"><span
+                        class="icon fontawesome-star-empty scnd-font-color"></span>Blocked Users</a>
+                <a class="header-menu-number" href="#4"></a>
             </li>
             <%--<li>--%>
             <%--<a class="header-menu-tab" href="#5"><span class="icon fontawesome-star-empty scnd-font-color"></span>Favorites</a>--%>
@@ -69,34 +66,68 @@
 
     <!-- LEFT-CONTAINER -->
     <div class="left-container container">
-        <div class="menu-box block"> <!-- MENU BOX (LEFT-CONTAINER) -->
-            <h2 class="titular">MENU BOX</h2>
-            <ul class="menu-box-menu">
-                <li>
-                    <a class="menu-box-tab" href="#6"><span class="icon fontawesome-envelope scnd-font-color"></span>Messages
-                        <div class="menu-box-number">24</div>
-                    </a>
-                </li>
-                <li>
-                    <a class="menu-box-tab" href="#8"><span class="icon entypo-paper-plane scnd-font-color"></span>Invites
-                        <div class="menu-box-number">3</div>
-                    </a>
-                </li>
-                <li>
-                    <a class="menu-box-tab" href="#10"><span class="icon entypo-calendar scnd-font-color"></span>Events
-                        <div class="menu-box-number">5</div>
-                    </a>
-                </li>
-                <li>
-                    <a class="menu-box-tab" href="#12"><span class="icon entypo-cog scnd-font-color"></span>Account
-                        Settings</a>
-                </li>
-                <li>
-                    <a class="menu-box-tab" href="#13">
-                        <sapn class="icon entypo-chart-line scnd-font-color"></sapn>
-                        Statistics</a>
-                </li>
-            </ul>
+        <%--<div class="menu-box block"> <!-- MENU BOX (LEFT-CONTAINER) -->--%>
+        <%--<h2 class="titular">MENU BOX</h2>--%>
+        <%--<ul class="menu-box-menu">--%>
+        <%--<li>--%>
+        <%--<a class="menu-box-tab" href="#6"><span class="icon fontawesome-envelope scnd-font-color"></span>Messages--%>
+        <%--<div class="menu-box-number">24</div>--%>
+        <%--</a>--%>
+        <%--</li>--%>
+        <%--<li>--%>
+        <%--<a class="menu-box-tab" href="#8"><span class="icon entypo-paper-plane scnd-font-color"></span>Invites--%>
+        <%--<div class="menu-box-number">3</div>--%>
+        <%--</a>--%>
+        <%--</li>--%>
+        <%--<li>--%>
+        <%--<a class="menu-box-tab" href="#10"><span class="icon entypo-calendar scnd-font-color"></span>Events--%>
+        <%--<div class="menu-box-number">5</div>--%>
+        <%--</a>--%>
+        <%--</li>--%>
+        <%--<li>--%>
+        <%--<a class="menu-box-tab" href="#12"><span class="icon entypo-cog scnd-font-color"></span>Account--%>
+        <%--Settings</a>--%>
+        <%--</li>--%>
+        <%--<li>--%>
+        <%--<a class="menu-box-tab" href="#13">--%>
+        <%--<sapn class="icon entypo-chart-line scnd-font-color"></sapn>--%>
+        <%--Statistics</a>--%>
+        <%--</li>--%>
+        <%--</ul>--%>
+        <%--</div>--%>
+        <div id="frame">
+            <div id="sidepanel">
+                <h2 style="text-align: center">DELETED Users</h2>
+                <div id="contacts">
+                    <ul>
+                        <c:forEach items="${deleted}" var="deletedUser">
+
+
+                            <c:if test="${deletedUser.userStatus.toString()=='OFFLINE'}">
+                                <a href="/user?otherUserId=${deletedUser.id}">
+                                    <li class="contact">
+                                        <div class="wrap">
+                                            <span class="contact-status busy"></span>
+                                            <img src="/getPic?filename=${deletedUser.picture}">
+                                            <div class="meta">
+                                                <p class="name"
+                                                   style="float: left"> ${deletedUser.name} ${deletedUser.surname}</p>
+                                                <a href="/activateUser?deletedUserId=${deletedUser.id}">
+                                                    <input type="submit" value="Activate"
+                                                           style="background-color: #2c3e50;color: white;margin-left: 20px;margin-top: 13px">
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </a>
+                            </c:if>
+
+
+                        </c:forEach>
+                    </ul>
+                </div>
+            </div>
+
         </div>
 
         <div class="media block"> <!-- MEDIA (LEFT-CONTAINER) -->
@@ -168,7 +199,7 @@
                     <label for=""><i class="fa fa-search" aria-hidden="true"></i></label>
                     <input type="text" placeholder="Search contacts..." oninput="searchAjax(this)"/>
                 </div>
-                <div id="contacts">
+                <div id="contacts" class="searchBox">
 
                 </div>
             </div>
@@ -194,7 +225,7 @@
         jQuery.ajax({
             url: "http://localhost:8080/searchUser?userNameForSearch=" + text1.value,
             success: function (result) {
-                $("#contacts").html(result);
+                $(".searchBox").html(result);
             }
         });
 
