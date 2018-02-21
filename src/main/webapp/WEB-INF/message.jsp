@@ -129,6 +129,10 @@
     //   onclick   see messages the friend
     function getMessages(id) {
         currentFriendId = id;
+
+        tazaAjax(id);
+
+
         if (x) {
             clearInterval(x);
             inter(id);
@@ -142,6 +146,14 @@
             }, 1000);
         }
     }
+
+          tazaAjax(id){
+          ajax(id)
+
+        erta miam taza jsp vercne et verevi mas@ bere dne @dtex
+        }
+
+
     //   see messages the friend
     function inter(id) {
         $.ajax({
