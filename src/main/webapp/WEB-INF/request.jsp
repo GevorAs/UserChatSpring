@@ -57,7 +57,7 @@
     function acceptRequest(id) {
 
         jQuery.ajax({
-            url: "http://localhost:8080/acceptRequest?friendId=" + id,
+            url: "/acceptRequest?friendId=" + id,
             success: function (result) {
                 $("#contacts").html(result);
             }
@@ -69,7 +69,7 @@
     function rejectRequest(id) {
         getRequests();
         jQuery.ajax({
-            url: "http://localhost:8080/rejectRequest?friendId=" + id,
+            url: "/rejectRequest?friendId=" + id,
             success: function (result) {
                 $("#contacts").html(result);
             }

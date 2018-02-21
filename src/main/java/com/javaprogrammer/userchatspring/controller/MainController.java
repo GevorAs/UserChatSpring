@@ -34,6 +34,19 @@ public class MainController {
     @Value("${file.path}")
     private String filePath;
 
+
+
+
+    @GetMapping("/")
+    public String loginPage(ModelMap map, @RequestParam(value = "message", required = false) String message) {
+
+        map.addAttribute("userRegister", new User());
+        map.addAttribute("message", message != null ? message : "");
+        return "index";
+
+    }
+
+
     @GetMapping(value = "/logout")
     public String logout(@SessionAttribute("user")User user,ModelMap map) {
         User one = userRepository.getOne(user.getId());
