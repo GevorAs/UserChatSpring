@@ -5,10 +5,12 @@ import com.javaprogrammer.userchatspring.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -89,17 +91,54 @@ public class UserController {
 
     @GetMapping("/sendRequest")
     public HttpServletResponse sendRequest(HttpServletResponse response, @SessionAttribute("friend") User friend, @SessionAttribute("user") User user) {
-
-        Request request = new Request();
-        request.setToId(friend.getId());
-        request.setFromId(user.getId());
-        Request request1 = requestRepository.findAllByFromIdAndToId(user.getId(), friend.getId());
-        Request request2 = requestRepository.findAllByToIdAndFromId(user.getId(), friend.getId());
-        if (request1 == null && request2 == null) {
-            requestRepository.save(request);
+        if (!friend.equals(user)) {
+            Request request = new Request();
+            request.setToId(friend.getId());
+            request.setFromId(user.getId());
+            Request request1 = requestRepository.findByFromIdAndToId(user.getId(), friend.getId());
+            Request request2 = requestRepository.findByToIdAndFromId(user.getId(), friend.getId());
+            Friend byFriendIdAndUserId = friendRepository.findByFriendIdAndUserId(user.getId(), friend.getId());
+            Friend byUserIdAndFriendId = friendRepository.findByUserIdAndFriendId(user.getId(), friend.getId());
+            if (byFriendIdAndUserId == null && byUserIdAndFriendId == null) {
+                if (request1 == null && request2 == null) {
+                    requestRepository.save(request);
+                }
+            }
         }
+
         return response;
     }
 
+    @GetMapping("/acceptRequest")
+    public String acceptRequest(@RequestParam("friendId") int fromId, HttpServletResponse response, @SessionAttribute("user") User user, ModelMap map) {
+        Friend friend = new Friend();
+        friend.setUserId(user.getId());
+        friend.setFriendId(fromId);
+        friendRepository.save(friend);
+        Request request = requestRepository.findByFromIdAndToId(fromId, user.getId());
+        requestRepository.delete(request.getId());
+        List<Request> allByToId = requestRepository.findAllByToId(user.getId());
+        List<User> friendRequests = new ArrayList<>();
+        for (Request request1 : allByToId) {
 
+            friendRequests.add(userRepository.getOne(request1.getFromId()));
+        }
+        map.addAttribute("friendRequests", friendRequests);
+        return "request";
+    }
+
+    @GetMapping("/rejectRequest")
+    public String rejectRequest(@RequestParam("friendId") int fromId, HttpServletResponse response, @SessionAttribute("user") User user, ModelMap map) {
+
+        Request request = requestRepository.findByFromIdAndToId(fromId, user.getId());
+        requestRepository.delete(request.getId());
+        List<Request> allByToId = requestRepository.findAllByToId(user.getId());
+        List<User> friendRequests = new ArrayList<>();
+        for (Request request1 : allByToId) {
+
+            friendRequests.add(userRepository.getOne(request1.getFromId()));
+        }
+        map.addAttribute("friendRequests", friendRequests);
+        return "request";
+    }
 }

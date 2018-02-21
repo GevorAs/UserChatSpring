@@ -10,8 +10,8 @@ padding: 50px;
 
 .action-button {
     position: relative;
-    padding: 0px 6px;
-    margin: -15px 2px 0px 50px;
+    padding: -5px 6px;
+    margin: -16px 2px 0px 50px;
     float: left;
     border-radius: 10px;
     font-family: 'Pacifico', cursive;

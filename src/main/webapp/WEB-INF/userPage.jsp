@@ -1,6 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags/form" %>
-<%@ page import="com.javaprogrammer.userchatspring.model.User" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <html>
@@ -57,7 +56,7 @@
                 <span class="scnd-font-color">
                     <span class="profile-picture small-profile-picture">
                     <%--<img width="40px" alt="<%=user.getName()%>" src="/getResource?filename=<%=user.getPicture()%>">--%>
-                    <img width="40px" alt="${user.name}" src="/getResource?filename=${user.picture}">
+                    <img width="40px" alt="${user.name}" src="/getPic?filename=${user.picture}">
                     </span>
                 </span>
                 </a>
@@ -113,12 +112,12 @@
     <!-- MIDDLE-CONTAINER -->
     <div class="middle-container container">
         <div class="profile block"> <!-- PROFILE (MIDDLE-CONTAINER) -->
-            <a class="add-button" href="#28"><span class="icon entypo-plus scnd-font-color"></span></a>
+            <div style="float: right;width: 23px;margin: 10px;"></div>
             <div class="profile-picture big-profile-picture clear">
                 <%--<img width="150px" alt="<%=user.getName()%>"--%>
                 <img width="150px" alt="${user.name}"
                 <%--src="/getResource?filename=<%=user.getPicture()%>">--%>
-                     src="/getResource?filename=${user.picture}">
+                     src="/getPic?filename=${user.picture}">
             </div>
             <%--<h1 class="user-name"><%=user.getName()%> <%=user.getSurname()%>--%>
             <h1 class="user-name">${user.name} ${user.surname}
@@ -167,6 +166,7 @@
                     <input type="text" id="1111" placeholder="Search contacts..." oninput="searchAjax(this)"/>
                 </div>
                 <div id="contacts">
+                    <%---------------------------------------------Ajax-----------------------------------------------------------------------------------------------%>
 
                 </div>
             </div>
@@ -187,6 +187,7 @@
 <script src="../front/userpage/css/index.js"></script>
 <script>
 
+    // see new requests
     function getRequests() {
         jQuery.ajax({
             url: "http://localhost:8080/requests",
@@ -197,6 +198,7 @@
 
     }
 
+    // search ajax
     function searchAjax(text1) {
         jQuery.ajax({
             url: "http://localhost:8080/searchUser?userNameForSearch=" + text1.value,

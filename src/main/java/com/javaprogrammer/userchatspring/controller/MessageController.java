@@ -69,15 +69,28 @@ public class MessageController {
 
 
     @PostMapping("/sendMessage")
-    public String sendMessage(@ModelAttribute("emptyMessage") Message message, @RequestParam("messageFile") MultipartFile multipartFile,@SessionAttribute("user")User user, @SessionAttribute("friendIdForMessage") User friend,ModelMap map ) throws IOException {
-        if (!multipartFile.getOriginalFilename().equals("")) {
-            String filename = System.currentTimeMillis() + "_" + multipartFile.getOriginalFilename();
-            File file = new File("/home/intern/Desktop/nk@r/" + filename);
-            multipartFile.transferTo(file);
-            message.setFile(filename);
-            message.setToId(friend.getId());
-            message.setMessageStatus(MessageStatus.NEW);
-            messageRepository.save(message);
+    public String sendMessage(@ModelAttribute("emptyMessage") Message message, @RequestParam("messageFile") MultipartFile multipartFile,@RequestParam("messagePic")MultipartFile multipartPic,@SessionAttribute("user")User user, @SessionAttribute("friendIdForMessage") User friend,ModelMap map ) throws IOException {
+       boolean fileBool=multipartFile.getOriginalFilename().equals("");
+       boolean picBool=multipartPic.getOriginalFilename().equals("");
+
+        if (!fileBool||!picBool) {
+            if (!fileBool) {
+                String filename = System.currentTimeMillis() + "_" + multipartFile.getOriginalFilename();
+                File file = new File("D:\\ADMIN\\fileSpringDemo\\" + filename);
+                multipartFile.transferTo(file);
+                message.setFile(filename);
+                message.setToId(friend.getId());
+                message.setMessageStatus(MessageStatus.NEW);
+                messageRepository.save(message);
+            }else {
+                String filename = System.currentTimeMillis() + "_" + multipartPic.getOriginalFilename();
+                File file = new File("D:\\ADMIN\\picStringDemo\\" + filename);
+                multipartPic.transferTo(file);
+                message.setPicture(filename);
+                message.setToId(friend.getId());
+                message.setMessageStatus(MessageStatus.NEW);
+                messageRepository.save(message);
+            }
         }else if (!message.getText().equals("")){
             message.setToId(friend.getId());
             message.setMessageStatus(MessageStatus.NEW);

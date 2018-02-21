@@ -12,7 +12,7 @@
                     <li class="contact">
                         <div class="wrap">
                             <span class="contact-status online"></span>
-                            <img src="/getResource?filename=${otherUser.picture}">
+                            <img src="/getPic?filename=${otherUser.picture}">
                             <div class="meta">
                                 <p class="name"> ${otherUser.name} ${otherUser.surname}</p>
                             </div>
@@ -28,7 +28,7 @@
                     <li class="contact">
                         <div class="wrap">
                             <span class="contact-status busy"></span>
-                            <img src="/getResource?filename=${otherUser.picture}">
+                            <img src="/getPic?filename=${otherUser.picture}">
                             <div class="meta">
                                 <p class="name"> ${otherUser.name} ${otherUser.surname}</p>
                             </div>

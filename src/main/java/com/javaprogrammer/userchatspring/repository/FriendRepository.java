@@ -11,6 +11,7 @@ public interface FriendRepository extends JpaRepository<Friend,Integer> {
 
     @Query(value = "select friend from Friend friend where user_id = :id or  friend_id = :id")
     List<Friend> serchAllFriends(@Param(value = "id") int id);
-
+        Friend findByFriendIdAndUserId(int friendId,int userId);
+        Friend findByUserIdAndFriendId(int userId,int friendId);
 
 }

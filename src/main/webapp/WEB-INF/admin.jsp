@@ -59,7 +59,7 @@
                 <a href="/userPage">
                 <span class="scnd-font-color">
                     <span class="profile-picture small-profile-picture">
-                    <img width="40px" alt="${user.name}" src="/getResource?filename=${user.picture}">
+                    <img width="40px" alt="${user.name}" src="/getPic?filename=${user.picture}">
                     </span>
                 </span>
                 </a>
@@ -118,7 +118,7 @@
             <a class="add-button" href="#28"><span class="icon entypo-plus scnd-font-color"></span></a>
             <div class="profile-picture big-profile-picture clear">
                 <img width="150px" alt="${user.name}"
-                     src="/getResource?filename=${user.picture}">
+                     src="/getPic?filename=${user.picture}">
             </div>
             <h1 class="user-name">${user.name} ${user.surname}
             </h1>

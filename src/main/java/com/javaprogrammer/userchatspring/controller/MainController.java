@@ -38,11 +38,22 @@ public class MainController {
 
     }
 
-    @GetMapping(value = "/getResource")
-    public void getResource(HttpServletResponse response, @RequestParam("filename") String filename) throws IOException {
-        try (InputStream inputStream = new FileInputStream("/home/intern/Desktop/nk@r/" + filename)) {
+    @GetMapping(value = "/getPic")
+    public void getPic(HttpServletResponse response, @RequestParam("filename") String filename) {
+        try (InputStream inputStream = new FileInputStream("D:\\ADMIN\\picStringDemo\\" + filename)) {
             response.setContentType(MediaType.ALL_VALUE);
             IOUtils.copy(inputStream, response.getOutputStream());
+        }catch (IOException e){
+
+        }
+
+    } @GetMapping(value = "/getFile")
+    public void getFile(HttpServletResponse response, @RequestParam("filename") String filename) {
+        try (InputStream inputStream = new FileInputStream("D:\\ADMIN\\fileSpringDemo\\" + filename)) {
+            response.setContentType(MediaType.ALL_VALUE);
+            IOUtils.copy(inputStream, response.getOutputStream());
+        }catch (IOException e){
+
         }
 
     }

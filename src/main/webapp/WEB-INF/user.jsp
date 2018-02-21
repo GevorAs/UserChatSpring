@@ -42,7 +42,7 @@
             </li>
 
             <li>
-                <a class="header-menu-tab" href="/requests"><span
+                <a class="header-menu-tab" href="#"><span
                         class="icon fontawesome-star-empty scnd-font-color"></span>Request</a>
                 <a class="header-menu-number" href="#4">${newRequest}</a>
             </li>
@@ -60,7 +60,7 @@
                 <span class="scnd-font-color">
                     <span class="profile-picture small-profile-picture">
                     <%--<img width="40px" alt="<%=user.getName()%>" src="/getResource?filename=<%=user.getPicture()%>">--%>
-                    <img width="40px" alt="${user.name}" src="/getResource?filename=${user.picture}">
+                    <img width="40px" alt="${user.name}" src="/getPic?filename=${user.picture}">
                     </span>
                 </span>
                 </a>
@@ -119,7 +119,7 @@
             <span onclick="sendRequest()"><a class="add-button" href="#" ><span class="icon entypo-plus scnd-font-color"></span></a></span>
             <div class="profile-picture big-profile-picture clear">
                 <img width="150px" alt="${otherUser.name}"
-                     src="/getResource?filename=${otherUser.picture}">
+                     src="/getPic?filename=${otherUser.picture}">
             </div>
             <h1 class="user-name">${otherUser.name} ${otherUser.surname}
             </h1>
@@ -175,7 +175,7 @@
                                     <li class="contact">
                                         <div class="wrap">
                                             <span class="contact-status online"></span>
-                                            <img src="/getResource?filename=${otherUser.picture}">
+                                            <img src="/getPic?filename=${otherUser.picture}">
                                             <div class="meta">
                                                 <p class="name"> ${otherUser.name} ${otherUser.surname}</p>
                                             </div>
@@ -190,7 +190,7 @@
                                     <li class="contact">
                                         <div class="wrap">
                                             <span class="contact-status busy"></span>
-                                            <img src="/getResource?filename=${otherUser.picture}">
+                                            <img src="/getPic?filename=${otherUser.picture}">
                                             <div class="meta">
                                                 <p class="name"> ${otherUser.name} ${otherUser.surname}</p>
                                             </div>

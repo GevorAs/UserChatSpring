@@ -14,7 +14,7 @@
 </head>
 <body>
 <div id="frame">
-    <a class="header-menu-tab" href="/userPage" >Home</a>
+    <a class="header-menu-tab" href="/userPage">Home</a>
     <a class="header-menu-tab" href="/logout">Logut</a>
     <div id="sidepanel">
         <div id="profile">
@@ -57,7 +57,7 @@
                         <li class="contact" onclick="getMessages(${userfriend.id})">
                             <div class="wrap">
                                 <span class="contact-status online"></span>
-                                <img src="/getResource?filename=${userfriend.picture}">
+                                <img src="/getPic?filename=${userfriend.picture}">
                                 <div class="meta">
                                     <p class="name"> ${userfriend.name} ${userfriend.surname}</p>
                                 </div>
@@ -72,7 +72,7 @@
                         <li class="contact" onclick="getMessages(${userfriend.id})">
                             <div class="wrap">
                                 <span class="contact-status busy"></span>
-                                <img src="/getResource?filename=${userfriend.picture}">
+                                <img src="/getPic?filename=${userfriend.picture}">
                                 <div class="meta">
                                     <p class="name"> ${userfriend.name} ${userfriend.surname}</p>
                                 </div>
@@ -99,11 +99,14 @@
 
         <div class="message-input" id="222">
             <div class="wrap">
-                <spring:form action="/sendMessage" method="post" modelAttribute="emptyMessage" id="1111"  enctype="multipart/form-data">
+                <spring:form action="/sendMessage" method="post" modelAttribute="emptyMessage" id="1111"
+                             enctype="multipart/form-data">
                     <spring:input type="text" id="8888" path="text" placeholder="Write your message..." name="text"/>
                     <spring:input path="fromId" value="${user.id}" type="hidden"/>
                     <%--<i class="fa fa-paperclip attachment" aria-hidden="true">--%>
-                        <input type="file" name="messageFile" title=" ">
+
+                    <input type="file" name="messageFile" title="file" >
+                    <input type="file" name="messagePic" title="pic">
                     <%--</i>--%>
                     <button type="submit"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
                 </spring:form>
@@ -118,17 +121,14 @@
 <script src="../front/chat/js/index.js"></script>
 <script>
     var x;
-
-
     var currentFriendId;
-    var id=${friendIdForMessage.id};
+    var id =${friendIdForMessage.id};
     if (${friendIdForMessage.id!=""}) {
-
         getMessages(id)
     }
+    //   onclick   see messages the friend
     function getMessages(id) {
-currentFriendId=id;
-
+        currentFriendId = id;
         if (x) {
             clearInterval(x);
             inter(id);
@@ -142,19 +142,19 @@ currentFriendId=id;
             }, 1000);
         }
     }
+    //   see messages the friend
     function inter(id) {
-       $.ajax({
+        $.ajax({
             url: "http://localhost:8080/getMessages?id=" + id,
             success: function (result) {
                 $("#concatProfil").html(result);
             }
         })
     }
-// --------------------------------------------------------------------------------------------------------
 
 
-    $("#1111").submit(function(e){
-
+    //send message Ajax
+    $("#1111").submit(function (e) {
         e.preventDefault();  // <--------stops the form submission
         var fd = new FormData($("#1111")[0]);
         // fd.append('groupName', 'xxx');
@@ -170,8 +170,9 @@ currentFriendId=id;
                 $("#concatProfil").html(result);
             }
         });
-        document.getElementById("8888").value="";
+        document.getElementById("8888").value = "";
     });
+
 
 </script>
 
