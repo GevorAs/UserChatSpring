@@ -7,6 +7,7 @@ import com.javaprogrammer.userchatspring.model.UserType;
 import com.javaprogrammer.userchatspring.repository.UserRepository;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -28,6 +29,11 @@ public class MainController {
     @Autowired
     private UserRepository userRepository;
 
+    @Value("${pic.path}")
+    private String nkar;
+    @Value("${file.path}")
+    private String filePath;
+
     @GetMapping(value = "/logout")
     public String logout(@SessionAttribute("user")User user,ModelMap map) {
         User one = userRepository.getOne(user.getId());
@@ -40,7 +46,7 @@ public class MainController {
 
     @GetMapping(value = "/getPic")
     public void getPic(HttpServletResponse response, @RequestParam("filename") String filename) {
-        try (InputStream inputStream = new FileInputStream("D:\\ADMIN\\picStringDemo\\" + filename)) {
+        try (InputStream inputStream = new FileInputStream(nkar + filename)) {
             response.setContentType(MediaType.ALL_VALUE);
             IOUtils.copy(inputStream, response.getOutputStream());
         }catch (IOException e){
@@ -49,7 +55,7 @@ public class MainController {
 
     } @GetMapping(value = "/getFile")
     public void getFile(HttpServletResponse response, @RequestParam("filename") String filename) {
-        try (InputStream inputStream = new FileInputStream("D:\\ADMIN\\fileSpringDemo\\" + filename)) {
+        try (InputStream inputStream = new FileInputStream(filePath + filename)) {
             response.setContentType(MediaType.ALL_VALUE);
             IOUtils.copy(inputStream, response.getOutputStream());
         }catch (IOException e){

@@ -6,6 +6,7 @@ import com.javaprogrammer.userchatspring.model.UserStatus;
 import com.javaprogrammer.userchatspring.model.UserType;
 import com.javaprogrammer.userchatspring.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -22,6 +23,9 @@ import java.io.IOException;
 public class LoginRegisterController {
     @Autowired
     private UserRepository userRepository;
+
+    @Value("${pic.path}")
+    private String nkar;
 
     @PostMapping(value = "/login")
     public String login(@RequestParam("emailLogin") String email, @RequestParam("passwordLogin") String password, ModelMap map) {
@@ -90,7 +94,7 @@ public class LoginRegisterController {
             return "redirect:/?message=" + sb.toString();
         }
         String picname = System.currentTimeMillis() + "_" + multipartFile.getOriginalFilename();
-        File file = new File("D:\\ADMIN\\picStringDemo\\" + picname);
+        File file = new File(nkar + picname);
         multipartFile.transferTo(file);
         user.setUserStatus(UserStatus.ONLINE);
         user.setActiveStatus(ActiveStatus.ACTIVE);
