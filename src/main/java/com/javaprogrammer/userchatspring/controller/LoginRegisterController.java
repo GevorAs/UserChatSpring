@@ -1,5 +1,4 @@
 package com.javaprogrammer.userchatspring.controller;
-
 import com.javaprogrammer.userchatspring.model.ActiveStatus;
 import com.javaprogrammer.userchatspring.model.User;
 import com.javaprogrammer.userchatspring.model.UserStatus;
@@ -28,6 +27,7 @@ public class LoginRegisterController {
     private String nkar;
 
 
+
     @GetMapping(value = "/logout")
     public String logout(@SessionAttribute("user")User user,ModelMap map) {
         User one = userRepository.getOne(user.getId());
@@ -35,11 +35,17 @@ public class LoginRegisterController {
         userRepository.save(one);
         map.addAttribute("user",new User());
         return "redirect:/";
-
+	
     }
-
     @PostMapping(value = "/login")
-    public String login(@RequestParam("emailLogin") String email, @RequestParam("passwordLogin") String password, ModelMap map) {
+
+    
+	@PostMapping(value = "/login")
+    
+	
+	
+	
+	public String login(@RequestParam("emailLogin") String email, @RequestParam("passwordLogin") String password, ModelMap map) {
         if (email.equalsIgnoreCase("admin@admin.com") && !userRepository.existsByEmail("admin@admin.com")) {
             User user = new User();
             user.setName("Admin");
