@@ -89,25 +89,6 @@ public class UserController {
 
     }
 
-    @GetMapping("/sendRequest")
-    public HttpServletResponse sendRequest(HttpServletResponse response, @SessionAttribute("friend") User friend, @SessionAttribute("user") User user) {
-        if (!friend.equals(user)) {
-            Request request = new Request();
-            request.setToId(friend.getId());
-            request.setFromId(user.getId());
-            Request request1 = requestRepository.findByFromIdAndToId(user.getId(), friend.getId());
-            Request request2 = requestRepository.findByToIdAndFromId(user.getId(), friend.getId());
-            Friend byFriendIdAndUserId = friendRepository.findByFriendIdAndUserId(user.getId(), friend.getId());
-            Friend byUserIdAndFriendId = friendRepository.findByUserIdAndFriendId(user.getId(), friend.getId());
-            if (byFriendIdAndUserId == null && byUserIdAndFriendId == null) {
-                if (request1 == null && request2 == null) {
-                    requestRepository.save(request);
-                }
-            }
-        }
-
-        return response;
-    }
 
     @GetMapping("/acceptRequest")
     public String acceptRequest(@RequestParam("friendId") int fromId, HttpServletResponse response, @SessionAttribute("user") User user, ModelMap map) {

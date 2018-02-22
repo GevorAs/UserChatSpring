@@ -28,8 +28,17 @@ public class LoginRegisterController {
     private String nkar;
 
 
-    @PostMapping(value = "/login")
+    @GetMapping(value = "/logout")
+    public String logout(@SessionAttribute("user")User user,ModelMap map) {
+        User one = userRepository.getOne(user.getId());
+        one.setUserStatus(UserStatus.OFFLINE);
+        userRepository.save(one);
+        map.addAttribute("user",new User());
+        return "redirect:/";
 
+    }
+
+    @PostMapping(value = "/login")
     public String login(@RequestParam("emailLogin") String email, @RequestParam("passwordLogin") String password, ModelMap map) {
         if (email.equalsIgnoreCase("admin@admin.com") && !userRepository.existsByEmail("admin@admin.com")) {
             User user = new User();

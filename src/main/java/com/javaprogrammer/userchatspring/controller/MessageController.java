@@ -1,11 +1,9 @@
 package com.javaprogrammer.userchatspring.controller;
 
-import com.javaprogrammer.userchatspring.model.Friend;
-import com.javaprogrammer.userchatspring.model.Message;
-import com.javaprogrammer.userchatspring.model.MessageStatus;
-import com.javaprogrammer.userchatspring.model.User;
+import com.javaprogrammer.userchatspring.model.*;
 import com.javaprogrammer.userchatspring.repository.FriendRepository;
 import com.javaprogrammer.userchatspring.repository.MessageRepository;
+import com.javaprogrammer.userchatspring.repository.RequestRepository;
 import com.javaprogrammer.userchatspring.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -31,11 +29,37 @@ public class MessageController {
     private MessageRepository messageRepository;
     @Autowired
     private FriendRepository friendRepository;
+    @Autowired
+    RequestRepository requestRepository;
 
     @Value("${pic.path}")
     private String nkar;
     @Value("${file.path}")
     private String filePath;
+
+
+
+
+    @GetMapping("/sendRequest")
+    public HttpServletResponse sendRequest(HttpServletResponse response, @SessionAttribute("friend") User friend, @SessionAttribute("user") User user) {
+        if (!friend.equals(user)) {
+            Request request = new Request();
+            request.setToId(friend.getId());
+            request.setFromId(user.getId());
+            Request request1 = requestRepository.findByFromIdAndToId(user.getId(), friend.getId());
+            Request request2 = requestRepository.findByToIdAndFromId(user.getId(), friend.getId());
+            Friend byFriendIdAndUserId = friendRepository.findByFriendIdAndUserId(user.getId(), friend.getId());
+            Friend byUserIdAndFriendId = friendRepository.findByUserIdAndFriendId(user.getId(), friend.getId());
+            if (byFriendIdAndUserId == null && byUserIdAndFriendId == null) {
+                if (request1 == null && request2 == null) {
+                    requestRepository.save(request);
+                }
+            }
+        }
+
+        return response;
+    }
+
 
 
     @GetMapping("/messages")
