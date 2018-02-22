@@ -45,15 +45,7 @@ public class MainController {
 
     }
 
-    @GetMapping(value = "/logout")
-    public String logout(@SessionAttribute("user")User user,ModelMap map) {
-        User one = userRepository.getOne(user.getId());
-        one.setUserStatus(UserStatus.OFFLINE);
-        userRepository.save(one);
-        map.addAttribute("user",new User());
-        return "redirect:/";
 
-    }
 
     @GetMapping(value = "/getPic")
     public void getPic(HttpServletResponse response, @RequestParam("filename") String filename) {
