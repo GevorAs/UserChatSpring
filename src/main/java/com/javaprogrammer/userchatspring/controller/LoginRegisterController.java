@@ -28,6 +28,27 @@ public class LoginRegisterController {
     private String nkar;
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     @PostMapping(value = "/login")
 
     public String login(@RequestParam("emailLogin") String email, @RequestParam("passwordLogin") String password, ModelMap map) {
