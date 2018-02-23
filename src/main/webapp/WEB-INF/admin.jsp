@@ -1,6 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags/form" %>
-<%@ page import="com.javaprogrammer.userchatspring.model.User" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <html>
@@ -29,7 +28,7 @@
         <ul class="header-menu horizontal-list">
 
             <li>
-                <a class="header-menu-tab" href="/userPage"><span class="icon fontawesome-user scnd-font-color"></span>Home</a>
+                <a class="header-menu-tab" href="/admin"><span class="icon fontawesome-user scnd-font-color"></span>Home</a>
             </li>
 
 
@@ -72,9 +71,9 @@
         <div class="menu-box block"> <!-- MENU BOX (LEFT-CONTAINER) -->
             <h2 class="titular">MENU BOX</h2>
             <ul class="menu-box-menu">
-                <li>
-                    <a class="menu-box-tab" href="#6"><span class="icon fontawesome-envelope scnd-font-color"></span>Messages
-                        <div class="menu-box-number">24</div>
+                <li >
+                    <a class="menu-box-tab" href="#" onclick="getDeletedUser()" ><span class="icon entypo-cog scnd-font-color"></span>Deleted Users
+
                     </a>
                 </li>
                 <li>
@@ -99,45 +98,6 @@
             </ul>
         </div>
 
-        <div class="media block"> <!-- MEDIA (LEFT-CONTAINER) -->
-            <div id="media-display">
-                <a class="media-btn play" href="#23"><span class="fontawesome-play"></span></a>
-            </div>
-            <div class="media-control-bar">
-                <a class="media-btn play" href="#23"><span class="fontawesome-play scnd-font-color"></span></a>
-                <p class="time-passed">4:15 <span class="time-duration scnd-font-color">/ 9:23</span></p>
-                <a class="media-btn volume" href="#24"><span class="fontawesome-volume-up scnd-font-color"></span></a>
-                <a class="media-btn resize" href="#25"><span class="fontawesome-resize-full scnd-font-color"></span></a>
-            </div>
-        </div>
-    </div>
-
-    <!-- MIDDLE-CONTAINER -->
-    <div class="middle-container container">
-        <div class="profile block"> <!-- PROFILE (MIDDLE-CONTAINER) -->
-            <a class="add-button" href="#28"><span class="icon entypo-plus scnd-font-color"></span></a>
-            <div class="profile-picture big-profile-picture clear">
-                <img width="150px" alt="${user.name}"
-                     src="/getPic?filename=${user.picture}">
-            </div>
-            <h1 class="user-name">${user.name} ${user.surname}
-            </h1>
-            <div class="profile-description">
-                <p class="scnd-font-color">Lorem ipsum dolor sit amet consectetuer adipiscing</p>
-            </div>
-            <ul class="profile-options horizontal-list">
-                <li><a class="comments" href="#40"><p><span class="icon fontawesome-comment-alt scnd-font-color"></span>23
-                </li>
-                </p></a>
-                <li><a class="views" href="#41"><p><span class="icon fontawesome-eye-open scnd-font-color"></span>841
-                </li>
-                </p></a>
-                <li><a class="likes" href="#42"><p><span class="icon fontawesome-heart-empty scnd-font-color"></span>49
-                </li>
-                </p></a>
-            </ul>
-        </div>
-
         <div class="tweets block"> <!-- TWEETS (MIDDLE-CONTAINER) -->
             <h2 class="titular"><span class="icon zocial-twitter"></span>LATEST TWEETS</h2>
             <div class="tweet first">
@@ -146,15 +106,34 @@
                 </p>
                 <p><a class="time-ago scnd-font-color" href="#18">3 minutes ago</a></p>
             </div>
-            <c:forEach items="${posts}" var="post">
-                <div class="tweet">
-                    <p>${post.text}
-                        <a class="tweet-link" href="fullPost">Full Post</a>
-                    </p>
-                    <p class="scnd-font-color">${post.createdDate}</p>
-                </div>
-            </c:forEach>
+            >
+            <div class="tweet">
+                <p>
+                    <a class="tweet-link" href="fullPost">Full Post</a>
+                </p>
+                <p class="scnd-font-color"></p>
+            </div>
+
         </div>
+
+    </div>
+
+    <!-- MIDDLE-CONTAINER -->
+    <div class="middle-container container">
+        <div id="frame">
+            <div id="sidepanel">
+
+                <div id="search">
+
+                </div>
+                <div id="contacts" class="deleted" >
+
+                </div>
+            </div>
+
+        </div>
+
+
 
     </div>
 
@@ -168,7 +147,7 @@
                     <label for=""><i class="fa fa-search" aria-hidden="true"></i></label>
                     <input type="text" placeholder="Search contacts..." oninput="searchAjax(this)"/>
                 </div>
-                <div id="contacts">
+                <div id="contacts" class="searchBox">
 
                 </div>
             </div>
@@ -187,18 +166,28 @@
 </script>
 <script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
 <script src="../front/userpage/css/index.js"></script>
-<script>
 
+<script>
+    function getDeletedUser() {
+        jQuery.ajax({
+            url: "/getDeletedUser",
+            success: function (result) {
+                $(".deleted").html(result);
+            }
+        });
+
+    }
 
     function searchAjax(text1) {
         jQuery.ajax({
             url: "/searchUser?userNameForSearch=" + text1.value,
             success: function (result) {
-                $("#contacts").html(result);
+                $(".searchBox").html(result);
             }
         });
 
     }
+
 
 
 </script>
