@@ -14,11 +14,12 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletResponse;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.StringTokenizer;
 
 @Controller
 @SessionAttributes("friendIdForMessage")
@@ -63,23 +64,38 @@ public class MessageController {
         int friendId = Integer.parseInt(idStr);
         List<Message> chat = messageRepository.customGetMessagesByUserAndFriend(user.getId(), friendId);
         for (Message message : chat) {
+            //----------timestamp i menak timen e vercrac---------
+            String timestamp = message.getTimestamp();
+            StringTokenizer tk = new StringTokenizer(timestamp);
+            String date = tk.nextToken();
+            String time = tk.nextToken();
+            String substring = time.substring(0, 8);
+            message.setTimestamp(substring);
+            //---------------------------------
             if ((message.getToId() == user.getId()) && message.getMessageStatus().equals(MessageStatus.NEW)) {
                 message.setMessageStatus(MessageStatus.OLD);
                 messageRepository.save(message);
             }
         }
         map.addAttribute("chat", chat);
-        map.addAttribute("friendIdForMessage", userRepository.getOne(friendId));
+
+        //----------SIK XRKAC E getFriendProfileMessage() metodic--------------
+//        map.addAttribute("friendIdForMessage", userRepository.getOne(friendId));
         return "messageAjax";
     }
 
 
     @PostMapping("/sendMessage")
-    public String sendMessage(@ModelAttribute("emptyMessage") Message message, @RequestParam("messageFile") MultipartFile multipartFile,@RequestParam("messagePic")MultipartFile multipartPic,@SessionAttribute("user")User user, @SessionAttribute("friendIdForMessage") User friend,ModelMap map ) throws IOException {
-       boolean fileBool=multipartFile.getOriginalFilename().equals("");
-       boolean picBool=multipartPic.getOriginalFilename().equals("");
+    public String sendMessage(@ModelAttribute("emptyMessage") Message message,
+                              @RequestParam("messageFile") MultipartFile multipartFile,
+                              @RequestParam("messagePic") MultipartFile multipartPic,
+                              @SessionAttribute("user") User user,
+                              @SessionAttribute("friendIdForMessage") User friend, ModelMap map) throws IOException {
 
-        if (!fileBool||!picBool) {
+        boolean fileBool = multipartFile.getOriginalFilename().equals("");
+        boolean picBool = multipartPic.getOriginalFilename().equals("");
+
+        if (!fileBool || !picBool) {
             if (!fileBool) {
                 String filename = System.currentTimeMillis() + "_" + multipartFile.getOriginalFilename();
                 File file = new File(filePath + filename);
@@ -88,7 +104,7 @@ public class MessageController {
                 message.setToId(friend.getId());
                 message.setMessageStatus(MessageStatus.NEW);
                 messageRepository.save(message);
-            }else {
+            } else {
                 String filename = System.currentTimeMillis() + "_" + multipartPic.getOriginalFilename();
                 File file = new File(nkar + filename);
                 multipartPic.transferTo(file);
@@ -97,7 +113,7 @@ public class MessageController {
                 message.setMessageStatus(MessageStatus.NEW);
                 messageRepository.save(message);
             }
-        }else if (!message.getText().equals("")){
+        } else if (!message.getText().equals("")) {
             message.setToId(friend.getId());
             message.setMessageStatus(MessageStatus.NEW);
             messageRepository.save(message);
@@ -117,5 +133,11 @@ public class MessageController {
 
     }
 
-
+    @GetMapping("/getFriendProfileMessage")
+    public String getFriendProfileMessage(@RequestParam("id2") String id, ModelMap map) {
+        int idd = Integer.parseInt(id);
+        User one = userRepository.getOne(idd);
+        map.addAttribute("friendIdForMessage", one);
+        return "friendProfileMessage";
+    }
 }

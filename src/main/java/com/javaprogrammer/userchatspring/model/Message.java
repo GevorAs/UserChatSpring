@@ -30,4 +30,6 @@ public class Message {
     private String picture;
     @Column(name = "send_file")
     private String file;
+    @Column
+    private String timestamp;
 }
