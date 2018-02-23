@@ -14,34 +14,34 @@
 </head>
 <body>
 <div id="frame">
-    <a class="header-menu-tab" href="/userPage">Home</a>
-    <a class="header-menu-tab" href="/logout">Logut</a>
+
     <div id="sidepanel">
         <div id="profile">
             <div class="wrap">
-                <img id="profile-img" src="http://emilcarlsson.se/assets/mikeross.png" class="online" alt=""/>
-                <p>Mike Ross</p>
-                <i class="fa fa-chevron-down expand-button" aria-hidden="true"></i>
-                <div id="status-options">
-                    <ul>
-                        <li id="status-online" class="active"><span class="status-circle"></span>
-                            <p>Online</p></li>
-                        <li id="status-away"><span class="status-circle"></span>
-                            <p>Away</p></li>
-                        <li id="status-busy"><span class="status-circle"></span>
-                            <p>Busy</p></li>
-                        <li id="status-offline"><span class="status-circle"></span>
-                            <p>Offline</p></li>
-                    </ul>
-                </div>
-                <div id="expanded">
-                    <label for="twitter"><i class="fa fa-facebook fa-fw" aria-hidden="true"></i></label>
-                    <input name="twitter" type="text" value="mikeross"/>
-                    <label for="twitter"><i class="fa fa-twitter fa-fw" aria-hidden="true"></i></label>
-                    <input name="twitter" type="text" value="ross81"/>
-                    <label for="twitter"><i class="fa fa-instagram fa-fw" aria-hidden="true"></i></label>
-                    <input name="twitter" type="text" value="mike.ross"/>
-                </div>
+                <img id="profile-img" src="/getPic?filename=${user.picture}" class="online" alt=""/>
+                <%--<img src="/getPic?filename=${user.picture}">--%>
+                <p> ${user.name} ${user.surname}</p>
+                <%--<i class="fa fa-chevron-down expand-button" aria-hidden="true"></i>--%>
+                <%--<div id="status-options">--%>
+                    <%--<ul>--%>
+                        <%--<li id="status-online" class="active"><span class="status-circle"></span>--%>
+                            <%--<p>Online</p></li>--%>
+                        <%--<li id="status-away"><span class="status-circle"></span>--%>
+                            <%--<p>Away</p></li>--%>
+                        <%--<li id="status-busy"><span class="status-circle"></span>--%>
+                            <%--<p>Busy</p></li>--%>
+                        <%--<li id="status-offline"><span class="status-circle"></span>--%>
+                            <%--<p>Offline</p></li>--%>
+                    <%--</ul>--%>
+                <%--</div>--%>
+                <%--<div id="expanded">--%>
+                    <%--<label for="twitter"><i class="fa fa-facebook fa-fw" aria-hidden="true"></i></label>--%>
+                    <%--<input name="twitter" type="text" value="mikeross"/>--%>
+                    <%--<label for="twitter"><i class="fa fa-twitter fa-fw" aria-hidden="true"></i></label>--%>
+                    <%--<input name="twitter" type="text" value="ross81"/>--%>
+                    <%--<label for="twitter"><i class="fa fa-instagram fa-fw" aria-hidden="true"></i></label>--%>
+                    <%--<input name="twitter" type="text" value="mike.ross"/>--%>
+                <%--</div>--%>
             </div>
         </div>
         <div id="search">
@@ -54,7 +54,7 @@
 
                     <c:if test="${userfriend.userStatus.toString()=='ONLINE'}">
 
-                        <li class="contact" onclick="getMessages(${userfriend.id})">
+                        <li class="contact" onclick="getFriendProfile(${userfriend.id});getMessages(${userfriend.id})">
                             <div class="wrap">
                                 <span class="contact-status online"></span>
                                 <img src="/getPic?filename=${userfriend.picture}">
@@ -69,7 +69,7 @@
 
                     <c:if test="${userfriend.userStatus.toString()=='OFFLINE'}">
 
-                        <li class="contact" onclick="getMessages(${userfriend.id})">
+                        <li class="contact" onclick="getFriendProfile(${userfriend.id});getMessages(${userfriend.id})">
                             <div class="wrap">
                                 <span class="contact-status busy"></span>
                                 <img src="/getPic?filename=${userfriend.picture}">
@@ -87,30 +87,43 @@
             </ul>
         </div>
         <div id="bottom-bar">
-            <button id="addcontact"><i class="fa fa-user-plus fa-fw" aria-hidden="true"></i> <span>Add contact</span>
-            </button>
-            <button id="settings"><i class="fa fa-cog fa-fw" aria-hidden="true"></i> <span>Settings</span></button>
+            <a href="/userPage">
+                <button id="addcontact"><i class="fa fa-cog fa-fw" aria-hidden="true"></i> <span>HOME</span>
+                </button>
+            </a>
+            <a href="/logout">
+                <button id="settings"><i class="fa fa-cog fa-fw" aria-hidden="true"></i> <span>LOGOUT</span></button>
+            </a>
         </div>
     </div>
     <div class="content">
-        <div id="concatProfil">
-            <%-----------------------AJAX-----------------------------------------------------%>
+        <div class="contact-profile">
+
+            <%--------------------------AJAX_FRIEND_PROFILE_MESSAGES----------------------------%>
+
+        </div>
+        <div class="messages" id="concatProfile">
+
+            <%-----------------------------AJAX_MESSAGES----------------------------%>
+
         </div>
 
         <div class="message-input" id="222">
             <div class="wrap">
                 <spring:form action="/sendMessage" method="post" modelAttribute="emptyMessage" id="1111"
                              enctype="multipart/form-data">
-                    <spring:input type="text" id="8888" path="text" placeholder="Write your message..." name="text"/>
-                    <spring:input path="fromId" value="${user.id}" type="hidden"/>
+                <spring:input type="text" id="8888" path="text" placeholder="Write your message..." name="text"/>
+                <spring:input path="fromId" value="${user.id}" type="hidden"/>
                     <%--<i class="fa fa-paperclip attachment" aria-hidden="true">--%>
 
-                    <input type="file" name="messageFile" title="file" >
-                    <input type="file" name="messagePic" title="pic">
+
                     <%--</i>--%>
-                    <button type="submit"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
-                </spring:form>
+                <button type="submit"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+
             </div>
+            <input type="file" name="messageFile" title="file" style="float: left;margin-left: 80px">
+            <input type="file" name="messagePic" title="pic">
+            </spring:form>
         </div>
 
     </div>
@@ -126,12 +139,12 @@
     if (${friendIdForMessage.id!=""}) {
         getMessages(id)
     }
+
     //   onclick   see messages the friend
     function getMessages(id) {
         currentFriendId = id;
 
-
-
+        getFriendProfile(id);
 
         if (x) {
             clearInterval(x);
@@ -147,13 +160,23 @@
         }
     }
 
+    //contact-profile in message
+    function getFriendProfile(id) {
+        $.ajax({
+            url: "getFriendProfileMessage?id2=" + id,
+            success: function (result) {
+                $(".contact-profile").html(result);
+            }
+        })
+
+    }
 
     //   see messages the friend
     function inter(id) {
         $.ajax({
             url: "/getMessages?id=" + id,
             success: function (result) {
-                $("#concatProfil").html(result);
+                $("#concatProfile").html(result);
             }
         })
     }
@@ -173,7 +196,7 @@
             contentType: false,
             cache: false,
             success: function (result) {
-                $("#concatProfil").html(result);
+                $("#concatProfile").html(result);
             }
         });
         document.getElementById("8888").value = "";
