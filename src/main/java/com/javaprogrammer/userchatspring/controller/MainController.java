@@ -36,7 +36,6 @@ public class MainController {
 
 
 
-
     @GetMapping("/")
     public String loginPage(ModelMap map, @RequestParam(value = "message", required = false) String message) {
 
@@ -45,7 +44,6 @@ public class MainController {
         return "index";
 
     }
-
 
     @GetMapping(value = "/logout")
     public String logout(@SessionAttribute("user")User user,ModelMap map) {

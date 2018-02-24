@@ -62,6 +62,7 @@ public class LoginRegisterController {
     }
 
 
+
     @PostMapping("/register")
     public String registerUser(@Valid @ModelAttribute("userRegister") User user, BindingResult result, @RequestParam("pic") MultipartFile multipartFile, ModelMap map) throws IOException {
         StringBuilder sb = new StringBuilder();
