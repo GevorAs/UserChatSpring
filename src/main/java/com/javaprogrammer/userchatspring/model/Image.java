@@ -17,7 +17,7 @@ public class Image {
     @GeneratedValue
     private int id;
     @ManyToOne
-    private User userId;
+    private User user;
     @Column(name = "pic_url")
     private String picture;
     @Column(name = "create_date")

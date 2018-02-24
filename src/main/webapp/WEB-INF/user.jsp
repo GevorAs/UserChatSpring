@@ -25,6 +25,7 @@
         <ul class="header-menu horizontal-list">
 
             <li>
+
                 <a class="header-menu-tab" href="/userPage"><span class="icon fontawesome-user scnd-font-color"></span>Home</a>
             </li>
 
@@ -72,7 +73,7 @@
             <h2 class="titular">MENU BOX</h2>
             <ul class="menu-box-menu">
                 <li>
-                    <a class="menu-box-tab" href="#6"><span class="icon fontawesome-envelope scnd-font-color"></span>Messages
+                    <a class="menu-box-tab" href="/guestImage?otherUser=${otherUser.id}"><span class="icon fontawesome-envelope scnd-font-color"></span>Images
                         <div class="menu-box-number">24</div>
                     </a>
                 </li>

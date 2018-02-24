@@ -10,7 +10,7 @@
 
     <link rel="stylesheet" href="../front/userpage/css/style.css">
     <link rel="stylesheet" href="../front/userpage/css/style1.css">
-
+<script src="../front/jquery-3.3.1.min.js"></script>
 
 </head>
 <body>
@@ -37,13 +37,13 @@
             </li>
 
             <li>
-                <a class="header-menu-tab" href="/messages"><span class="icon fontawesome-envelope scnd-font-color"></span>Messages</a>
+                <a class="header-menu-tab" href="/messagesForAdmin"><span class="icon fontawesome-envelope scnd-font-color"></span>Messages</a>
                 <a class="header-menu-number" href="#4">${newMessage}</a>
             </li>
 
             <li>
                 <a class="header-menu-tab" href="/requests"><span class="icon fontawesome-star-empty scnd-font-color"></span>Request</a>
-                <a class="header-menu-number" href="#4">${newRequest}</a>
+                <a class="header-menu-number" href="#4"></a>
             </li>
             <%--<li>--%>
             <%--<a class="header-menu-tab" href="#5"><span class="icon fontawesome-star-empty scnd-font-color"></span>Favorites</a>--%>
@@ -54,15 +54,15 @@
             </li>
         </ul>
         <div class="profile-menu">
-            <p>
-                <a href="/userPage">
-                <span class="scnd-font-color">
-                    <span class="profile-picture small-profile-picture">
-                    <img width="40px" alt="${user.name}" src="/getPic?filename=${user.picture}">
-                    </span>
-                </span>
-                </a>
-            </p>
+            <%--<p>--%>
+                <%--<a href="/userPage">--%>
+                <%--<span class="scnd-font-color">--%>
+                    <%--<span class="profile-picture small-profile-picture">--%>
+                    <%--<img width="40px" alt="${user.name}" src="/getPic?filename=${user.picture}">--%>
+                    <%--</span>--%>
+                <%--</span>--%>
+                <%--</a>--%>
+            <%--</p>--%>
         </div>
     </header>
 
@@ -158,13 +158,13 @@
 </div> <!-- end main-container -->
 
 
-<script
-        src="http://code.jquery.com/jquery-3.3.1.min.js"
-        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-        crossorigin="anonymous">
+<%--<script--%>
+        <%--src="http://code.jquery.com/jquery-3.3.1.min.js"--%>
+        <%--integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="--%>
+        <%--crossorigin="anonymous">--%>
 
-</script>
-<script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
+<%--</script>--%>
+<%--<script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>--%>
 <script src="../front/userpage/css/index.js"></script>
 
 <script>

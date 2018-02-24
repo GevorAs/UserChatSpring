@@ -47,9 +47,9 @@ $("#status-options ul li").click(function() {
 //   newMessage();
 // });
 
-$(window).on('keydown', function(e) {
-  if (e.which == 13) {
-    newMessage();
-    return false;
-  }
-});
+// $(window).on('keydown', function(e) {
+//   if (e.which == 13) {
+//     // newMessage();
+//     return false;
+//   }
+// });

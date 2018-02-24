@@ -54,6 +54,8 @@ public class MessageController {
             }
 
         }
+
+
         map.addAttribute("emptyMessage", new Message());
         map.addAttribute("userFriends", userFriends);
         return "message";
@@ -65,12 +67,12 @@ public class MessageController {
         List<Message> chat = messageRepository.customGetMessagesByUserAndFriend(user.getId(), friendId);
         for (Message message : chat) {
             //----------timestamp i menak timen e vercrac---------
-            String timestamp = message.getTimestamp();
-            StringTokenizer tk = new StringTokenizer(timestamp);
-            String date = tk.nextToken();
-            String time = tk.nextToken();
-            String substring = time.substring(0, 8);
-            message.setTimestamp(substring);
+//            String timestamp = message.getTimestamp();
+//            StringTokenizer tk = new StringTokenizer(timestamp);
+//            String date = tk.nextToken();
+//            String time = tk.nextToken();
+//            String substring = time.substring(0, 8);
+//            message.setTimestamp(timestamp);
             //---------------------------------
             if ((message.getToId() == user.getId()) && message.getMessageStatus().equals(MessageStatus.NEW)) {
                 message.setMessageStatus(MessageStatus.OLD);
@@ -79,8 +81,6 @@ public class MessageController {
         }
         map.addAttribute("chat", chat);
 
-        //----------SIK XRKAC E getFriendProfileMessage() metodic--------------
-//        map.addAttribute("friendIdForMessage", userRepository.getOne(friendId));
         return "messageAjax";
     }
 
@@ -140,4 +140,8 @@ public class MessageController {
         map.addAttribute("friendIdForMessage", one);
         return "friendProfileMessage";
     }
+
+
+
+
 }

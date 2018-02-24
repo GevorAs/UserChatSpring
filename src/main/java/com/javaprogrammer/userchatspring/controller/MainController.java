@@ -29,10 +29,14 @@ public class MainController {
     @Autowired
     private UserRepository userRepository;
 
+
+
     @Value("${pic.path}")
     private String nkar;
     @Value("${file.path}")
     private String filePath;
+    @Value("${user.pictures}")
+    private String userPicPath;
 
 
 
@@ -64,7 +68,20 @@ public class MainController {
 
         }
 
-    } @GetMapping(value = "/getFile")
+    }
+
+    @GetMapping(value = "/getUserPic")
+    public void getUserPic(HttpServletResponse response, @RequestParam("filename") String filename) {
+        try (InputStream inputStream = new FileInputStream(userPicPath + filename)) {
+            response.setContentType(MediaType.ALL_VALUE);
+            IOUtils.copy(inputStream, response.getOutputStream());
+        }catch (IOException e){
+
+        }
+
+    }
+
+    @GetMapping(value = "/getFile")
     public void getFile(HttpServletResponse response, @RequestParam("filename") String filename) {
         try (InputStream inputStream = new FileInputStream(filePath + filename)) {
             response.setContentType(MediaType.ALL_VALUE);
@@ -85,7 +102,7 @@ public class MainController {
             if (nameStrArr.length == 1) {
                 List<User> users = userRepository.customFindUsersbyNameOrSurname(nameStrArr[0], " ");
                 for (User user1 : users) {
-                    if (user1.getActiveStatus().equals(ActiveStatus.ACTIVE)) {
+                    if (user1.getActiveStatus().equals(ActiveStatus.ACTIVE)&&user1.getUserType()!=UserType.ADMIN) {
                         customFindUsersbyNameOrSurname.add(user1);
                     }
                 }
@@ -105,8 +122,11 @@ public class MainController {
                 customFindUsersbyNameOrSurname = userRepository.customFindUsersbyNameOrSurname(nameStrArr[0], nameStrArr[1]);
             }
         }
-
         map.addAttribute("search", customFindUsersbyNameOrSurname);
+
+        if(user.getUserType()==UserType.ADMIN){
+            return "searchForAdmin";
+        }
         return "searchUsers";
 
     }

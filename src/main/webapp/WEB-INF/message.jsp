@@ -11,6 +11,8 @@
     <link rel='stylesheet prefetch'
           href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.2/css/font-awesome.min.css'>
     <link rel="stylesheet" href="../front/chat/css/style.css">
+
+    <script src="../front/jquery-3.3.1.min.js"></script>
 </head>
 <body>
 <div id="frame">
@@ -23,24 +25,24 @@
                 <p> ${user.name} ${user.surname}</p>
                 <%--<i class="fa fa-chevron-down expand-button" aria-hidden="true"></i>--%>
                 <%--<div id="status-options">--%>
-                    <%--<ul>--%>
-                        <%--<li id="status-online" class="active"><span class="status-circle"></span>--%>
-                            <%--<p>Online</p></li>--%>
-                        <%--<li id="status-away"><span class="status-circle"></span>--%>
-                            <%--<p>Away</p></li>--%>
-                        <%--<li id="status-busy"><span class="status-circle"></span>--%>
-                            <%--<p>Busy</p></li>--%>
-                        <%--<li id="status-offline"><span class="status-circle"></span>--%>
-                            <%--<p>Offline</p></li>--%>
-                    <%--</ul>--%>
+                <%--<ul>--%>
+                <%--<li id="status-online" class="active"><span class="status-circle"></span>--%>
+                <%--<p>Online</p></li>--%>
+                <%--<li id="status-away"><span class="status-circle"></span>--%>
+                <%--<p>Away</p></li>--%>
+                <%--<li id="status-busy"><span class="status-circle"></span>--%>
+                <%--<p>Busy</p></li>--%>
+                <%--<li id="status-offline"><span class="status-circle"></span>--%>
+                <%--<p>Offline</p></li>--%>
+                <%--</ul>--%>
                 <%--</div>--%>
                 <%--<div id="expanded">--%>
-                    <%--<label for="twitter"><i class="fa fa-facebook fa-fw" aria-hidden="true"></i></label>--%>
-                    <%--<input name="twitter" type="text" value="mikeross"/>--%>
-                    <%--<label for="twitter"><i class="fa fa-twitter fa-fw" aria-hidden="true"></i></label>--%>
-                    <%--<input name="twitter" type="text" value="ross81"/>--%>
-                    <%--<label for="twitter"><i class="fa fa-instagram fa-fw" aria-hidden="true"></i></label>--%>
-                    <%--<input name="twitter" type="text" value="mike.ross"/>--%>
+                <%--<label for="twitter"><i class="fa fa-facebook fa-fw" aria-hidden="true"></i></label>--%>
+                <%--<input name="twitter" type="text" value="mikeross"/>--%>
+                <%--<label for="twitter"><i class="fa fa-twitter fa-fw" aria-hidden="true"></i></label>--%>
+                <%--<input name="twitter" type="text" value="ross81"/>--%>
+                <%--<label for="twitter"><i class="fa fa-instagram fa-fw" aria-hidden="true"></i></label>--%>
+                <%--<input name="twitter" type="text" value="mike.ross"/>--%>
                 <%--</div>--%>
             </div>
         </div>
@@ -128,16 +130,19 @@
 
     </div>
 </div>
-<script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
+<%--<script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>--%>
 
 
 <script src="../front/chat/js/index.js"></script>
 <script>
     var x;
     var currentFriendId;
-    var id =${friendIdForMessage.id};
+    var id = ${friendIdForMessage.id};
     if (${friendIdForMessage.id!=""}) {
-        getMessages(id)
+
+        getMessages(id);
+        // getFriendProfile(id.id);
+
     }
 
     //   onclick   see messages the friend
@@ -145,7 +150,6 @@
         currentFriendId = id;
 
         getFriendProfile(id);
-
         if (x) {
             clearInterval(x);
             inter(id);
