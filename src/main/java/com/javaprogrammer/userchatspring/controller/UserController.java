@@ -3,14 +3,15 @@ package com.javaprogrammer.userchatspring.controller;
 import com.javaprogrammer.userchatspring.model.*;
 import com.javaprogrammer.userchatspring.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttribute;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -28,9 +29,13 @@ public class UserController {
     @Autowired
     private FriendRepository friendRepository;
     @Autowired
-    RequestRepository requestRepository;
+    private RequestRepository requestRepository;
     @Autowired
-    CommentRepository commentRepository;
+    private CommentRepository commentRepository;
+    @Autowired
+    private ImageRepository imageRepository;
+    @Value("${user.pictures}")
+    private String imagePath;
 
     @GetMapping(value = "/userPage")
     public String loginPageControler(ModelMap map, @SessionAttribute("user") User user) {
@@ -65,7 +70,7 @@ public class UserController {
     }
 
     @GetMapping(value = "/user")
-    public String goToOtherUserPage(@RequestParam("otherUserId") int id, ModelMap map) {
+    public String goToOtherUserPage(@RequestParam("otherUserId") int id, ModelMap map, @SessionAttribute("user") User user) {
         List<Post> allPostOtherUser = postRepository.findAllByUserId(id);
 
         List<Friend> friends = friendRepository.serchAllFriends(id);
@@ -84,6 +89,9 @@ public class UserController {
         map.addAttribute("allPostOtherUser", allPostOtherUser);
         map.addAttribute("otherUsersFriends", otherUsersFriends);
         map.addAttribute("friend", userRepository.getOne(id));
+        if (user.getUserType() == UserType.ADMIN) {
+            return "userForAdmin";
+        }
         return "user";
 
 
@@ -141,4 +149,6 @@ public class UserController {
         map.addAttribute("friendRequests", friendRequests);
         return "request";
     }
+
+
 }

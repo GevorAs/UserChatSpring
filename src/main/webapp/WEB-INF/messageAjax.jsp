@@ -16,7 +16,8 @@
                     </c:if>
                     <img src="/getPic?filename=${user.picture}" alt=""/>
                     <br>
-                    <span>${message.timestamp}</span><br>
+                    <span>${message.timestamp.substring(0,10)}</span><br>
+                    <span>${message.timestamp.substring(10,19)}</span><br>
                     <p>${message.text}</p>
                     <a href="/getFile?filename=${message.file}"
                        style="text-decoration: none">${ message.file.replaceAll("[0-9/_]","") }</a>
@@ -35,7 +36,8 @@
                     </c:if>
                     <img src="/getPic?filename=${friendIdForMessage.picture}" alt=""/>
                     <br>
-                    <span style="float: right">${message.timestamp}</span><br>
+                    <span style="float: right">${message.timestamp.substring(0,10)}</span><br>
+                    <span style="float: right">${message.timestamp.substring(10,19)}</span><br>
                     <p>${message.text}</p>
                     <a href="/getFile?filename=${ message.file}"
                        style="text-decoration: none">${ message.file.replaceAll("[0-9/_]","") }</a>

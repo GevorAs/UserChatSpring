@@ -1,0 +1,155 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,300,500);
+html,
+body {
+  display: table;
+  width: 100%;
+  height: 100%;
+  background: white;
+  font-family: Roboto;
+}
+
+#main-ctr {
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+}
+
+.main-ctr {
+  width: 480px;
+  margin: auto;
+  position: relative;
+}
+.main-ctr .post-form {
+  padding: 10px;
+  position: relative;
+  text-align: right;
+  border: 1px solid #ddd;
+  margin-bottom: 20px;
+  background: white;
+  -webkit-transform: rotateX(0deg);
+  -moz-transform: rotateX(0deg);
+  -ms-transform: rotateX(0deg);
+  -o-transform: rotateX(0deg);
+  transform: rotateX(0deg);
+  -webkit-transform-origin: "center center";
+  -moz-transform-origin: "center center";
+  -ms-transform-origin: "center center";
+  -o-transform-origin: "center center";
+  transform-origin: "center center";
+  transition: .3s all ease;
+  z-index: 99;
+  border-radius: 3px;
+}
+.main-ctr .post-form:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.25);
+  border-radius: 3px;
+  pointer-events: none;
+  opacity: .25;
+}
+.main-ctr .post-form > img {
+  width: 50px;
+  display: block;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+}
+.main-ctr .post-form > .content {
+  padding-left: 60px;
+  box-sizing: border-box;
+}
+.main-ctr .post-form > .content textarea {
+  width: 100%;
+  padding: 10px 0;
+  margin-right: 10px;
+  font-size: 16px;
+  box-sizing: border-box;
+  min-height: 50px;
+  -webkit-appearance: none;
+  line-height: 1.5;
+  margin: 0;
+  border: none;
+  border-bottom: 1px solid #ddd;
+  font-weight: 300;
+  transition: .3s all ease;
+}
+.main-ctr .post-form > .content textarea:focus {
+  outline: none;
+  border-color: #4285f4;
+}
+.main-ctr .post-form > .content [type="submit"] {
+  padding: 7.5px 20px;
+  border-radius: 3px;
+  background: #4285f4;
+  margin-top: 8px;
+  border: none;
+  color: white;
+  cursor: pointer;
+  letter-spacing: 1px;
+  transition: .3s all ease;
+}
+.main-ctr .post-form > .content [type="submit"]:hover {
+  background: #0d5bdd;
+}
+.main-ctr .post-form > .content [type="submit"]:focus {
+  outline: none;
+}
+.main-ctr .post-form > .content [type="submit"].not-active {
+  pointer-events: none;
+  opacity: .5;
+}
+.main-ctr .post-ctr .post {
+  min-height: 45px;
+  background: #fff;
+  padding: 10px;
+  position: relative;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  transition: .3s all ease;
+  text-align: left;
+  -webkit-transform: translateY(-100px);
+  -moz-transform: translateY(-100px);
+  -ms-transform: translateY(-100px);
+  -o-transform: translateY(-100px);
+  transform: translateY(-100px);
+}
+.main-ctr .post-ctr .post.glance {
+  -webkit-transform: translateY(-76px) scale(0.95);
+  -moz-transform: translateY(-76px) scale(0.95);
+  -ms-transform: translateY(-76px) scale(0.95);
+  -o-transform: translateY(-76px) scale(0.95);
+  transform: translateY(-76px) scale(0.95);
+}
+.main-ctr .post-ctr .post > img {
+  width: 45px;
+  display: block;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+}
+.main-ctr .post-ctr .post > .content {
+  padding-left: 55px;
+  box-sizing: border-box;
+}
+.main-ctr .post-ctr .post > .content span {
+  text-align: left;
+  font-size: 14px;
+}
+.main-ctr .post-ctr .post > .content span.username {
+  color: #4285f4;
+}
+.main-ctr .post-ctr .post > .content span.date {
+  color: #999;
+  font-weight: 300;
+}
+.main-ctr .post-ctr .post > .content .post-status {
+  line-height: 1.5;
+  padding: 2.5px 0;
+  color: #777;
+  font-weight: 300;
+}
