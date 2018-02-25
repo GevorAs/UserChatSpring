@@ -18,6 +18,12 @@
     <%--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">--%>
 
 
+
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
 
     <style>
@@ -83,10 +89,16 @@
 
                         <a href="/likeForPost?postId=${onePost.id}&postUserId=${onePost.user.id}">Like <span
                                 style="color: #14d921; font-weight:500;font-size: 25px"><span
+
                                 style="font-size: 20px">${onePost.likeCount}</span> &#128077</span></a>
                         <a href="/dislikeForPost?postId=${onePost.id}&postUserId=${onePost.user.id}"> Dislike <span
                                 style=" color: #f60707; font-weight:500;font-size: 25px"><span style="font-size: 20px">${onePost.dislikeCount}</span>
                             &#128078</span></a>
+
+                                style="font-size: 20px">${onePost.likeCount}<span class="glyphicon glyphicon-star"></span></a>
+                        <a href="/dislikeForPost?postId=${onePost.id}&postUserId=${onePost.user.id}"> Dislike <span
+                                style=" color: #f60707; font-weight:500;font-size: 25px"><span style="font-size: 20px">${onePost.dislikeCount} <span class="glyphicon glyphicon-star-empty"></span></a>
+
 
                     </div>
                     <div class="post-content-box">

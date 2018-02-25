@@ -17,6 +17,12 @@
     <link rel="stylesheet" href="../nkrner/css/style.css">
 
 
+  
+
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script
 </head>
 <body>
 
@@ -61,10 +67,17 @@
                                                                                          src="/getUserPic?filename=${im.picture}"
                                                                                          width="400"/></a>
                 <a href="/likeForImage?imageId=${im.id}&otherUser=${im.user.id}"><span
+
                         style="float:left;color: #14d921; font-weight:500;font-size: 35px">&#128077 ${im.likeCount}</span></a>
 
                 <a href="/dislikeForImage?imageId=${im.id}&otherUser=${im.user.id}"><span
                         style="float: right; color: #f60707; font-weight:500;font-size: 35px">${im.dislikeCount} &#128078</span></a>
+
+                        style="float:left;color: #14d921; font-weight:500;font-size: 35px"><span class="glyphicon glyphicon-star"></span>${im.likeCount}</span></a>
+
+                <a href="/dislikeForImage?imageId=${im.id}&otherUser=${im.user.id}"><span
+                        style="float: right; color: #f60707; font-weight:500;font-size: 35px">${im.dislikeCount} <span class="glyphicon glyphicon-star-empty"></span></span></a>
+
             </div>
 
         </c:forEach>
