@@ -8,7 +8,7 @@
 
 <html>
 <head>
-    <base target="_blank">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Add Post</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -166,7 +166,7 @@
 </html>
 
 
-<script src="js/index.js"></script>
+<script src="../past_form/js/index.js"></script>
 
 
 </body>

@@ -17,6 +17,8 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.validation.Valid;
 import java.io.File;
 import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
 
 @Controller
 @SessionAttributes("user")
@@ -42,6 +44,23 @@ public class LoginRegisterController {
             user.setUserStatus(UserStatus.OFFLINE);
             userRepository.save(user);
         }
+
+
+
+
+//        for (int i = 0; i <100 ; i++) {
+//            User user = new User();
+//            user.setName("Anun" + i);
+//            user.setSurname("Azganunyan" +i);
+//            user.setEmail("anun@mail.ru" +i);
+//            user.setPassword("1");
+//            user.setUserType(UserType.USER);
+//            user.setActiveStatus(ActiveStatus.ACTIVE);
+//            user.setUserStatus(UserStatus.OFFLINE);
+//            user.setPicture("1519505157993p.jpg");
+//            userRepository.save(user);
+//        }
+
         User user = userRepository.getByEmailAndPassword(email, password);
         if (user != null && user.getId() != 0) {
             user.setUserStatus(UserStatus.ONLINE);

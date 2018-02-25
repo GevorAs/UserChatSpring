@@ -71,30 +71,36 @@ public class UserController {
 
     @GetMapping(value = "/user")
     public String goToOtherUserPage(@RequestParam("otherUserId") int id, ModelMap map, @SessionAttribute("user") User user) {
-        List<Post> allPostOtherUser = postRepository.findAllByUserId(id);
+        if (!(id == user.getId())) {
 
-        List<Friend> friends = friendRepository.serchAllFriends(id);
-        List<User> otherUsersFriends = new LinkedList<>();
-        for (Friend friend : friends) {
-            if (friend.getFriendId() == id) {
-                User one = userRepository.getOne(friend.getUserId());
-                otherUsersFriends.add(one);
-            } else {
-                User one = userRepository.getOne(friend.getFriendId());
-                otherUsersFriends.add(one);
+            List<Post> allPostOtherUser = postRepository.findAllByUserId(id);
+            List<Friend> friends = friendRepository.serchAllFriends(id);
+            List<User> otherUsersFriends = new LinkedList<>();
+            for (Friend friend : friends) {
+                if(friend.getFriendId()==user.getId()||friend.getUserId()==user.getId()){
+                    map.addAttribute("infoFriend","myFriend");
+                }
+                if (friend.getFriendId() == id) {
+
+                    User one = userRepository.getOne(friend.getUserId());
+                    otherUsersFriends.add(one);
+                } else {
+
+                    User one = userRepository.getOne(friend.getFriendId());
+                    otherUsersFriends.add(one);
+                }
+
             }
-
+            map.addAttribute("otherUser", userRepository.getOne(id));
+            map.addAttribute("allPostOtherUser", allPostOtherUser);
+            map.addAttribute("otherUsersFriends", otherUsersFriends);
+            map.addAttribute("friend", userRepository.getOne(id));
+            if (user.getUserType() == UserType.ADMIN) {
+                return "userForAdmin";
+            }
+            return "user";
         }
-        map.addAttribute("otherUser", userRepository.getOne(id));
-        map.addAttribute("allPostOtherUser", allPostOtherUser);
-        map.addAttribute("otherUsersFriends", otherUsersFriends);
-        map.addAttribute("friend", userRepository.getOne(id));
-        if (user.getUserType() == UserType.ADMIN) {
-            return "userForAdmin";
-        }
-        return "user";
-
-
+        return "redirect:/userPage";
     }
 
     @GetMapping("/sendRequest")
@@ -150,5 +156,13 @@ public class UserController {
         return "request";
     }
 
+
+    @GetMapping("/removeFriend")
+    public HttpServletResponse removeFriend(@RequestParam("friendForRemove")int id, HttpServletResponse response,@SessionAttribute("user")User user){
+
+//        friendRepository.deleteByFriechchfghfndIdAndUserId(user.getId(),id);
+
+        return response;
+    }
 
 }

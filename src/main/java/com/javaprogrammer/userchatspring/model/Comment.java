@@ -16,8 +16,8 @@ public class Comment {
     @Column
     @GeneratedValue
     private int id;
-    @Column(name = "user_id")
-    private int userId;
+    @ManyToOne
+    private User user;
     @Column(name = "post_id")
     private int postId;
     @Column

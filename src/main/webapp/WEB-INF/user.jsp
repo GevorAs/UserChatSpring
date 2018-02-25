@@ -110,8 +110,14 @@
     <!-- MIDDLE-CONTAINER -->
     <div class="middle-container container">
         <div class="profile block"> <!-- PROFILE (MIDDLE-CONTAINER) -->
+            <c:if test="${infoFriend.equals('myFriend')}">
+            <span onclick="removeFriend(${otherUser.id})"><a class="add-button" href="#"><span
+                    class="icon entypo-minus scnd-font-color"></span></a></span>
+            </c:if>
+            <c:if test="${!infoFriend.equals('myFriend')}">
             <span onclick="sendRequest()"><a class="add-button" href="#"><span
                     class="icon entypo-plus scnd-font-color"></span></a></span>
+            </c:if>
             <div class="profile-picture big-profile-picture clear">
                 <img width="150px" alt="${otherUser.name}"
                      src="/getPic?filename=${otherUser.picture}">
@@ -133,19 +139,13 @@
         </div>
 
         <div class="tweets block"> <!-- TWEETS (MIDDLE-CONTAINER) -->
-            <h2 class="titular"><span class="icon zocial-twitter"></span>LATEST TWEETS</h2>
-            <div class="tweet first">
-                <p>Ice-cream trucks only play music when out of ice-cream. Well played dad. On <a class="tweet-link"
-                                                                                                  href="#17">@Quora</a>
-                </p>
-                <p><a class="time-ago scnd-font-color" href="#18">3 minutes ago</a></p>
-            </div>
+            <h2 class="titular"><span class="icon zocial-twitter"></span>POSTS</h2>
 
 
             <c:forEach items="${allPostOtherUser}" var="post">
                 <div class="tweet">
                     <p>${post.text}
-                        <a class="tweet-link" href="fullPost">Full Post</a>
+                        <a class="tweet-link" href="/seePost?postId=${post.id}">Full Post</a>
                     </p>
                     <p class="scnd-font-color">${post.createdDate}</p>
                 </div>
@@ -221,6 +221,14 @@
     function sendRequest() {
         $.ajax({
             url: "/sendRequest",
+            success: function (result) {
+                $("#").html(result);
+            }
+        })
+    }
+    function removeFriend(id) {
+        $.ajax({
+            url: "/removeFriend?friendForRemove="+id,
             success: function (result) {
                 $("#").html(result);
             }
