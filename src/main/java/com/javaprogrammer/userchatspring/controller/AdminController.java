@@ -28,8 +28,6 @@ public class AdminController {
     @Autowired
     private MessageRepository messageRepository;
     @Autowired
-    private FriendRepository friendRepository;
-    @Autowired
     private RequestRepository requestRepository;
     @Autowired
     private CommentRepository commentRepository;

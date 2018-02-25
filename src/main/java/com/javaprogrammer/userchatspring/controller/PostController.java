@@ -2,6 +2,7 @@ package com.javaprogrammer.userchatspring.controller;
 
 
 import com.javaprogrammer.userchatspring.model.ActiveStatus;
+import com.javaprogrammer.userchatspring.model.Comment;
 import com.javaprogrammer.userchatspring.model.Post;
 import com.javaprogrammer.userchatspring.model.User;
 import com.javaprogrammer.userchatspring.repository.*;
@@ -57,21 +58,28 @@ public class PostController {
 
         if (!fileBool || !picBool) {
             if (!fileBool) {
-                String filename = System.currentTimeMillis() + "_" + multipartFile.getOriginalFilename();
-                File file = new File(filePath + filename);
-                multipartFile.transferTo(file);
-                post.setFile(filename);
-                post.setActiveStatus(ActiveStatus.ACTIVE);
-                post.setUser(user);
-                postRepository.save(post);
+
+
+
+                if(!multipartFile.getOriginalFilename().endsWith(".jpg")&&!multipartFile.getOriginalFilename().endsWith(".jpeg")&&!multipartFile.getOriginalFilename().endsWith(".png")) {
+                    String filename = System.currentTimeMillis() + "_" + multipartFile.getOriginalFilename();
+                    File file = new File(filePath + filename);
+                    multipartFile.transferTo(file);
+                    post.setFile(filename);
+                    post.setActiveStatus(ActiveStatus.ACTIVE);
+                    post.setUser(user);
+                    postRepository.save(post);
+                }
             } else {
-                String filename = System.currentTimeMillis() + "_" + multipartPic.getOriginalFilename();
-                File file = new File(nkar + filename);
-                multipartPic.transferTo(file);
-                post.setPicture(filename);
-                post.setActiveStatus(ActiveStatus.ACTIVE);
-                post.setUser(user);
-                postRepository.save(post);
+                if (multipartPic.getOriginalFilename().endsWith(".jpg")||multipartPic.getOriginalFilename().endsWith(".jpeg")||multipartPic.getOriginalFilename().endsWith(".png")) {
+                    String filename = System.currentTimeMillis() + "_" + multipartPic.getOriginalFilename();
+                    File file = new File(nkar + filename);
+                    multipartPic.transferTo(file);
+                    post.setPicture(filename);
+                    post.setActiveStatus(ActiveStatus.ACTIVE);
+                    post.setUser(user);
+                    postRepository.save(post);
+                }
             }
         } else if (!post.getText().equals("")) {
             post.setActiveStatus(ActiveStatus.ACTIVE);
@@ -88,6 +96,9 @@ public class PostController {
     public String seePost(@RequestParam("postId")int id,ModelMap map) {
 
         map.addAttribute("onePost", postRepository.getOne(id));
+        map.addAttribute("postComements", commentRepository.findAllByPostId(id));
+        map.addAttribute("commentCount", commentRepository.countByPostId(id));
+        map.addAttribute("emptyComment", new Comment());
         return "postPage";
 
     }
