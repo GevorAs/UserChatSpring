@@ -21,6 +21,14 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
 
     <style>
+        body {
+            background-color: #3c496a;
+        }
+
+        * {
+            text-align: center;
+        }
+
         .disclaimer {
             width: 480px;
             color: #646464;
@@ -40,17 +48,15 @@
     </style>
 </head>
 
-<body>
+<body style="background-color: #5b88b6 ">
 
 
-<div class="header-menu">
+<div class="header-menu" style="background-color: #1f253d">
     <nav>
-        <a href="#" class="main"><i class="fa fa-navicon"></i></a>
+        <%--<a href="#" class="main"><i class="fa fa-navicon"></i></a>--%>
         <ul class="menu">
-            <li><a href="#">home</a></li>
-            <li><a href="#">menu 1</a></li>
-            <li><a href="#">menu 2</a></li>
-            <li><a href="#">menu 3</a></li>
+            <li><a href="/userPage">HOME</a></li>
+            <li><a href="/logout">LOGOUT</a></li>
         </ul>
     </nav>
 </div>
@@ -61,7 +67,9 @@
 
             <article class="post-box">
                 <div class="post-content">
-                    <div class="post-title"><h2><a href="/user?otherUserId=${onePost.user.id}">${onePost.user.name.toUpperCase()} ${onePost.user.surname.toUpperCase()} POSTS</a></h2></div>
+                    <div class="post-title"><h2><a
+                            href="/user?otherUserId=${onePost.user.id}">${onePost.user.name.toUpperCase()} ${onePost.user.surname.toUpperCase()}
+                        POSTS</a></h2></div>
                     <div class="post-info">
                         <span><i class="fa fa-user"></i><a
                                 href="#"> ${onePost.user.name} ${onePost.user.surname}</a></span>
@@ -72,13 +80,34 @@
         <a href="#"> love </a>
       </span>
                         <span><i class="fa fa-comments"></i><a href="#"> ${commentCount} comments </a></span>
+
+                        <a href="/likeForPost?postId=${onePost.id}&postUserId=${onePost.user.id}">Like <span
+                                style="color: #14d921; font-weight:500;font-size: 25px"><span
+                                style="font-size: 20px">${onePost.likeCount}</span> &#128077</span></a>
+                        <a href="/dislikeForPost?postId=${onePost.id}&postUserId=${onePost.user.id}"> Dislike <span
+                                style=" color: #f60707; font-weight:500;font-size: 25px"><span style="font-size: 20px">${onePost.dislikeCount}</span>
+                            &#128078</span></a>
+
                     </div>
                     <div class="post-content-box">
                         <p>${onePost.text}</p>
-<c:if test="${onePost.picture!=null}">
-                        <p><img src="/getPic?filename=${onePost.picture}" alt="post img"/></p>
-</c:if>
-                        <p><a href="/getFile?filename=${onePost.file}">${onePost.file.replaceAll("[0-9/_]","")}</a></p>
+                        <c:if test="${onePost.picture!=null}">
+                            <p><img src="/getPic?filename=${onePost.picture}" alt="post img"
+                                    style="margin:0 auto; width: 50% "/></p>
+
+                        </c:if>
+                        <p>
+                            <c:if test="${onePost.file.endsWith('.mp4')}">
+                                <video width="500" height="300" controls>
+                                    <source src="/getFile?filename=${onePost.file}" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                            </c:if>
+                        </p>
+                        <c:if test="${!onePost.file.endsWith('.mp4')}">
+                            <p><a href="/getFile?filename=${onePost.file}">${onePost.file.replaceAll("[0-9/_]","")}</a>
+                            </p>
+                        </c:if>
                     </div>
                 </div>
 
@@ -96,13 +125,14 @@
                                     </div>
                                     <div class="commentmetadata">
                                         <c:if test="${comment.picture!=null}">
-                                        <a href="/getPic?filename=${comment.picture}" target="_blank"> <img src="/getPic?filename=${comment.picture}" style="width: 300px">
+                                        <a href="/getPic?filename=${comment.picture}" target="_blank"> <img
+                                                src="/getPic?filename=${comment.picture}" style="width: 300px">
 
-                                        </c:if>
-                                       </a>
+                                            </c:if>
+                                        </a>
                                         <div class="commenttext">
                                             <p>${comment.text}</p>
-                                            <%--<span class="reply"><a href="#" class="comment-reply-link">Reply</a></span>--%>
+                                                <%--<span class="reply"><a href="#" class="comment-reply-link">Reply</a></span>--%>
                                         </div>
                                         <a href="/getFile?filename=${comment.file}" target="_blank">${comment.file}</a>
                                     </div>
@@ -117,14 +147,15 @@
                 <div id="commentNew">
                     <div id="boxNew" class="box-New">
                         <h4 class="nc-title">New Comment</h4>
-                        <spring:form action="/addComment" id="commentform" method="post"  modelAttribute="emptyComment" enctype="multipart/form-data">
+                        <spring:form action="/addComment" id="commentform" method="post" modelAttribute="emptyComment"
+                                     enctype="multipart/form-data">
                             <%--${emptyComment.postId=onePost.id}--%>
                             <input type="hidden" value="${onePost.id}" name="po">
                             <div class="nc-form-fields">
                             </div>
                             <p id="comment_text_wrapper">
-                             <spring:textarea  path="text" id="comment_text" class="placeholder"
-                                               placeholder="Comment Text*" cols="45" rows="16" ></spring:textarea>
+                                <spring:textarea path="text" id="comment_text" class="placeholder"
+                                                 placeholder="Comment Text*" cols="45" rows="16"></spring:textarea>
                             </p>
                             <div class="row">
 

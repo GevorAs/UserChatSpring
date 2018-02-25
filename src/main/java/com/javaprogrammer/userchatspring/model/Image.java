@@ -25,5 +25,9 @@ public class Image {
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
     private ActiveStatus activeStatus;
+    @Column(name = "like_count")
+    private int likeCount;
+    @Column(name = "dislike_count")
+    private int dislikeCount;
 
 }

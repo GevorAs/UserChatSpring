@@ -34,6 +34,8 @@ public class UserController {
     private CommentRepository commentRepository;
     @Autowired
     private ImageRepository imageRepository;
+    @Autowired
+    LikeRepository likeRepository;
     @Value("${user.pictures}")
     private String imagePath;
 
@@ -48,10 +50,15 @@ public class UserController {
         if (messageRepository.countByToIdAndMessageStatus(user.getId(), MessageStatus.NEW) != 0) {
             newMessage = "" + messageRepository.countByToIdAndMessageStatus(user.getId(), MessageStatus.NEW);
         }
+        Integer like = likeRepository.countByUserIdAndLikeStatus(user.getId(), LikeStatus.LIKE);
+        Integer disLike = likeRepository.countByUserIdAndLikeStatus(user.getId(), LikeStatus.DISLIKE);
+        int rating=like-disLike;
+map.addAttribute("rating",rating);
         map.addAttribute("posts", postRepository.findAllByUserId(user.getId()));
         map.addAttribute("newMessage", newMessage);
         map.addAttribute("newRequest", newRequest);
         map.addAttribute("friendIdForMessage", new User());
+
 
 
         return "userPage";
@@ -77,8 +84,8 @@ public class UserController {
             List<Friend> friends = friendRepository.serchAllFriends(id);
             List<User> otherUsersFriends = new LinkedList<>();
             for (Friend friend : friends) {
-                if(friend.getFriendId()==user.getId()||friend.getUserId()==user.getId()){
-                    map.addAttribute("infoFriend","myFriend");
+                if (friend.getFriendId() == user.getId() || friend.getUserId() == user.getId()) {
+                    map.addAttribute("infoFriend", "myFriend");
                 }
                 if (friend.getFriendId() == id) {
 
@@ -158,10 +165,13 @@ public class UserController {
 
 
     @GetMapping("/removeFriend")
-    public HttpServletResponse removeFriend(@RequestParam("friendForRemove")int id, HttpServletResponse response,@SessionAttribute("user")User user){
+    public HttpServletResponse removeFriend(@RequestParam("friendForRemove") int id, HttpServletResponse response, @SessionAttribute("user") User user) {
 
-//        friendRepository.deleteByFriechchfghfndIdAndUserId(user.getId(),id);
+        Friend friend = friendRepository.customGetFriend(user.getId(), id);
+        if (friend!=null){
 
+            friendRepository.delete(friend);
+        }
         return response;
     }
 

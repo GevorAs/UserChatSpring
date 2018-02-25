@@ -13,7 +13,7 @@ public interface FriendRepository extends JpaRepository<Friend,Integer> {
     List<Friend> serchAllFriends(@Param(value = "id") int id);
         Friend findByFriendIdAndUserId(int friendId,int userId);
         Friend findByUserIdAndFriendId(int userId,int friendId);
-        @Query(value = "delete from friend where (friend_id=:friendId and user_id=:userId) or (friend_id=:userId and user_id=:frienId)")
-        void deleteByFriechchfghfndIdAndUserId(@Param(value = "friendId") int friendId,@Param(value = "userId") int userId);
+        @Query(value = "select * from friend where (friend_id=:fId and user_id=:uId) or (friend_id=:uId and user_id=:fId)",nativeQuery = true)
+        Friend customGetFriend(@Param(value = "fId") int friendId,@Param(value = "uId") int userId);
 
 }

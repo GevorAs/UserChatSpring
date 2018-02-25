@@ -30,5 +30,9 @@ public class Post {
     private ActiveStatus activeStatus;
     @Column(name = "created_date")
     private  String createdDate;
+    @Column(name = "like_count")
+    private int likeCount;
+    @Column(name = "dislike_count")
+    private int dislikeCount;
 
 }
