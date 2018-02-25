@@ -10,7 +10,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "like_posts")
+@Table(name = "Like_all")
 public class Like {
 
     @Id
@@ -19,6 +19,8 @@ public class Like {
     private int id;
     @Column(name = "post_id")
     private int postId;
+    @Column(name = "image_id")
+    private int imageId;
     @Column(name = "user_id")
     private int userId;
     @Column(name = "status_like")

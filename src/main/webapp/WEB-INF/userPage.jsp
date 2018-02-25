@@ -126,7 +126,7 @@
                 </p></a></li>
                 <li><a class="views" href="#41"><p><span class="icon fontawesome-eye-open scnd-font-color"></span>841
                 </p></a></li>
-                <li><a class="likes" href="#42"><p><span class="icon fontawesome-heart-empty scnd-font-color"></span>49
+                <li><a class="likes" href="#42"><p><span class="icon fontawesome-heart-empty scnd-font-color"></span>${rating}
                 </p></a></li>
             </ul>
         </div>

@@ -138,16 +138,16 @@
             </ul>
         </div>
 
-        <div class="tweets block"> <!-- TWEETS (MIDDLE-CONTAINER) -->
+        <div class="tweets block" style="overflow: scroll ;height: 500px" > <!-- TWEETS (MIDDLE-CONTAINER) -->
             <h2 class="titular"><span class="icon zocial-twitter"></span>POSTS</h2>
 
 
             <c:forEach items="${allPostOtherUser}" var="post">
-                <div class="tweet">
-                    <p>${post.text}
-                        <a class="tweet-link" href="/seePost?postId=${post.id}">Full Post</a>
+                <div class="tweet first">
+                    <p style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${post.text}
                     </p>
-                    <p class="scnd-font-color">${post.createdDate}</p>
+                    <p style="text-align: center"><a class="tweet-link" href="/seePost?postId=${post.id}">See post</a></p>
+                    <p style="text-align: center"><a class="time-ago scnd-font-color" href="#18">${post.createdDate}</a></p>
                 </div>
             </c:forEach>
         </div>

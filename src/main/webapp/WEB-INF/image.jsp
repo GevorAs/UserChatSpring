@@ -73,7 +73,7 @@
                                                                                          border="0"
                                                                                          height="300"
                                                                                          src="/getUserPic?filename=${im.picture}"
-                                                                                         width="400"/></a><a href="/deleteImage?id=${im.id}">Delete</a></div>
+                                                                                         width="400"/></a><a href="/deleteImage?id=${im.id}" style="font-weight: bold;color:red;font-size: 30px">&#10060</a></div>
         </c:forEach>
 
     </div>

@@ -59,8 +59,14 @@
                                                                                          border="0"
                                                                                          height="300"
                                                                                          src="/getUserPic?filename=${im.picture}"
-                                                                                         width="400"/></a><a
-                    href="#">heto kpoxenq</a></div>
+                                                                                         width="400"/></a>
+                <a href="/likeForImage?imageId=${im.id}&otherUser=${im.user.id}"><span
+                        style="float:left;color: #14d921; font-weight:500;font-size: 35px">&#128077 ${im.likeCount}</span></a>
+
+                <a href="/dislikeForImage?imageId=${im.id}&otherUser=${im.user.id}"><span
+                        style="float: right; color: #f60707; font-weight:500;font-size: 35px">${im.dislikeCount} &#128078</span></a>
+            </div>
+
         </c:forEach>
 
     </div>

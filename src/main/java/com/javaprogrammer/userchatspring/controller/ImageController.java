@@ -2,6 +2,7 @@ package com.javaprogrammer.userchatspring.controller;
 
 import com.javaprogrammer.userchatspring.model.ActiveStatus;
 import com.javaprogrammer.userchatspring.model.Image;
+import com.javaprogrammer.userchatspring.model.LikeStatus;
 import com.javaprogrammer.userchatspring.model.User;
 import com.javaprogrammer.userchatspring.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,8 @@ public class ImageController {
     private UserRepository userRepository;
     @Autowired
     private ImageRepository imageRepository;
+    @Autowired
+    private LikeRepository likeRepository;
     @Value("${user.pictures}")
     private String imagePath;
 
@@ -59,6 +62,8 @@ public class ImageController {
             Image image = new Image();
             image.setPicture(picName);
             image.setUser(user);
+            image.setLikeCount(0);
+            image.setDislikeCount(0);
             image.setActiveStatus(ActiveStatus.ACTIVE);
             imageRepository.save(image);
         }
@@ -82,6 +87,16 @@ public class ImageController {
         List<Image> imageList = imageRepository.findAllByUser(userRepository.getOne(id));
         List<Image> imageList1 = new LinkedList<>();
         for (Image image : imageList) {
+           Integer like = likeRepository.countByImageIdAndLikeStatus(image.getId(), LikeStatus.LIKE);
+
+
+                image.setLikeCount(like);
+
+            Integer disLike = likeRepository.countByImageIdAndLikeStatus(image.getId(), LikeStatus.DISLIKE);
+
+
+            image.setDislikeCount(disLike);
+
             if (image.getActiveStatus() == ActiveStatus.ACTIVE) {
                 imageList1.add(image);
             }
