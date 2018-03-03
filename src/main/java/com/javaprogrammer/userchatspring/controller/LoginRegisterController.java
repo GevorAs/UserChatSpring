@@ -1,5 +1,6 @@
 package com.javaprogrammer.userchatspring.controller;
 
+import com.javaprogrammer.userchatspring.Security.CurrentUser;
 import com.javaprogrammer.userchatspring.model.ActiveStatus;
 import com.javaprogrammer.userchatspring.model.User;
 import com.javaprogrammer.userchatspring.model.UserStatus;
@@ -7,6 +8,8 @@ import com.javaprogrammer.userchatspring.model.UserType;
 import com.javaprogrammer.userchatspring.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -28,55 +31,30 @@ public class LoginRegisterController {
 
     @Value("${pic.path}")
     private String nkar;
+  @Autowired
+    PasswordEncoder passwordEncoder;
 
 
-    @PostMapping(value = "/login")
 
-    public String login(@RequestParam("emailLogin") String email, @RequestParam("passwordLogin") String password, ModelMap map) {
-        if (email.equalsIgnoreCase("admin@admin.com") && !userRepository.existsByEmail("admin@admin.com")) {
-            User user = new User();
-            user.setName("Admin");
-            user.setSurname("Admin");
-            user.setEmail("admin@admin.com");
-            user.setPassword("admin");
-            user.setUserType(UserType.ADMIN);
-            user.setActiveStatus(ActiveStatus.DELETED);
-            user.setUserStatus(UserStatus.OFFLINE);
-            userRepository.save(user);
+    @GetMapping("/loginSuccess")
+    public String loginSucces(ModelMap map){
+        CurrentUser principal = (CurrentUser)
+                SecurityContextHolder.
+                        getContext().
+                        getAuthentication()
+                        .getPrincipal();
+
+        if (principal.getUser().getUserType()==UserType.ADMIN){
+            map.addAttribute("user",principal.getUser() );
+
+            return "redirect:/admin";
+
+        }else if (principal.getUser().getUserType()==UserType.USER){
+            map.addAttribute("user",principal.getUser() );
+            return "redirect:/userPage";
+
         }
-
-
-
-
-//        for (int i = 0; i <100 ; i++) {
-//            User user = new User();
-//            user.setName("Anun" + i);
-//            user.setSurname("Azganunyan" +i);
-//            user.setEmail("anun@mail.ru" +i);
-//            user.setPassword("1");
-//            user.setUserType(UserType.USER);
-//            user.setActiveStatus(ActiveStatus.ACTIVE);
-//            user.setUserStatus(UserStatus.OFFLINE);
-//            user.setPicture("1519505157993p.jpg");
-//            userRepository.save(user);
-//        }
-
-        User user = userRepository.getByEmailAndPassword(email, password);
-        if (user != null && user.getId() != 0) {
-            user.setUserStatus(UserStatus.ONLINE);
-            userRepository.save(user);
-            user.setPassword(null);
-            map.addAttribute("user", user);
-            if (user.getUserType().equals(UserType.ADMIN)) {
-                return "redirect:/admin";
-            } else if (user.getUserType().equals(UserType.MODERATOR) && !user.getActiveStatus().equals(ActiveStatus.DELETED)) {
-                return "redirect:/moderator";
-            } else if (!user.getActiveStatus().equals(ActiveStatus.DELETED)) {
-                return "redirect:/userPage";
-            }
-        }
-        return "redirect:/?message=" + "please input valid login or password";
-
+        return "redirect:/";
 
     }
 
@@ -96,7 +74,10 @@ public class LoginRegisterController {
             sb.append("this email already exist<br>");
 
             return "redirect:/?message=" + sb.toString();
-        } else if (!user.getPassword().matches(pattern)) {
+        } else
+//            if (!user.getPassword().matches(pattern))
+            if (false)
+            {
             String passwordValidStr;
             passwordValidStr = "Password will be<br>  -a digit must occur at least once<br>" +
                     "  - a lower case letter must occur at least once<br>" +
@@ -107,13 +88,16 @@ public class LoginRegisterController {
             sb.append(passwordValidStr);
             return "redirect:/?message=" + sb.toString();
         }
-        String picname = System.currentTimeMillis() + "_" + multipartFile.getOriginalFilename();
-        File file = new File(nkar + picname);
-        multipartFile.transferTo(file);
-        user.setUserStatus(UserStatus.ONLINE);
-        user.setActiveStatus(ActiveStatus.ACTIVE);
-        user.setUserType(UserType.USER);
-        user.setPicture(picname);
+        if (multipartFile.getOriginalFilename().endsWith(".jpg")) {
+            String picname = System.currentTimeMillis() + "_" + multipartFile.getOriginalFilename();
+            File file = new File(nkar + picname);
+            multipartFile.transferTo(file);
+            user.setPicture(picname);
+        }
+            user.setUserStatus(UserStatus.ONLINE);
+            user.setActiveStatus(ActiveStatus.ACTIVE);
+            user.setUserType(UserType.USER);
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
         user.setPassword(null);
         map.addAttribute("user", user);

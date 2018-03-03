@@ -17,7 +17,6 @@
     <link rel="stylesheet" href="../nkrner/css/style.css">
 
 
-
 </head>
 <body>
 
@@ -44,7 +43,6 @@
             <spring:form action="/saveImage" method="post" id="1111" enctype="multipart/form-data">
 
 
-
                 <button class="input-file">
                     <input type="file" id="file-input" name="userImage"/>
                     <label for="file-input">Choose File</label>
@@ -67,20 +65,23 @@
         <c:forEach items="${images}" var="im">
 
 
-            <div class="col-lg-3 col-md-4 col-xs-6 thumb"><a class="thumbnail"
-                                                             href="/getUserPic?filename=${im.picture}"
-                                                             data-lightbox="imgGLR"><img class="img-responsive"
-                                                                                         border="0"
-                                                                                         height="300"
-                                                                                         src="/getUserPic?filename=${im.picture}"
+        <div class="col-lg-3 col-md-4 col-xs-6 thumb"><a class="thumbnail"
+                                                         href="/getUserPic?filename=${im.picture}"
+                                                         data-lightbox="imgGLR"><img class="img-responsive"
+                                                                                     border="0"
+                                                                                     height="300"
+                                                                                     src="/getUserPic?filename=${im.picture}"
 
-                                                                                         width="400"/></a><a href="/deleteImage?id=${im.id}" style="font-weight: bold;color:red;font-size: 30px">&#10060</a></div>
+                                                                                     width="400"/></a>
+            <a href="/deleteImage?id=${im.id}" style="font-weight: bold;color:red;font-size: 30px"><span
+                    class="glyphicon glyphicon-remove"></span></a>&nbsp;
+            <span style="color: #14d921; font-weight:500;font-size: 35px"><span class="glyphicon glyphicon-star"></span>${im.likeCount}</span>
+            <span style="float: right; color: #f60707; font-weight:500;font-size: 35px">${im.dislikeCount} <span class="glyphicon glyphicon-star-empty"></span></span>
+        </div>
 
-                                                                                         width="400"/></a><a href="/deleteImage?id=${im.id}" style="font-weight: bold;color:red;font-size: 30px"><span class="glyphicon glyphicon-remove"></span></a></div>
+    </c:forEach>
 
-        </c:forEach>
-
-    </div>
+</div>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.8.2/js/lightbox-plus-jquery.min.js"></script>

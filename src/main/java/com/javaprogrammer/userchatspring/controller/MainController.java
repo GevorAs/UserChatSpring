@@ -9,6 +9,7 @@ import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,6 +31,9 @@ public class MainController {
     private UserRepository userRepository;
 
 
+    @Autowired
+    PasswordEncoder passwordEncoder;
+
 
     @Value("${pic.path}")
     private String nkar;
@@ -39,9 +43,9 @@ public class MainController {
     private String userPicPath;
 
 
-
     @GetMapping("/")
     public String loginPage(ModelMap map, @RequestParam(value = "message", required = false) String message) {
+
 
         map.addAttribute("userRegister", new User());
         map.addAttribute("message", message != null ? message : "");
@@ -50,11 +54,11 @@ public class MainController {
     }
 
     @GetMapping(value = "/logout")
-    public String logout(@SessionAttribute("user")User user,ModelMap map) {
+    public String logout(@SessionAttribute("user") User user, ModelMap map) {
         User one = userRepository.getOne(user.getId());
         one.setUserStatus(UserStatus.OFFLINE);
         userRepository.save(one);
-        map.addAttribute("user",new User());
+        map.addAttribute("user", new User());
         return "redirect:/";
 
     }
@@ -64,7 +68,7 @@ public class MainController {
         try (InputStream inputStream = new FileInputStream(nkar + filename)) {
             response.setContentType(MediaType.ALL_VALUE);
             IOUtils.copy(inputStream, response.getOutputStream());
-        }catch (IOException e){
+        } catch (IOException e) {
 
         }
 
@@ -75,7 +79,7 @@ public class MainController {
         try (InputStream inputStream = new FileInputStream(userPicPath + filename)) {
             response.setContentType(MediaType.ALL_VALUE);
             IOUtils.copy(inputStream, response.getOutputStream());
-        }catch (IOException e){
+        } catch (IOException e) {
 
         }
 
@@ -86,7 +90,7 @@ public class MainController {
         try (InputStream inputStream = new FileInputStream(filePath + filename)) {
             response.setContentType(MediaType.ALL_VALUE);
             IOUtils.copy(inputStream, response.getOutputStream());
-        }catch (IOException e){
+        } catch (IOException e) {
 
         }
 
@@ -94,7 +98,7 @@ public class MainController {
 
 
     @GetMapping(value = "/searchUser")
-    public String search(@RequestParam("userNameForSearch") String searchName, ModelMap map, @SessionAttribute("user")User user) {
+    public String search(@RequestParam("userNameForSearch") String searchName, ModelMap map, @SessionAttribute("user") User user) {
 
         List<User> customFindUsersbyNameOrSurname = new LinkedList<>();
         String[] nameStrArr = searchName.split(" ");
@@ -102,8 +106,10 @@ public class MainController {
             if (nameStrArr.length == 1) {
                 List<User> users = userRepository.customFindUsersbyNameOrSurname(nameStrArr[0], " ");
                 for (User user1 : users) {
-                    if (user1.getActiveStatus().equals(ActiveStatus.ACTIVE)&&user1.getUserType()!=UserType.ADMIN) {
-                        customFindUsersbyNameOrSurname.add(user1);
+                    if (user1.getActiveStatus().equals(ActiveStatus.ACTIVE) && user1.getUserType() != UserType.ADMIN) {
+                        if (!user1 .equals(user)) {
+                            customFindUsersbyNameOrSurname.add(user1);
+                        }
                     }
                 }
             } else if (nameStrArr.length == 2) {
@@ -111,7 +117,9 @@ public class MainController {
 
                 for (User user1 : users) {
                     if (user1.getActiveStatus().equals(ActiveStatus.ACTIVE)) {
-                        customFindUsersbyNameOrSurname.add(user1);
+                        if (!user1.equals(user)) {
+                            customFindUsersbyNameOrSurname.add(user1);
+                        }
                     }
                 }
             }
@@ -124,7 +132,7 @@ public class MainController {
         }
         map.addAttribute("search", customFindUsersbyNameOrSurname);
 
-        if(user.getUserType()==UserType.ADMIN){
+        if (user.getUserType() == UserType.ADMIN) {
             return "searchForAdmin";
         }
         return "searchUsers";

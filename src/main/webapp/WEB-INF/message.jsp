@@ -155,12 +155,13 @@
             inter(id);
             x = setInterval(function () {
                 inter(id)
-            }, 1000);
-        } else {
+            }, 3000);
+        }
+        else {
             inter(id);
             x = setInterval(function () {
                 inter(id)
-            }, 1000);
+            }, 3000);
         }
     }
 

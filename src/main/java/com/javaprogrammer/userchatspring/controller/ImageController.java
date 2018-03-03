@@ -40,7 +40,18 @@ public class ImageController {
         List<Image> imageList1 = new LinkedList<>();
         for (Image image : imageList) {
             if (image.getActiveStatus() == ActiveStatus.ACTIVE) {
+                Integer like = likeRepository.countByImageAndLikeStatus(image, LikeStatus.LIKE);
+
+
+                image.setLikeCount(like);
+
+                Integer disLike = likeRepository.countByImageAndLikeStatus(image, LikeStatus.DISLIKE);
+
+
+                image.setDislikeCount(disLike);
+
                 imageList1.add(image);
+
 
             }
         }
@@ -87,12 +98,12 @@ public class ImageController {
         List<Image> imageList = imageRepository.findAllByUser(userRepository.getOne(id));
         List<Image> imageList1 = new LinkedList<>();
         for (Image image : imageList) {
-           Integer like = likeRepository.countByImageIdAndLikeStatus(image.getId(), LikeStatus.LIKE);
+           Integer like = likeRepository.countByImageAndLikeStatus(image, LikeStatus.LIKE);
 
 
                 image.setLikeCount(like);
 
-            Integer disLike = likeRepository.countByImageIdAndLikeStatus(image.getId(), LikeStatus.DISLIKE);
+            Integer disLike = likeRepository.countByImageAndLikeStatus(image, LikeStatus.DISLIKE);
 
 
             image.setDislikeCount(disLike);

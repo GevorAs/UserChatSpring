@@ -82,21 +82,18 @@
                         <span><i class="fa fa-calendar"></i>${onePost.createdDate.substring(0,10)}</span>
                         <span><i class="fa fa-clock-o"></i> ${onePost.createdDate.substring(10,19)} </span>
                         <span><i class="fa fa-tags"></i>
-        <a href="#"> life </a>,
-        <a href="#"> love </a>
+                            <c:if test="${!onePost.user.equals(user)}">
+        <a href="/sharePostToUserPage?sharePostId=${onePost.id}">Share </a>,
+                            </c:if>
+       <span>Views ${postVisits}</span>
       </span>
                         <span><i class="fa fa-comments"></i><a href="#"> ${commentCount} comments </a></span>
 
-                        <a href="/likeForPost?postId=${onePost.id}&postUserId=${onePost.user.id}">Like <span
+                        <a href="/likeForPost?postId=${onePost.id}">Like <span
                                 style="color: #14d921; font-weight:500;font-size: 25px"><span
 
-                                style="font-size: 20px">${onePost.likeCount}</span> &#128077</span></a>
-                        <a href="/dislikeForPost?postId=${onePost.id}&postUserId=${onePost.user.id}"> Dislike <span
-                                style=" color: #f60707; font-weight:500;font-size: 25px"><span style="font-size: 20px">${onePost.dislikeCount}</span>
-                            &#128078</span></a>
-
                                 style="font-size: 20px">${onePost.likeCount}<span class="glyphicon glyphicon-star"></span></a>
-                        <a href="/dislikeForPost?postId=${onePost.id}&postUserId=${onePost.user.id}"> Dislike <span
+                        <a href="/dislikeForPost?postId=${onePost.id}"> Dislike <span
                                 style=" color: #f60707; font-weight:500;font-size: 25px"><span style="font-size: 20px">${onePost.dislikeCount} <span class="glyphicon glyphicon-star-empty"></span></a>
 
 

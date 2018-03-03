@@ -23,13 +23,13 @@
     <div class="login">
 
         <h1>LOGIN</h1>
-        <spring:form action="/login" method="post">
+        <spring:form action="/" method="post">
             <div class="group"><i class="fa fa-envelope" aria-hidden="true"></i>
-                <input type="text" id="email" placeholder="E-Mail" name="emailLogin"/>
+                <input type="text" id="email" placeholder="E-Mail" name="j_email"/>
                 <label for="email"></label>
             </div>
             <div class="group"><i class="fa fa-unlock-alt" aria-hidden="true"></i>
-                <input type="password" id="password" placeholder="Password" name="passwordLogin"/>
+                <input type="password" id="password" placeholder="Password" name="j_password"/>
                 <label for="password"></label>
             </div>
             <input type="submit" value="LOGIN"/>
