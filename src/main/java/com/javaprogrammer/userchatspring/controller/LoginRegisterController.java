@@ -1,5 +1,7 @@
 package com.javaprogrammer.userchatspring.controller;
 
+import com.javaprogrammer.userchatspring.Security.CurrentUser;
+import com.javaprogrammer.userchatspring.mail.EmailServiceImpl;
 import com.javaprogrammer.userchatspring.model.ActiveStatus;
 import com.javaprogrammer.userchatspring.model.User;
 import com.javaprogrammer.userchatspring.model.UserStatus;
@@ -7,6 +9,8 @@ import com.javaprogrammer.userchatspring.model.UserType;
 import com.javaprogrammer.userchatspring.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -28,58 +32,33 @@ public class LoginRegisterController {
 
     @Value("${pic.path}")
     private String nkar;
+    @Autowired
+    PasswordEncoder passwordEncoder;
+    @Autowired
+    EmailServiceImpl emailService;
 
 
-    @PostMapping(value = "/login")
+    @GetMapping("/loginSuccess")
+    public String loginSucces(ModelMap map) {
+        CurrentUser principal = (CurrentUser)
+                SecurityContextHolder.
+                        getContext().
+                        getAuthentication()
+                        .getPrincipal();
 
-    public String login(@RequestParam("emailLogin") String email, @RequestParam("passwordLogin") String password, ModelMap map) {
-        if (email.equalsIgnoreCase("admin@admin.com") && !userRepository.existsByEmail("admin@admin.com")) {
-            User user = new User();
-            user.setName("Admin");
-            user.setSurname("Admin");
-            user.setEmail("admin@admin.com");
-            user.setPassword("admin");
-            user.setUserType(UserType.ADMIN);
-            user.setActiveStatus(ActiveStatus.DELETED);
-            user.setUserStatus(UserStatus.OFFLINE);
-            userRepository.save(user);
+        if (principal.getUser().getUserType() == UserType.ADMIN) {
+            map.addAttribute("user", principal.getUser());
+
+            return "redirect:/admin";
+
+        } else if (principal.getUser().getUserType() == UserType.USER) {
+            map.addAttribute("user", principal.getUser());
+            return "redirect:/userPage";
+
         }
-
-
-
-
-//        for (int i = 0; i <100 ; i++) {
-//            User user = new User();
-//            user.setName("Anun" + i);
-//            user.setSurname("Azganunyan" +i);
-//            user.setEmail("anun@mail.ru" +i);
-//            user.setPassword("1");
-//            user.setUserType(UserType.USER);
-//            user.setActiveStatus(ActiveStatus.ACTIVE);
-//            user.setUserStatus(UserStatus.OFFLINE);
-//            user.setPicture("1519505157993p.jpg");
-//            userRepository.save(user);
-//        }
-
-        User user = userRepository.getByEmailAndPassword(email, password);
-        if (user != null && user.getId() != 0) {
-            user.setUserStatus(UserStatus.ONLINE);
-            userRepository.save(user);
-            user.setPassword(null);
-            map.addAttribute("user", user);
-            if (user.getUserType().equals(UserType.ADMIN)) {
-                return "redirect:/admin";
-            } else if (user.getUserType().equals(UserType.MODERATOR) && !user.getActiveStatus().equals(ActiveStatus.DELETED)) {
-                return "redirect:/moderator";
-            } else if (!user.getActiveStatus().equals(ActiveStatus.DELETED)) {
-                return "redirect:/userPage";
-            }
-        }
-        return "redirect:/?message=" + "please input valid login or password";
-
+        return "redirect:/";
 
     }
-
 
 
     @PostMapping("/register")
@@ -96,29 +75,51 @@ public class LoginRegisterController {
             sb.append("this email already exist<br>");
 
             return "redirect:/?message=" + sb.toString();
-        } else if (!user.getPassword().matches(pattern)) {
-            String passwordValidStr;
-            passwordValidStr = "Password will be<br>  -a digit must occur at least once<br>" +
-                    "  - a lower case letter must occur at least once<br>" +
-                    "  - an upper case letter must occur at least once<br>" +
-                    "  - a special character must occur at least once<br>" +
-                    "  - no whitespace allowed in the entire string<br>" +
-                    "  - anything, at least eight places though<br>";
-            sb.append(passwordValidStr);
-            return "redirect:/?message=" + sb.toString();
+        } else
+//            if (!user.getPassword().matches(pattern))
+            if (false) {
+                String passwordValidStr;
+                passwordValidStr = "Password will be<br>  -a digit must occur at least once<br>" +
+                        "  - a lower case letter must occur at least once<br>" +
+                        "  - an upper case letter must occur at least once<br>" +
+                        "  - a special character must occur at least once<br>" +
+                        "  - no whitespace allowed in the entire string<br>" +
+                        "  - anything, at least eight places though<br>";
+                sb.append(passwordValidStr);
+                return "redirect:/?message=" + sb.toString();
+            }
+        if (multipartFile.getOriginalFilename().endsWith(".jpg")) {
+            String picname = System.currentTimeMillis() + "_" + multipartFile.getOriginalFilename();
+            File file = new File(nkar + picname);
+            multipartFile.transferTo(file);
+            user.setPicture(picname);
         }
-        String picname = System.currentTimeMillis() + "_" + multipartFile.getOriginalFilename();
-        File file = new File(nkar + picname);
-        multipartFile.transferTo(file);
         user.setUserStatus(UserStatus.ONLINE);
         user.setActiveStatus(ActiveStatus.ACTIVE);
         user.setUserType(UserType.USER);
-        user.setPicture(picname);
+        user.setVerify(false);
         userRepository.save(user);
+        emailService.sendSimpleMessage(user.getEmail(), "verification",
+                String.format("http://localhost:8080/verification?email=%s", user.getEmail()));
         user.setPassword(null);
         map.addAttribute("user", user);
-        return "redirect:/userPage";
+        return "redirect:/";
 
     }
+
+    @GetMapping("/verification")
+    public String getVerification(@RequestParam("email") String email,ModelMap modelMap) {
+        User userByEmail = userRepository.findUserByEmail(email);
+        userByEmail.setVerify(true);
+        String pass=userByEmail.getPassword();
+        userByEmail.setPassword(passwordEncoder.encode(userByEmail.getPassword()));
+        userRepository.save(userByEmail);
+        modelMap.addAttribute("vEmail",userByEmail.getEmail());
+        modelMap.addAttribute("userRegister", new User());
+//
+        modelMap.addAttribute("vPassword",pass);
+        return "index";
+    }
+
 
 }

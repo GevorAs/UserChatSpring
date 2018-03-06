@@ -16,6 +16,10 @@
 
     <link rel="stylesheet" href="../nkrner/css/style.css">
 
+
+  
+
+
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -23,10 +27,6 @@
 <body>
 
 
-<spring:form action="/saveImage" method="post" id="1111" enctype="multipart/form-data">
-
-
-</spring:form>
 
 
 <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
@@ -62,11 +62,12 @@
                                                                                          height="300"
                                                                                          src="/getUserPic?filename=${im.picture}"
                                                                                          width="400"/></a>
-                <a href="/likeForImage?imageId=${im.id}&otherUser=${im.user.id}"><span
+                <a href="/likeForImage?imageId=${im.id}"><span
                         style="float:left;color: #14d921; font-weight:500;font-size: 35px"><span class="glyphicon glyphicon-star"></span>${im.likeCount}</span></a>
 
-                <a href="/dislikeForImage?imageId=${im.id}&otherUser=${im.user.id}"><span
-                        style="float: right; color: #f60707; font-weight:500;font-size: 35px">${im.dislikeCount} <span class="glyphicon glyphicon-star-empty"></span></span></a>
+                <a href="/dislikeForImage?imageId=${im.id}"><span
+                        style="float: right; color: #f60707; font-weight:500;font-size: 35px">${im.dislikeCount} <span class="glyphicon glyphicon-star-empty"></span></a>
+
             </div>
 
         </c:forEach>

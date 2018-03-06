@@ -129,10 +129,10 @@
                 <li><a class="comments" href="#40"><p><span class="icon fontawesome-comment-alt scnd-font-color"></span>23
                 </li>
                 </p></a>
-                <li><a class="views" href="#41"><p><span class="icon fontawesome-eye-open scnd-font-color"></span>841
+                <li><a class="views" href="#41"><p><span class="icon fontawesome-eye-open scnd-font-color"></span>${userVisit}
                 </li>
                 </p></a>
-                <li><a class="likes" href="#42"><p><span class="icon fontawesome-heart-empty scnd-font-color"></span>49
+                <li><a class="likes" href="#42"><p><span class="icon fontawesome-heart-empty scnd-font-color"></span>${rating}
                 </li>
                 </p></a>
             </ul>

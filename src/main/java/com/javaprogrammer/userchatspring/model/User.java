@@ -44,5 +44,6 @@ public class User {
     @Enumerated(EnumType.STRING)
     @Column(name = "status_active")
     private ActiveStatus activeStatus;
-
+    @Column
+    boolean verify;
 }

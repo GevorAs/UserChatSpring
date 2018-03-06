@@ -35,4 +35,14 @@ public class Post {
     @Column(name = "dislike_count")
     private int dislikeCount;
 
+    public Post(User user, String text, String file, String picture, ActiveStatus activeStatus, int likeCount, int dislikeCount) {
+        this.user = user;
+        this.text = text;
+        this.file = file;
+        this.picture = picture;
+        this.activeStatus = activeStatus;
+
+        this.likeCount = likeCount;
+        this.dislikeCount = dislikeCount;
+    }
 }

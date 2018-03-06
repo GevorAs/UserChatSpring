@@ -31,9 +31,9 @@ public class UserController {
     @Autowired
     private RequestRepository requestRepository;
     @Autowired
-    private CommentRepository commentRepository;
+    UserVisitRepo userVisitRepo;
     @Autowired
-    private ImageRepository imageRepository;
+    ImageRepository imageRepository;
     @Autowired
     LikeRepository likeRepository;
     @Value("${user.pictures}")
@@ -50,15 +50,25 @@ public class UserController {
         if (messageRepository.countByToIdAndMessageStatus(user.getId(), MessageStatus.NEW) != 0) {
             newMessage = "" + messageRepository.countByToIdAndMessageStatus(user.getId(), MessageStatus.NEW);
         }
-        Integer like = likeRepository.countByUserIdAndLikeStatus(user.getId(), LikeStatus.LIKE);
-        Integer disLike = likeRepository.countByUserIdAndLikeStatus(user.getId(), LikeStatus.DISLIKE);
-        int rating=like-disLike;
-map.addAttribute("rating",rating);
-        map.addAttribute("posts", postRepository.findAllByUserId(user.getId()));
+        int likeCount = 0;
+        int dislikeCount=0;
+        List<Post> postList = postRepository.findAllByUserId(user.getId());
+        List<Image> imageList = imageRepository.findAllByUser(user);
+        for (Post post : postList) {
+        likeCount+=likeRepository.countByPostAndLikeStatus(post, LikeStatus.LIKE);
+            dislikeCount+=likeRepository.countByPostAndLikeStatus(post, LikeStatus.DISLIKE);
+        }
+        for (Image image : imageList) {
+            likeCount+= likeRepository.countByImageAndLikeStatus(image,LikeStatus.LIKE);
+            dislikeCount+= likeRepository.countByImageAndLikeStatus(image,LikeStatus.DISLIKE);
+        }
+
+        map.addAttribute("rating", (likeCount-dislikeCount));
+        map.addAttribute("userVisit", userVisitRepo.countByUser(user));
+        map.addAttribute("posts", postList);
         map.addAttribute("newMessage", newMessage);
         map.addAttribute("newRequest", newRequest);
         map.addAttribute("friendIdForMessage", new User());
-
 
 
         return "userPage";
@@ -98,6 +108,23 @@ map.addAttribute("rating",rating);
                 }
 
             }
+            User otherUser = userRepository.findOne(id);
+            userVisitRepo.save(new UserVisit(otherUser));
+            int likeCount = 0;
+            int dislikeCount=0;
+            List<Post> postList = postRepository.findAllByUserId(id);
+            List<Image> imageList = imageRepository.findAllByUser(otherUser);
+            for (Post post : postList) {
+                likeCount+=likeRepository.countByPostAndLikeStatus(post, LikeStatus.LIKE);
+                dislikeCount+=likeRepository.countByPostAndLikeStatus(post, LikeStatus.DISLIKE);
+            }
+            for (Image image : imageList) {
+                likeCount+= likeRepository.countByImageAndLikeStatus(image,LikeStatus.LIKE);
+                dislikeCount+= likeRepository.countByImageAndLikeStatus(image,LikeStatus.DISLIKE);
+            }
+
+            map.addAttribute("rating", (likeCount-dislikeCount));
+            map.addAttribute("userVisit", userVisitRepo.countByUser(otherUser));
             map.addAttribute("otherUser", userRepository.getOne(id));
             map.addAttribute("allPostOtherUser", allPostOtherUser);
             map.addAttribute("otherUsersFriends", otherUsersFriends);
@@ -168,7 +195,7 @@ map.addAttribute("rating",rating);
     public HttpServletResponse removeFriend(@RequestParam("friendForRemove") int id, HttpServletResponse response, @SessionAttribute("user") User user) {
 
         Friend friend = friendRepository.customGetFriend(user.getId(), id);
-        if (friend!=null){
+        if (friend != null) {
 
             friendRepository.delete(friend);
         }

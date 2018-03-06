@@ -1,4 +1,5 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 
@@ -23,14 +24,14 @@
     <div class="login">
 
         <h1>LOGIN</h1>
-        <spring:form action="/login" method="post">
+        <spring:form action="/" method="post">
             <div class="group"><i class="fa fa-envelope" aria-hidden="true"></i>
-                <input type="text" id="email" placeholder="E-Mail" name="emailLogin"/>
-                <label for="email"></label>
+                <input type="text" id="vEmail" placeholder="E-Mail"  name="j_email"/>
+                <label for="vEmail"></label>
             </div>
             <div class="group"><i class="fa fa-unlock-alt" aria-hidden="true"></i>
-                <input type="password" id="password" placeholder="Password" name="passwordLogin"/>
-                <label for="password"></label>
+                <input type="password" id="vPassword" placeholder="Password" name="j_password"/>
+                <label for="vPassword"></label>
             </div>
             <input type="submit" value="LOGIN"/>
         </spring:form>
@@ -70,7 +71,13 @@
 
 
 </div>
+<script>
 
+document.getElementById("vEmail").value="${vEmail}"
+document.getElementById("vPassword").value="${vPassword}"
+
+
+</script>
 
 </body>
 

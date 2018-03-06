@@ -15,4 +15,7 @@ public interface UserRepository extends JpaRepository<User,Integer> {
     List<User> customFindUsersbyNameOrSurname(@Param("name") String name,@Param("surname") String surname);
 
     List<User> findAllByActiveStatus(ActiveStatus status);
+    User findUserByEmail(String email);
+
+
 }

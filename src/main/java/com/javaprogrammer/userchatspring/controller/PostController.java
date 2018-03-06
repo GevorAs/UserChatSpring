@@ -30,7 +30,8 @@ public class PostController {
     private ImageRepository imageRepository;
     @Autowired
     private LikeRepository likeRepository;
-
+    @Autowired
+    PostVisitRepo postVisitRepo;
 
     @Value("${pic.path}")
     private String nkar;
@@ -99,20 +100,36 @@ public class PostController {
     }
 
     @GetMapping("/seePost")
-    public String seePost(@RequestParam("postId") int id, ModelMap map) {
+    public String seePost(@RequestParam("postId") int id, ModelMap map, @SessionAttribute("user") User user) {
+
         Post post = postRepository.findOne(id);
 
-        Integer like = likeRepository.countByPostIdAndLikeStatus(id, LikeStatus.LIKE);
-        Integer disLike = likeRepository.countByPostIdAndLikeStatus(id, LikeStatus.DISLIKE);
+        if (user.getId() != post.getUser().getId()) {
+            postVisitRepo.save(new PostVisit(post));
+        }
+        Integer like = likeRepository.countByPostAndLikeStatus(post, LikeStatus.LIKE);
+        Integer disLike = likeRepository.countByPostAndLikeStatus(post, LikeStatus.DISLIKE);
         post.setDislikeCount(disLike);
         post.setLikeCount(like);
         map.addAttribute("onePost", post);
         map.addAttribute("postComements", commentRepository.findAllByPostId(id));
         map.addAttribute("commentCount", commentRepository.countByPostId(id));
         map.addAttribute("emptyComment", new Comment());
+        map.addAttribute("postVisits", postVisitRepo.countByPost(post));
 
         return "postPage";
 
+    }
+
+
+    @GetMapping("/sharePostToUserPage")
+
+    public String sharePost(@RequestParam("sharePostId") int postId, @SessionAttribute("user") User user, ModelMap map) {
+        Post sharePost = postRepository.findOne(postId);
+
+        postRepository.save(new Post(user,sharePost.getText(),sharePost.getFile(),sharePost.getPicture(),ActiveStatus.ACTIVE,0,0));
+        map.addAttribute("postId", postId);
+        return "redirect:/seePost";
     }
 
 

@@ -1,29 +1,29 @@
 package com.javaprogrammer.userchatspring.model;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
+@Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
-@Table(name = "Like_all")
-public class Like {
-
+@Table(name = "post_visit")
+public class PostVisit {
     @Id
-    @Column
     @GeneratedValue
+    @Column
     private int id;
     @ManyToOne
+    @NotNull
     private Post post;
-    @ManyToOne
-    private Image image;
-    @ManyToOne
-    private User user;
-    @Column(name = "status_like")
-    @Enumerated(EnumType.STRING)
-    private LikeStatus likeStatus;
+
+
+    public PostVisit(Post post) {
+        this.post = post;
+    }
 }

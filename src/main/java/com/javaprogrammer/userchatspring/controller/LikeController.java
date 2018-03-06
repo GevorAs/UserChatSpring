@@ -1,8 +1,6 @@
 package com.javaprogrammer.userchatspring.controller;
 
-import com.javaprogrammer.userchatspring.model.Like;
-import com.javaprogrammer.userchatspring.model.LikeStatus;
-import com.javaprogrammer.userchatspring.model.User;
+import com.javaprogrammer.userchatspring.model.*;
 import com.javaprogrammer.userchatspring.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -37,80 +35,85 @@ public class LikeController {
 
 
     @GetMapping("/likeForImage")
-    public String like(@RequestParam("imageId") int imageId, @SessionAttribute("user") User user, ModelMap map, @RequestParam("otherUser") int otherUser) {
+    public String like(@RequestParam("imageId") int imageId, @SessionAttribute("user") User user, ModelMap map) {
+        Image image = imageRepository.findOne(imageId);
 
-        Like byUserIdAndImageId = likeRepository.getByUserIdAndImageId(user.getId(), imageId);
+        Like byUserIdAndImageId = likeRepository.getByUserAndImage(user, image);
         if (byUserIdAndImageId != null) {
             byUserIdAndImageId.setLikeStatus(LikeStatus.LIKE);
             likeRepository.save(byUserIdAndImageId);
         } else {
             Like like = new Like();
-            like.setUserId(user.getId());
+            like.setUser(user);
             like.setLikeStatus(LikeStatus.LIKE);
-            like.setImageId(imageId);
+            like.setImage(image);
             likeRepository.save(like);
         }
 
-        map.addAttribute("otherUser", otherUser);
+        map.addAttribute("otherUser",image.getUser().getId());
         return "redirect:/guestImage";
 
     }
 
     @GetMapping("/dislikeForImage")
-    public String disLike(@RequestParam("imageId") int imageId, @SessionAttribute("user") User user, ModelMap map, @RequestParam("otherUser") int otherUser) {
-        Like byUserIdAndImageId = likeRepository.getByUserIdAndImageId(user.getId(), imageId);
+    public String disLike(@RequestParam("imageId") int imageId, @SessionAttribute("user") User user, ModelMap map) {
+        Image image = imageRepository.findOne(imageId);
+        Like byUserIdAndImageId = likeRepository.getByUserAndImage(user, image);
         if (byUserIdAndImageId != null) {
             byUserIdAndImageId.setLikeStatus(LikeStatus.DISLIKE);
             likeRepository.save(byUserIdAndImageId);
         } else {
             Like like = new Like();
-            like.setUserId(user.getId());
+            like.setUser(user);
             like.setLikeStatus(LikeStatus.DISLIKE);
-            like.setImageId(imageId);
+            like.setImage(image);
             likeRepository.save(like);
         }
-        map.addAttribute("otherUser", otherUser);
+        map.addAttribute("otherUser", image.getUser().getId());
         return "redirect:/guestImage";
 
     }
 
 
     @GetMapping("/likeForPost")
-    public String postLike(@RequestParam("postId") int postId, @SessionAttribute("user") User user, ModelMap map, @RequestParam("postUserId") int postUserId) {
+    public String postLike(@RequestParam("postId") int postId, @SessionAttribute("user") User user, ModelMap map) {
 
-        Like byUserIdAndPostId = likeRepository.getByUserIdAndPostId(user.getId(), postId);
+        Post post = postRepository.findOne(postId);
+        Like byUserIdAndPostId = likeRepository.getByUserAndPost(user, post);
 
 
         if (byUserIdAndPostId != null) {
-            byUserIdAndPostId.setLikeStatus(LikeStatus.LIKE);
+              byUserIdAndPostId.setLikeStatus(LikeStatus.LIKE);
             likeRepository.save(byUserIdAndPostId);
         } else {
             Like like = new Like();
-            like.setUserId(user.getId());
+            like.setUser(user);
             like.setLikeStatus(LikeStatus.LIKE);
-            like.setPostId(postId);
+            like.setPost(post);
             likeRepository.save(like);
         }
 
-        map.addAttribute("postId", postId);
+        map.addAttribute("postId", post.getId());
         return "redirect:/seePost";
 
     }
 
     @GetMapping("/dislikeForPost")
-    public String postDisLike(@RequestParam("postId") int postId, @SessionAttribute("user") User user, ModelMap map, @RequestParam("postUserId") int postUserId) {
-        Like byUserIdAndPostIdId = likeRepository.getByUserIdAndPostId(user.getId(), postId);
+    public String postDisLike(@RequestParam("postId") int postId, @SessionAttribute("user") User user, ModelMap map) {
+        Post post = postRepository.findOne(postId);
+
+        Like byUserIdAndPostIdId = likeRepository.getByUserAndPost(user, post);
         if (byUserIdAndPostIdId != null) {
             byUserIdAndPostIdId.setLikeStatus(LikeStatus.DISLIKE);
             likeRepository.save(byUserIdAndPostIdId);
         } else {
             Like like = new Like();
-            like.setUserId(user.getId());
+            like.setUser(user);
             like.setLikeStatus(LikeStatus.DISLIKE);
-            like.setPostId(postId);
+            like.setPost(post);
             likeRepository.save(like);
         }
-        map.addAttribute("postId", postId);
+        map.addAttribute("postId", post.getId());
         return "redirect:/seePost";
 
     }

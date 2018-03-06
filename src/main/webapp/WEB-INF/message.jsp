@@ -149,19 +149,21 @@
     function getMessages(id) {
         currentFriendId = id;
 
-        getFriendProfile(id);
+
         if (x) {
             clearInterval(x);
             inter(id);
             x = setInterval(function () {
                 inter(id)
-            }, 1000);
-        } else {
+            }, 3000);
+        }
+        else {
             inter(id);
             x = setInterval(function () {
                 inter(id)
-            }, 1000);
+            }, 3000);
         }
+        getFriendProfile(id);
     }
 
     //contact-profile in message

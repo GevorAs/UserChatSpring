@@ -5,25 +5,23 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
+@Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
-@Table(name = "Like_all")
-public class Like {
-
+@Table(name = "user_visit")
+public class UserVisit {
     @Id
-    @Column
     @GeneratedValue
+    @Column
     private int id;
     @ManyToOne
-    private Post post;
-    @ManyToOne
-    private Image image;
-    @ManyToOne
-    private User user;
-    @Column(name = "status_like")
-    @Enumerated(EnumType.STRING)
-    private LikeStatus likeStatus;
+    @NotNull
+   private User user;
+
+    public UserVisit(User user) {
+        this.user = user;
+    }
 }
