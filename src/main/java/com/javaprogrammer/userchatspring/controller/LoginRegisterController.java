@@ -1,6 +1,7 @@
 package com.javaprogrammer.userchatspring.controller;
 
 import com.javaprogrammer.userchatspring.Security.CurrentUser;
+import com.javaprogrammer.userchatspring.jwt.JwtTokenUtil;
 import com.javaprogrammer.userchatspring.mail.EmailServiceImpl;
 import com.javaprogrammer.userchatspring.model.ActiveStatus;
 import com.javaprogrammer.userchatspring.model.User;
@@ -10,6 +11,7 @@ import com.javaprogrammer.userchatspring.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -21,8 +23,6 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.validation.Valid;
 import java.io.File;
 import java.io.IOException;
-import java.util.LinkedList;
-import java.util.List;
 
 @Controller
 @SessionAttributes("user")
@@ -30,13 +30,16 @@ public class LoginRegisterController {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    UserDetailsService userDetailsService;
+    @Autowired
+    PasswordEncoder passwordEncoder;
     @Value("${pic.path}")
     private String nkar;
     @Autowired
-    PasswordEncoder passwordEncoder;
-    @Autowired
     EmailServiceImpl emailService;
-
+    @Autowired
+    JwtTokenUtil jwtTokenUtil;
 
     @GetMapping("/loginSuccess")
     public String loginSucces(ModelMap map) {
@@ -100,7 +103,7 @@ public class LoginRegisterController {
         user.setVerify(false);
         userRepository.save(user);
         emailService.sendSimpleMessage(user.getEmail(), "verification",
-                String.format("http://localhost:8080/verification?email=%s", user.getEmail()));
+                String.format("http://localhost:8080/verification?token=%s", jwtTokenUtil.generateToken(new CurrentUser(user))));
         user.setPassword(null);
         map.addAttribute("user", user);
         return "redirect:/";
@@ -108,16 +111,15 @@ public class LoginRegisterController {
     }
 
     @GetMapping("/verification")
-    public String getVerification(@RequestParam("email") String email,ModelMap modelMap) {
-        User userByEmail = userRepository.findUserByEmail(email);
+    public String getVerification(@RequestParam("token") String token, ModelMap modelMap) {
+        User userByEmail = userRepository.findUserByEmail(jwtTokenUtil.getUsernameFromToken(token));
         userByEmail.setVerify(true);
-        String pass=userByEmail.getPassword();
+        String pass = userByEmail.getPassword();
         userByEmail.setPassword(passwordEncoder.encode(userByEmail.getPassword()));
         userRepository.save(userByEmail);
-        modelMap.addAttribute("vEmail",userByEmail.getEmail());
+        modelMap.addAttribute("vEmail", userByEmail.getEmail());
         modelMap.addAttribute("userRegister", new User());
-//
-        modelMap.addAttribute("vPassword",pass);
+        modelMap.addAttribute("vPassword", pass);
         return "index";
     }
 
