@@ -1,6 +1,6 @@
 package com.javaprogrammer.userchatspring.jwt;
 
-import com.javaprogrammer.userchatspring.Security.CurrentUser;
+import com.javaprogrammer.userchatspring.security.CurrentUser;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

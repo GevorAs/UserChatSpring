@@ -1,4 +1,4 @@
-package com.javaprogrammer.userchatspring.Security;
+package com.javaprogrammer.userchatspring.security;
 
 import com.javaprogrammer.userchatspring.model.User;
 import com.javaprogrammer.userchatspring.repository.UserRepository;

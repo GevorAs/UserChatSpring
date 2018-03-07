@@ -1,6 +1,6 @@
 package com.javaprogrammer.userchatspring.controller;
 
-import com.javaprogrammer.userchatspring.Security.CurrentUser;
+import com.javaprogrammer.userchatspring.security.CurrentUser;
 import com.javaprogrammer.userchatspring.jwt.JwtTokenUtil;
 import com.javaprogrammer.userchatspring.mail.EmailServiceImpl;
 import com.javaprogrammer.userchatspring.model.ActiveStatus;
