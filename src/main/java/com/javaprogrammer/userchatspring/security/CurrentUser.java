@@ -1,4 +1,4 @@
-package com.javaprogrammer.userchatspring.security;
+package com.javaprogrammer.userchatspring.Security;
 
 import com.javaprogrammer.userchatspring.model.User;
 import org.springframework.security.core.authority.AuthorityUtils;

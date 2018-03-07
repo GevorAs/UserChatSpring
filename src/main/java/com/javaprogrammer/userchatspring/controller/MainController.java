@@ -43,6 +43,7 @@ public class MainController {
     private String userPicPath;
 
 
+
     @GetMapping("/")
     public String loginPage(ModelMap map, @RequestParam(value = "message", required = false) String message) {
 
@@ -54,11 +55,11 @@ public class MainController {
     }
 
     @GetMapping(value = "/logout")
-    public String logout(@SessionAttribute("user") User user, ModelMap map) {
+    public String logout(@SessionAttribute("user")User user,ModelMap map) {
         User one = userRepository.getOne(user.getId());
         one.setUserStatus(UserStatus.OFFLINE);
         userRepository.save(one);
-        map.addAttribute("user", new User());
+        map.addAttribute("user",new User());
         return "redirect:/";
 
     }
@@ -68,7 +69,7 @@ public class MainController {
         try (InputStream inputStream = new FileInputStream(nkar + filename)) {
             response.setContentType(MediaType.ALL_VALUE);
             IOUtils.copy(inputStream, response.getOutputStream());
-        } catch (IOException e) {
+        }catch (IOException e){
 
         }
 
@@ -79,7 +80,7 @@ public class MainController {
         try (InputStream inputStream = new FileInputStream(userPicPath + filename)) {
             response.setContentType(MediaType.ALL_VALUE);
             IOUtils.copy(inputStream, response.getOutputStream());
-        } catch (IOException e) {
+        }catch (IOException e){
 
         }
 
@@ -90,7 +91,7 @@ public class MainController {
         try (InputStream inputStream = new FileInputStream(filePath + filename)) {
             response.setContentType(MediaType.ALL_VALUE);
             IOUtils.copy(inputStream, response.getOutputStream());
-        } catch (IOException e) {
+        }catch (IOException e){
 
         }
 
@@ -98,7 +99,7 @@ public class MainController {
 
 
     @GetMapping(value = "/searchUser")
-    public String search(@RequestParam("userNameForSearch") String searchName, ModelMap map, @SessionAttribute("user") User user) {
+    public String search(@RequestParam("userNameForSearch") String searchName, ModelMap map, @SessionAttribute("user")User user) {
 
         List<User> customFindUsersbyNameOrSurname = new LinkedList<>();
         String[] nameStrArr = searchName.split(" ");

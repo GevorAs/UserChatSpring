@@ -39,7 +39,7 @@ public class UserController {
     @Value("${user.pictures}")
     private String imagePath;
 
-    @GetMapping(value = "/userPage")
+    @GetMapping("/userPage")
     public String loginPageControler(ModelMap map, @SessionAttribute("user") User user) {
         String newRequest = "";
         String newMessage = "";
