@@ -2,14 +2,19 @@ package com.javaprogrammer.userchatspring.controller;
 
 import com.javaprogrammer.userchatspring.model.*;
 import com.javaprogrammer.userchatspring.repository.*;
+import com.javaprogrammer.userchatspring.security.CurrentUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -36,8 +41,13 @@ public class UserController {
     ImageRepository imageRepository;
     @Autowired
     LikeRepository likeRepository;
+
+    @Autowired
+    PasswordEncoder passwordEncoder;
     @Value("${user.pictures}")
     private String imagePath;
+    @Value("${pic.path}")
+    private String nkar;
 
     @GetMapping("/userPage")
     public String loginPageControler(ModelMap map, @SessionAttribute("user") User user) {
@@ -51,19 +61,19 @@ public class UserController {
             newMessage = "" + messageRepository.countByToIdAndMessageStatus(user.getId(), MessageStatus.NEW);
         }
         int likeCount = 0;
-        int dislikeCount=0;
+        int dislikeCount = 0;
         List<Post> postList = postRepository.findAllByUserId(user.getId());
         List<Image> imageList = imageRepository.findAllByUser(user);
         for (Post post : postList) {
-        likeCount+=likeRepository.countByPostAndLikeStatus(post, LikeStatus.LIKE);
-            dislikeCount+=likeRepository.countByPostAndLikeStatus(post, LikeStatus.DISLIKE);
+            likeCount += likeRepository.countByPostAndLikeStatus(post, LikeStatus.LIKE);
+            dislikeCount += likeRepository.countByPostAndLikeStatus(post, LikeStatus.DISLIKE);
         }
         for (Image image : imageList) {
-            likeCount+= likeRepository.countByImageAndLikeStatus(image,LikeStatus.LIKE);
-            dislikeCount+= likeRepository.countByImageAndLikeStatus(image,LikeStatus.DISLIKE);
+            likeCount += likeRepository.countByImageAndLikeStatus(image, LikeStatus.LIKE);
+            dislikeCount += likeRepository.countByImageAndLikeStatus(image, LikeStatus.DISLIKE);
         }
 
-        map.addAttribute("rating", (likeCount-dislikeCount));
+        map.addAttribute("rating", (likeCount - dislikeCount));
         map.addAttribute("userVisit", userVisitRepo.countByUser(user));
         map.addAttribute("posts", postList);
         map.addAttribute("newMessage", newMessage);
@@ -111,19 +121,19 @@ public class UserController {
             User otherUser = userRepository.findOne(id);
             userVisitRepo.save(new UserVisit(otherUser));
             int likeCount = 0;
-            int dislikeCount=0;
+            int dislikeCount = 0;
             List<Post> postList = postRepository.findAllByUserId(id);
             List<Image> imageList = imageRepository.findAllByUser(otherUser);
             for (Post post : postList) {
-                likeCount+=likeRepository.countByPostAndLikeStatus(post, LikeStatus.LIKE);
-                dislikeCount+=likeRepository.countByPostAndLikeStatus(post, LikeStatus.DISLIKE);
+                likeCount += likeRepository.countByPostAndLikeStatus(post, LikeStatus.LIKE);
+                dislikeCount += likeRepository.countByPostAndLikeStatus(post, LikeStatus.DISLIKE);
             }
             for (Image image : imageList) {
-                likeCount+= likeRepository.countByImageAndLikeStatus(image,LikeStatus.LIKE);
-                dislikeCount+= likeRepository.countByImageAndLikeStatus(image,LikeStatus.DISLIKE);
+                likeCount += likeRepository.countByImageAndLikeStatus(image, LikeStatus.LIKE);
+                dislikeCount += likeRepository.countByImageAndLikeStatus(image, LikeStatus.DISLIKE);
             }
 
-            map.addAttribute("rating", (likeCount-dislikeCount));
+            map.addAttribute("rating", (likeCount - dislikeCount));
             map.addAttribute("userVisit", userVisitRepo.countByUser(otherUser));
             map.addAttribute("otherUser", userRepository.getOne(id));
             map.addAttribute("allPostOtherUser", allPostOtherUser);
@@ -201,5 +211,74 @@ public class UserController {
         }
         return response;
     }
+
+    @GetMapping("/settingPage")
+    public String goToSettingPage(ModelMap map, @RequestParam(value = "message", required = false) String message) {
+        map.addAttribute("upUser", new User());
+        map.addAttribute("message", message != null ? message : "");
+        return "settings";
+    }
+
+
+    @PostMapping("/updateUser")
+    public String registerUser(@Valid @ModelAttribute("upUser") User upUser,
+                               BindingResult result,
+                               @RequestParam("pic") MultipartFile multipartFile,
+                               ModelMap map,
+                               @RequestParam("oldPassword") String oldPassword,
+                               @SessionAttribute("user") User user) throws IOException {
+
+        if (multipartFile.getOriginalFilename().endsWith(".jpg")) {
+            String petqChe;
+            String picname = System.currentTimeMillis() + "_" + multipartFile.getOriginalFilename();
+            File file = new File(nkar + picname);
+            multipartFile.transferTo(file);
+            upUser.setPicture(picname);
+        }
+        user.setName(upUser.getName());
+        user.setSurname(upUser.getSurname());
+        user.setAge(upUser.getAge());
+        user.setCity(upUser.getCity());
+        if (upUser.getPicture() != null) {
+            user.setPicture(upUser.getPicture());
+        }
+        if (upUser.getPassword() != null && !upUser.getPassword().equals("")
+                & oldPassword != null && !oldPassword.equals("")) {
+            StringBuilder sb = new StringBuilder();
+            String pattern = "(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{8,}";
+
+            if (result.hasErrors()) {
+
+
+                if (!upUser.getPassword().matches(pattern))
+//            if (false)
+                {
+
+                    String passwordValidStr;
+                    passwordValidStr = "Password will be<br>  -a digit must occur at least once<br>" +
+                            "  - a lower case letter must occur at least once<br>" +
+                            "  - an upper case letter must occur at least once<br>" +
+                            "  - a special character must occur at least once<br>" +
+                            "  - no whitespace allowed in the entire string<br>" +
+                            "  - anything, at least eight places though<br>";
+                    sb.append(passwordValidStr);
+                    return "redirect:/settingPage?message=" + sb.toString();
+                }
+
+            }
+            boolean matches = passwordEncoder.matches(oldPassword, user.getPassword());
+            if (matches) {
+
+                user.setPassword(passwordEncoder.encode(upUser.getPassword()));
+            }
+        }
+
+
+        userRepository.save(user);
+
+        return "redirect:/userPage";
+
+    }
+
 
 }

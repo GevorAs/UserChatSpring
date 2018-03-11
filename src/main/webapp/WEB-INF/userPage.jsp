@@ -29,7 +29,7 @@
 
 
             <li>
-                <a class="header-menu-tab" href="#1"><span class="icon entypo-cog scnd-font-color"></span>Settings</a>
+                <a class="header-menu-tab" href="/settingPage"><span class="icon entypo-cog scnd-font-color"></span>Settings</a>
             </li>
 
             <li>
