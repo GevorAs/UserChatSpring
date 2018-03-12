@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="en" >
+
+<head>
+  <meta charset="UTF-8">
+  <title>post blog</title>
+  <script src="//s.codepen.io/assets/libs/modernizr.js" type="text/javascript"></script>
+
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+<link href="//fonts.googleapis.com/css?family=Lato:300|Lato:normal|Open+Sans:normal|Open+Sans:600&amp;subset=latin" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=Raleway:200,400,800|Clicker+Script" rel="stylesheet" type="text/css">
+  
+  
+      <style>
+      /* NOTE: The styles were added inline because Prefixfree needs access to your styles and they must be inlined if they are on local disk! */
+      html, body {
+  background-color: #F5F5F5;
+  color: #333;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 16px;
+  font-weight: normal;
+  margin: 0 auto;
+  padding: 0;
+}
+* {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  box-sizing: content-box;
+}
+::selection {background: #08C;color: #FFF;}
+::-webkit-selection {background: #08C;color: #FFF;}
+::-moz-selection {background: #08C;color: #FFF;}
+*, *:before, *:after { box-sizing: border-box }
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    vertical-align: baseline;
+}
+html { -webkit-font-smoothing: antialiased }
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section { display: block }
+ol, ul { list-style: none }
+blockquote, q { quotes: none }
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+article ol {
+  margin: 1.5em 0 1.571em 1.9em;
+  list-style-type: decimal;
+}
+button, input, select, textarea { margin: 0 }
+:focus { outline: 0 }
+img, video, object {
+    max-width: 100%;
+    height: auto!important;
+}
+iframe { max-width: 100% }
+blockquote {
+    font-weight: 600;
+    position: relative;
+    margin-top: 30px;
+    color: #A4A9B5;
+    border-top: 1px solid #EEE;
+    border-bottom: 1px solid #EEE;
+    margin-bottom: 30px;
+    padding: 30px 0 20px 0;
+    text-align: center;
+}
+blockquote p { margin-bottom: 10px }
+strong, b { font-weight: 600 }
+em, i, cite { font-style: italic }
+small { font-size: 100% }
+figure { margin: 10px 0 }
+code, pre {
+    font-weight: normal;
+    font-style: normal;
+}
+pre {
+    margin: 5px 0 20px 0;
+    line-height: 1.3em;
+    padding: 8px 10px;
+    overflow: auto;
+}
+code {
+    padding: 0 8px;
+    line-height: 1.5;
+}
+mark {
+    padding: 1px 6px;
+    margin: 0 2px;
+    color: black;
+    background: #FFF7A8;
+}
+address {
+    margin: 10px 0;
+    font-style: italic;
+}
+a {color: initial;text-decoration: none;}
+a:hover {color: #000;}
+img, .feed-content-box, .feed-readMore, .feed-load {width: 100%;}
+img {height: auto;}
+img, .feed-cover, .feed-load {display: block;}
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: #252525;
+    line-height: 1.4;
+}
+h1 { font-size: 36px }
+h2 { font-size: 32px }
+h3 { font-size: 28px }
+h4 { font-size: 24px }
+h5 { font-size: 20px }
+h6 { font-size: 16px }
+p { margin-bottom: 25px }
+a {
+    text-decoration: none;
+    color: inherit;
+    -webkit-transition: all 0.25s ease;
+    transition: all 0.25s ease;
+}
+a:hover { color: #45BDFF !important}
+a:link, a:visited, a:active { text-decoration: none }
+a#move-to-top {
+position: fixed;
+right: 25px;
+bottom: 25px;
+z-index: 25;
+width: 50px;
+font-size: 28px;
+line-height: 38px;
+text-align: center;
+color: #FFF;
+display: inline-block;
+-webkit-backface-visibility: hidden;
+border-radius: 5px;
+background: #45BDFF;
+background: -moz-linear-gradient(top, #45bdff 0%, #1d8ce0 100%);
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#45BDFF), color-stop(100%,#1D8CE0));
+background: -webkit-linear-gradient(top, #45BDFF 0%,#1D8CE0 100%);
+background: -o-linear-gradient(top, #45bdff 0%,#1d8ce0 100%);
+background: -ms-linear-gradient(top, #45bdff 0%,#1d8ce0 100%);
+background: linear-gradient(to bottom, #45BDFF 0%,#1D8CE0 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#45bdff', endColorstr='#1d8ce0',GradientType=0 );
+border: 1px solid #1C88DA;
+text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.15000000000000002);
+box-shadow: 0 1px 1px rgba(0, 0, 0, 0.12);
+}
+.wrapper {
+  height: initial;
+  margin: 120px auto 80px;
+  padding: 10px;
+  width: initial;
+}
+.page-main {
+  margin: 0 auto;
+  padding: 0;
+  text-align: center;
+}
+
+/*---------------------------------------
+/* Header CSS.
+/*--------------------------------------*/
+
+#header {
+  width: 100%;
+  height: auto;
+  overflow: hidden;
+  position: relative;
+}
+.header {
+  position: relative;
+  width: 100%;
+  background: #FBFBFB;
+  overflow: hidden;
+  background-size: cover;
+  background-position: center center;
+  z-index: 1;
+}
+.header {background-image: url('https://goo.gl/Pfs4wD');}
+.header-title {
+  position: absolute;
+  margin: 0;
+  padding: 0;
+  color: #F9F1E9;
+  text-align: center;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate3d(-50%,-50%,0);
+  transform: translate3d(-50%,-50%,0);
+}
+.header-title {
+  font-family: 'Clicker Script', cursive;
+  font-weight: normal;
+  font-size: 8em;
+  padding-left: 10px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+}
+.header-title::before {
+  content: '';
+  width: 20vw;
+  height: 20vw;
+  min-width: 3.5em;
+  min-height: 3.5em;
+  background-image: url('https://goo.gl/XTTGeH');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border-radius: 50%;
+  z-index: -1;
+  -webkit-transform: translate3d(-50%,-50%,0);
+  transform: translate3d(-50%,-50%,0);
+}
+
+/*---------------------------------------
+/* Menu Left Mobile CSS.
+/*--------------------------------------*/
+
+#mobile {
+  width: 50px;
+  height: 44px;
+  left: 20px;
+  top: 20px;
+  position: fixed;
+  z-index: 1000;
+  background: #FFF;
+  text-align: center;
+}
+#mobile .main {
+  position: relative;
+  left: 0;
+  line-height: 44px;
+}
+#mobil::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.15);
+  background-color: transparent;
+  border-radius: 5px;
+}
+#mobil::-webkit-scrollbar {
+  width: 6px;
+  background-color: transparent;
+}
+#mobil::-webkit-scrollbar-thumb {
+  background-color: rgba(255,255,255,0.25);
+  border-radius: 5px;
+}
+#mobil p {
+  height: 60px;
+  line-height: 60px;
+  padding: 15px 0;
+  vertical-align: middle;
+}
+#hide {
+  cursor: pointer;
+  line-height: 30px;
+  padding: 0;
+  position: relative;
+  width: 100%;
+}
+#hide > .fa {
+  font-size: 30px;
+  padding-right: 10px;
+}
+#hide > span {
+  font-family: 'Raleway', sans-serif;
+  font-weight: bold;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+#mobil {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  background: #151515;
+  margin-top: 0;
+  height: 100%;
+  overflow: auto;
+}
+#mobil > ul {
+  color: #BDF969;
+  margin: 0;
+  padding: 0;
+}
+#mobil ul > li {
+  line-height: 20px;
+  padding: 0.55em 0;
+}
+#mobil li > a > .fa {
+  font-size: .65em;
+  padding-right: 10px;
+}
+.submenu {
+  background: #050505;
+  height: initial;
+  margin: 20px 0;
+  position: relative;
+  width: initial;
+}
+.submenu {display: none;}
+.submenu {
+  color: #186364;
+  margin: 0;
+  padding: 20px;
+}
+.link {font-weight: bold;}
+.link .fa {font-weight: bold;}
+.submenu > li {
+  margin: 0;
+  padding: 0px 0px 10px !important;
+}
+.submenu > li > img {
+  border-radius: 3px;
+}
+.submenu > li > h3 {
+  color: #08c159;
+  font-family: 'Raleway';
+  font-size: 1.2em;
+  font-weight: 400;
+}
+.submenu > li > font {font-size: 15px;}
+.submenu > li > a > .fa {
+  font-size: 14px;
+  padding-left: 5px;
+}
+.open .link {color: #45BDFF;}
+.open a i.fa.fa-angle-down {
+  -webkit-transform: rotateX(180deg);
+  -moz-transform: rotateX(180deg);
+  transform: rotateX(180deg);
+}
+.link {
+  cursor: pointer;
+  font-family: 'Raleway', sans-serif;
+  font-size: 16px;
+  letter-spacing: 2px;
+  padding-right: 5px;
+  text-transform: uppercase;
+}
+.link .fa {
+  font-size: 20px !important;
+  padding-left: 15px;
+}
+a.main {
+  position: absolute;
+  left: 50px;
+  line-height: 60px;
+}
+
+/*--------------------------------------------------------
+/* Header Menu Linear Only Avalible to Screen > 992px
+/*------------------------------------------------------*/
+
+.header-menu {
+  background: #FEFEFE;
+  border-bottom: 1px solid #E1E1E1;
+  width: 100%;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 1em;
+  text-align: center;
+  padding: 1em 0;
+}
+.header-menu ul > li, .header-menu li > a {display: inline-block;}
+.header-menu li > a {
+  color: #566473;
+  padding: 16px 1.8em;
+  text-decoration: none;
+  letter-spacing: 1px;
+}
+
+/*---------------------------------------
+/* Arcticle Feed-box CSS
+/*--------------------------------------*/
+
+.feed-box {
+  position: relative;
+  margin-bottom: 40px;
+  background: #FFF;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+}
+.feed-cover {
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+}
+.feed-image img {
+  margin-bottom: 0;
+  width: 100%;
+  border-radius: 5px 5px 0 0;
+}
+.feed-cover .anim-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+.feed-cover .anim-wrapper .anim {
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+}
+.feed-image:hover .anim {opacity: 1;}
+.anim-wrapper:hover .anim {opacity: 1;}
+.anim {
+  opacity: 0;
+  -webkit-transition: opacity 400ms linear;
+  transition: opacity 400ms linear;
+}
+.feed-content {position: relative;}
+.feed-cover {position: relative;}
+.feed-info {
+  display: block;
+  width: 100%;
+  font-size: 13px;
+  padding: 0 20px 25px;
+  font-weight: 600;
+  color: #A4A9B5;
+}
+.feed-info a {color: inherit;}
+.feed-info > span {margin-right: 25px;}
+.feed-title {
+  padding: 20px 20px 10px;
+  margin-bottom: 0;
+  overflow: hidden;
+}
+.feed-content-box {
+  line-height: 28px;
+  padding: 0 20px 30px;
+}
+.feed-readMore {padding: 0 20px 25px;}
+
+/*---------------------------------------*/
+/* Article.post-box CSS.
+/*---------------------------------------*/
+
+.post-box {
+  position: relative;
+  margin-bottom: 40px;
+  background: #FFF;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+}
+.post-content {position: relative;}
+.post-info {
+  display: block;
+  width: 100%;
+  font-size: 13px;
+  padding: 0 20px 25px;
+  font-weight: 600;
+  color: #A4A9B5;
+  text-align: left !important;
+}
+.post-info a {color: inherit;}
+.post-info > span {margin-right: 25px;}
+.post-title {
+  padding: 20px 20px 10px;
+  margin-bottom: 0;
+  overflow: hidden;
+  text-align: left;
+}
+.post-content-box {
+  line-height: 28px;
+  padding: 0 20px 30px;
+  text-align: justify;
+}
+a.button {
+  padding: 5px 15px;
+  border-radius: 5px;
+  color: #FFF;
+  background: #45BDFF;
+  background: -moz-linear-gradient(top, #45bdff 0%, #1d8ce0 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#45BDFF), color-stop(100%,#1D8CE0));
+  background: -webkit-linear-gradient(top, #45BDFF 0%,#1D8CE0 100%);
+  background: -o-linear-gradient(top, #45bdff 0%,#1d8ce0 100%);
+  background: -ms-linear-gradient(top, #45bdff 0%,#1d8ce0 100%);
+  background: linear-gradient(to bottom, #45BDFF 0%,#1D8CE0 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#45bdff', endColorstr='#1d8ce0',GradientType=0 );
+  border: 1px solid #1C88DA;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.15000000000000002);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.12);
+}
+a.button:active {
+  padding: 5px 15px;
+  border-radius: 5px;
+  color: #FFF;
+  background: #45BDFF;
+  background: -moz-linear-gradient(top, #1d8ce0 0%, #45bdff 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#1D8CE0), color-stop(100%,#45BDFF));
+  background: -webkit-linear-gradient(top, #1D8CE0 0%,#45BDFF 100%);
+  background: -o-linear-gradient(top, #1d8ce0 0%,#45bdff 100%);
+  background: -ms-linear-gradient(top, #1d8ce0 0%,#45bdff 100%);
+  background: linear-gradient(to bottom,#1D8CE0  0%,#45BDFF 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#45bdff', endColorstr='#1d8ce0',GradientType=0 );
+  border: 1px solid #1C88DA;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.15000000000000002);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.12);  
+}
+.more-ptsa {
+  background: transparent;
+  *border-top: 1px solid #CCC;
+  color: #959595;
+  font-size: 18px;
+  padding: 0px 10px;
+  vertical-align: middle;
+}
+.more-ptsa span {
+  color: #757575;
+  font-size: 15px;
+  margin-right: 5px;
+}
+.more-ptsa a {
+  font-size: 15px;
+  margin: 0px 10px;
+  position: relative;
+  overflow: hidden;
+}
+.feed-load {
+  display: none;
+  margin: 40px 0 0 0;
+  text-align: center;
+}
+.feed-load a {
+  display: inline-block;
+  margin: 0 0 30px 0;
+  position: relative;
+  padding: 5px 20px;
+}
+.feed-load .fa {padding-right: 10px;}
+
+/*--------------------------------------
+/* Comments CSS.
+/*-------------------------------------*/
+#comments {
+  padding: 30px 20px 0 20px;
+  margin: 0;
+  width: 100%;
+}
+.nc-title {text-align: justify;}
+ol.commentlist {
+  width: 100%;
+  margin: 0;
+}
+.commentlist .children .comment > div {padding-left: 90px;}
+.commentlist li {
+  list-style: none;
+  padding: 20px 0 20px;
+  *float: left;
+  width: 100%;
+  position: relative;
+}
+.comment-author {
+  font-size: 13px;
+  font-weight: 600;
+  text-align: justify;
+}
+.commentmetadata {
+  overflow: hidden;
+  padding-top: 10px;
+  text-align: justify;
+}
+#comments img {width: 90px;}
+#comments .avatar {
+  float: left;
+  margin-right: 20px;
+  margin-top: 7px;
+  border-radius: 5px;
+}
+.commentlist p {margin-bottom: 5px;}
+.avatar {float: left;}
+.ago, .fn {margin-right: 15px;}
+.comment .fn {
+  color: #FC645F;
+  font-size: 16px;
+}
+.comment .ago {color: #A4A9B5;}
+.comment-meta {display: inline-block;}
+.reply a {font-weight: 600;}
+.reply {
+  font-size: 13px;
+  color: #A4A9B5;
+  text-align: left;
+}
+
+/*----------------------------------
+/* Comment New CSS - Form CSS.
+/*----------------------------------*/
+#commentNew {width: 100%;}
+#boxNew {
+  margin-top: -1px;
+  position: relative;
+}
+#boxNew  h4 {
+  margin-top: 20px;
+  padding: 0 20px;
+}
+#commentform {
+  width: 100%;
+  padding: 20px 20px 20px;
+  overflow: hidden;
+}
+#comment_text_wrapper {
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+.nc-form-fields,
+#comment_submit_wrapper {
+  width: 100%;
+  margin-right: 0;
+  margin-bottom: 0;
+}
+.nc-form-fields p {
+  margin-bottom: 10px;
+  width: 100%;
+}
+input, select, textarea {margin: 0;}
+input, textarea, select {
+  background-color: #FFF;
+  padding: 11px;
+  font-size: 13px;
+  font-family: inherit;
+  -webkit-transition: all 0.25s ease-in-out;
+  transition: all 0.25s ease-in-out;
+  border-radius: 5px;
+  border: 1px solid #D3D3D3;
+}
+input:focus, textarea:focus, select:focus {
+  background-color: #FFF;
+  border-color: #45BDFF;
+  color: #45BDFF;
+}
+input#comment_author,
+input#comment_authoremail,
+input#comment_authorurl {width: 100%;}
+.placeholder {color: #A5A5A5;}
+#commentform textarea {
+  width: 100%;
+  max-height: 160px;
+  line-height: 1.4;
+  border-radius: 4px;
+}
+textarea {
+  overflow: auto;
+  resize: vertical;
+}
+#commentform input#comment_submit {
+  color: #FFF;
+  font-size: 14px;
+  line-height: 1;
+  padding: 10px 22px;
+  text-decoration: none;
+  width: auto;
+  cursor: pointer;
+  display: block;
+  border-radius: 4px;
+  position: relative;
+  -webkit-transition: all 0.2s linear;
+  transition: all 0.2s linear;
+  background: #45BDFF;
+  background: -moz-linear-gradient(top, #45bdff 0%, #1d8ce0 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#45BDFF), color-stop(100%,#1D8CE0));
+  background: -webkit-linear-gradient(top, #45BDFF 0%,#1D8CE0 100%);
+  background: -o-linear-gradient(top, #45bdff 0%,#1d8ce0 100%);
+  background: -ms-linear-gradient(top, #45bdff 0%,#1d8ce0 100%);
+  background: linear-gradient(to bottom, #45BDFF 0%,#1D8CE0 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#45bdff', endColorstr='#1d8ce0',GradientType=0 );
+  border: 1px solid #1C88DA;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.15000000000000002);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.12);
+}
+
+/*-------------------------------------
+/* Footer CSS.
+/*------------------------------------*/
+
+footer {
+  background: #EEE;
+  border-top: 1px solid #DDD;
+  color: #888;
+  font-size: 20px;
+  padding: 20px 0 0;
+  text-align: center;
+}
+footer .row {
+  display: block;
+  padding: 20px;
+}
+footer .row {width: 100%;}
+#parallax {
+  position: relative;
+  padding-bottom: 39%;
+  height: 0;
+  overflow: hidden;
+  background-size: cover;
+  margin-bottom: 35px;
+  z-index: 1;
+}
+.visibility-mobil {display: block !important;}
+#move-to-top:not(.filling) {opacity: 0;visibility: hidden;}
+#k {cursor: pointer;}
+/*--------------------------------------------------------------------------
+/* @media CSS: Screen > 768px, Screen > 992px & Screen > 1200px.
+/*-------------------------------------------------------------------------*/
+
+@media only screen and (min-width: 768px)  {
+  .page-main {width: 100%;}
+  .s45 {position: relative !important;}
+}
+@media only screen and (min-width: 992px)  {
+  .wrapper {padding: 0 !important;}
+  .page-main {width: 950px;}
+  #mobile {
+    background: transparent;
+    height: 0px;
+    left: 0;
+    top: 0;
+    width: 0px;
+  }
+  #mobile .main {display: none;}
+  #mobile .visibility {display: none;}
+  footer .row {display: inline-block;}
+  footer .row {width: 45%;}
+}
+@media only screen and (min-width: 1200px)  {
+  .wrapper {padding: 0 !important;}
+  .page-main {width: 1100px;}
+  #mobile {
+    background: transparent;
+    height: 0px;
+    left: 0;
+    top: 0;
+    width: 0px;
+  }
+  #mobile .main {display: none;}
+  #mobile .visibility {display: none;}
+  footer .row {display: inline-block;}
+  footer .row {width: 45%;}
+}
+
+/*----------------------------------------------------
+/* @media CSS: Screen > 767px & Screen < 991px.
+/*--------------------------------------------------*/
+
+@media only screen and (max-width: 991px) and (min-width: 767px) {
+  .header-menu {display: none;}
+  .s45 {
+    position: relative !important;
+    height: 0px !important;
+    left: 0 !important;
+    top: 0 !important;
+    width: 0px !important;
+  }
+  .s45 p.visibility {display: none !important;margin-bottom: 0px;}
+}
+
+/*---------------------------------------
+/* @media CSS: Screen < 766px.
+/*--------------------------------------*/
+
+@media only screen and (max-width: 766px) {
+  .header-menu {display: none;}
+  .s45 {
+    position: relative !important;
+    height: 0px !important;
+    left: 0 !important;
+    top: 0 !important;
+    width: 0px !important;
+  }
+  .s45 p.visibility {display: none !important;margin-bottom: 0px;}
+  .feed-content-box {font-size: 14px;line-height: 26px;}
+}
+    </style>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
+
+</head>
+
+<body>
+
+
+<div class="header-menu">
+  <nav>
+  <a href="#" class="main"><i class="fa fa-navicon"></i></a>
+    <ul class="menu">
+      <li><a href="#">home</a></li>
+      <li><a href="#">menu 1</a></li>
+      <li><a href="#">menu 2</a></li>
+      <li><a href="#">menu 3</a></li>
+    </ul>
+  </nav>
+</div>
+<div class="wrapper">
+<menu id="mobile" class="visibility-mobil">
+  <p class="visibility"><a href="#" class="main"><i class="fa fa-navicon"></i></a></p>
+  <div id="mobil"><ul><p><a id="hide"><i class="fa fa-angle-left"></i><span>hide sidebar</span></a></p>
+  <li><a href="#header"><i class="fa fa-circle-o"></i> Home</a></li>
+  <li><a href="#header"><i class="fa fa-circle-o"></i> Home</a></li>
+  <li><a href="#header"><i class="fa fa-circle-o"></i> Home</a></li>
+  <li><a href="#header"><i class="fa fa-circle-o"></i> Home</a></li>
+  <li><a href="#"><i class="fa fa-circle-o"></i> Home</a></li>
+  <li><a class="link">Profile<i class="fa fa-angle-down"></i></a>
+    <ul class="submenu">
+      <li><img src="https://goo.gl/4U4aag" alt="" /></li>
+      <li><h3><a href="#">Emily Rudd</a></h3></li>
+      <li>20, Earth</li>
+      <li><font>Emily Rudd have 21-year-old doin some cool stuff, maybe twitter/tumblr: @emilysteaparty business: contactemilyrudd@gmail.com</font></li>
+      <li><a href="#">user@info.com <i class="fa fa-external-link"></i></a></li>
+     </ul>
+  </li>
+  <li><a class="link">Category<i class="fa fa-angle-down"></i></a>
+    <ul class="submenu">
+      <li><a href="#">category 1</a></li>
+      <li><a href="#">category 2</a></li>
+      <li><a href="#">category 3</a></li>
+      <li><a href="#">category 4</a></li>
+      <li><a href="#">category 5</a></li>
+     </ul>
+  </li>
+  <li><a class="link">Archive<i class="fa fa-angle-down"></i></a>
+    <ul class="submenu">
+      <li><a href="#">Achive 1</a></li>
+      <li><a href="#">Achive 2</a></li>
+      <li><a href="#">Achive 3</a></li>
+      <li><a href="#">Achive 4</a></li>
+      <li><a href="#">Achive 5</a></li>
+     </ul>
+  </li>
+  <li><a href="#header"><i class="fa fa-circle-o"></i> Home</a></li>
+  <li><a href="#header"><i class="fa fa-circle-o"></i> Home</a></li>
+  <li><a href="#header"><i class="fa fa-circle-o"></i> Home</a></li>
+  <li><a href="#header"><i class="fa fa-circle-o"></i> Home</a></li>
+ </ul>
+</div>
+</menu>  
+<div class="parallax">
+<div id="parallax" style="background-image: url('https://goo.gl/6v4yE4');"></div>
+<section class="page-main">
+  
+  <article class="post-box">
+  <div class="post-content">
+    <div class="post-title"><h2><a href="#">I Still Care For You</a></h2></div>
+    <div class="post-info">
+      <span><i class="fa fa-user"></i><a href="#"> PA </a></span>
+      <span><i class="fa fa-calendar"></i> 14 March 2014 </span>
+      <span><i class="fa fa-clock-o"></i> 21:15 </span>
+      <span><i class="fa fa-tags"></i>
+        <a href="#"> life </a>,
+        <a href="#"> love </a>
+      </span>
+      <span><i class="fa fa-comments"></i><a href="#"> 5 comments </a></span>
+    </div>
+    <div class="post-content-box">
+      <p>Eaque ipsa quae ab illo inventore veritatis et quasi. Eaque ipsa quae ab illo inventore veritatis et quasi. Et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam. Et Harum Qidem Rerum Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam. Quia consequuntur magni dolores eos qui ratione voluptatem …</p>
+      <p><img src="https://goo.gl/6v4yE4" alt="" /></p>
+    </div>
+  </div>
+  <div id="comments">
+    <h4 class="nc-title">4 Comments</h4>
+    <ol class="commentlist">
+      <li class="comment">
+        <div id="comment">
+          <div class="comment-author">
+            <img src="https://goo.gl/ZNYBaU" alt="" class="avatar" />
+            <span class="fn"><span>Roswell Parian</span></span>
+            <span class="ago">March 14, 2014</span>
+            <span class="comment-meta"></span>
+          </div>
+          <div class="commentmetadata">
+            <div class="commenttext">
+              <p>The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested.</p>
+              <span class="reply"><a href="#" class="comment-reply-link">Reply</a></span>
+            </div>
+          </div>
+        </div>
+      </li>
+      <ul class="children">
+        <li class="comment">
+        <div id="comment">
+          <div class="comment-author">
+            <img src="https://goo.gl/3TKe8H" alt="" class="avatar" />
+            <span class="fn"><span>Emily Rudd</span></span>
+            <span class="ago">March 12, 2014</span>
+            <span class="comment-meta"></span>
+          </div>
+          <div class="commentmetadata">
+            <div class="commenttext">
+              <p>The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested.</p>
+              <span class="reply"><a href="#" class="comment-reply-link">Reply</a></span>
+            </div>
+          </div>
+        </div>
+      </li>
+      </ul>
+      <li class="comment">
+        <div id="comment">
+          <div class="comment-author">
+            <img src="https://goo.gl/hMaJZ3" alt="" class="avatar" />
+            <span class="fn"><span>Parian Palvin</span></span>
+            <span class="ago">March 10, 2014</span>
+            <span class="comment-meta"></span>
+          </div>
+          <div class="commentmetadata">
+            <div class="commenttext">
+              <p>The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested.</p>
+              <span class="reply"><a href="#" class="comment-reply-link">Reply</a></span>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li class="comment">
+        <div id="comment">
+          <div class="comment-author">
+            <img src="https://goo.gl/frL61u" alt="" class="avatar" />
+            <span class="fn"><span>Parian Mohn</span></span>
+            <span class="ago">March 4, 2014</span>
+            <span class="comment-meta"></span>
+          </div>
+          <div class="commentmetadata">
+            <div class="commenttext">
+              <p>The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested.</p>
+              <span class="reply"><a href="#" class="comment-reply-link">Reply</a></span>
+            </div>
+          </div>
+        </div>
+      </li>
+    </ol>
+  </div>  
+  <div id="commentNew">
+    <div id="boxNew" class="box-New">
+      <h4 class="nc-title">New Comment</h4>
+      <form action="" id="commentform" method="post" onsubmit="doSubmit(this)">
+        <div class="nc-form-fields">
+          <p id="comment_author_wrapper">
+            <input name="author" type="text" id="comment_author" class="placeholder" placeholder="Name*" />
+          </p>
+          <p id="comment_authoremail_wrapper">
+            <input name="authoremail" type="text" id="comment_authoremail" class="placeholder" placeholder="Email*" />
+          </p>
+          <p id="comment_authorurl_wrapper">
+            <input name="authorurl" type="text" id="comment_authorurl" class="placeholder" placeholder="Website" />
+          </p>
+        </div>
+        <p id="comment_text_wrapper">
+          <textarea name="comment" id="comment_text" class="placeholder" placeholder="Comment Text*" cols="45" rows="16"></textarea>
+        </p>
+        <p id="comment_submit_wrapper">
+          <input name="submit" id="comment_submit" type="submit" value="Post Comment" />
+          <input name="commentid" type="hidden" value="" />
+        </p>
+      </form>
+    </div>
+  </div>
+</article>
+  
+</section>  
+</div>
+</div>  
+<footer>
+  <div class="row">
+    <div class="footer">
+      <p>2014 romswellprain <a href="#">parian <i class="fa fa-external-link"></i></a></p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="footer">
+      <p><i class="fa fa-copyright"></i> Copyright 2014 <a href="#">Licence <i class="fa fa-external-link"></i></a></p>
+    </div>
+  </div>
+</footer>
+  <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<script src='http://demo.mythemeshop.com/yosemite/wp-content/themes/yosemite/js/parallax.js?ver=4.0.1'></script>
+
+  
+
+    <script  src="js/index.js"></script>
+
+
+
+
+</body>
+
+</html>

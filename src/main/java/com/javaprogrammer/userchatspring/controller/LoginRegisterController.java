@@ -40,7 +40,8 @@ public class LoginRegisterController {
     EmailServiceImpl emailService;
     @Autowired
     JwtTokenUtil jwtTokenUtil;
-
+    @Value("${our.url}")
+     String ourUrl;
     @GetMapping("/loginSuccess")
     public String loginSucces(ModelMap map) {
         CurrentUser principal = (CurrentUser)
@@ -103,7 +104,7 @@ public class LoginRegisterController {
         user.setVerify(false);
         userRepository.save(user);
         emailService.sendSimpleMessage(user.getEmail(), "verification",
-                String.format("http://localhost:8080/verification?token=%s", jwtTokenUtil.generateToken(new CurrentUser(user))));
+                String.format(ourUrl+"/verification?token=%s", jwtTokenUtil.generateToken(new CurrentUser(user))));
         user.setPassword(null);
         map.addAttribute("user", user);
         return "redirect:/";
@@ -112,7 +113,8 @@ public class LoginRegisterController {
 
     @GetMapping("/verification")
     public String getVerification(@RequestParam("token") String token, ModelMap modelMap) {
-        User userByEmail = userRepository.findUserByEmail(jwtTokenUtil.getUsernameFromToken(token));
+       try {
+           User userByEmail = userRepository.findUserByEmail(jwtTokenUtil.getUsernameFromToken(token));
         userByEmail.setVerify(true);
         String pass = userByEmail.getPassword();
         userByEmail.setPassword(passwordEncoder.encode(userByEmail.getPassword()));
@@ -121,6 +123,9 @@ public class LoginRegisterController {
         modelMap.addAttribute("userRegister", new User());
         modelMap.addAttribute("vPassword", pass);
         return "index";
+       }catch (Exception e){
+           return "redirect:http://www.designernews.co/404";
+       }
     }
 
 

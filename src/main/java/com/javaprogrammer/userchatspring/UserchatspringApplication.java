@@ -34,7 +34,7 @@ public class UserchatspringApplication extends WebMvcConfigurerAdapter {
     String mailPassword;
     @Value("${spring.mail.properties.mail.smtp.auth}")
     String mailSmtpAuth;
-            @Value("${spring.mail.properties.mail.smtp.starttls.enable}")
+    @Value("${spring.mail.properties.mail.smtp.starttls.enable}")
     String mailSmtpStarttlsEnable;
 
     public static void main(String[] args) {
@@ -81,7 +81,7 @@ public class UserchatspringApplication extends WebMvcConfigurerAdapter {
 
         Properties props = mailSender.getJavaMailProperties();
         props.put("mail.transport.protocol", "smtp");
-        props.put("mail.smtp.auth",mailSmtpAuth );
+        props.put("mail.smtp.auth", mailSmtpAuth);
         props.put("mail.smtp.starttls.enable", mailSmtpStarttlsEnable);
         props.put("mail.debug", "true");
 
