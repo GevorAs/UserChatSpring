@@ -13,7 +13,7 @@
     <link href="//fonts.googleapis.com/css?family=Lato:300|Lato:normal|Open+Sans:normal|Open+Sans:600&amp;subset=latin"
           rel="stylesheet" type="text/css">
     <link href="//fonts.googleapis.com/css?family=Raleway:200,400,800|Clicker+Script" rel="stylesheet" type="text/css">
-    <link href="../postPage/css/style.css" rel="stylesheet" type="text/css">
+    <link href="../front/postPage/css/style.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <%--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">--%>
 
@@ -179,10 +179,13 @@
                                 <input id="image" type="file" name="commentImage">
 
                             </div>
+                            <br>
+                            <div style="padding-left: 460px">
                             <p id="comment_submit_wrapper">
                                 <input name="submit" id="comment_submit" type="submit" value="Post Comment"/>
                                 <input name="" type="hidden" value=""/>
                             </p>
+                            </div>
                         </spring:form>
                     </div>
                 </div>
@@ -196,8 +199,8 @@
 <script src='http://demo.mythemeshop.com/yosemite/wp-content/themes/yosemite/js/parallax.js?ver=4.0.1'></script>
 
 
-<script src="../postPage/js/index.js"></script>
-<script src="../past_form/js/index.js"></script>
+<script src="../front/postPage/js/index.js"></script>
+<script src="../front/past_form/js/index.js"></script>
 
 </body>
 

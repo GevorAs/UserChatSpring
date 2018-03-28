@@ -119,7 +119,9 @@ public class UserController {
 
             }
             User otherUser = userRepository.findOne(id);
-            userVisitRepo.save(new UserVisit(otherUser));
+            if (userVisitRepo.findByToId(user.getId()) == null) {
+                userVisitRepo.save(new UserVisit(user.getId(), otherUser));
+            }
             int likeCount = 0;
             int dislikeCount = 0;
             List<Post> postList = postRepository.findAllByUserId(id);
@@ -214,45 +216,47 @@ public class UserController {
 
     @GetMapping("/settingPage")
     public String goToSettingPage(ModelMap map, @RequestParam(value = "message", required = false) String message) {
-        map.addAttribute("upUser", new User());
         map.addAttribute("message", message != null ? message : "");
         return "settings";
     }
 
 
     @PostMapping("/updateUser")
-    public String registerUser(@Valid @ModelAttribute("upUser") User upUser,
-                               BindingResult result,
+    public String registerUser(@ModelAttribute("user") User user,
+
                                @RequestParam("pic") MultipartFile multipartFile,
                                ModelMap map,
-                               @RequestParam("oldPassword") String oldPassword,
-                               @SessionAttribute("user") User user) throws IOException {
+                               @RequestParam("oldPassword") String oldPassword, @SessionAttribute("user") User user1) throws IOException {
+
+
+        StringBuilder sb = new StringBuilder();
 
         if (multipartFile.getOriginalFilename().endsWith(".jpg")) {
             String petqChe;
             String picname = System.currentTimeMillis() + "_" + multipartFile.getOriginalFilename();
             File file = new File(nkar + picname);
             multipartFile.transferTo(file);
-            upUser.setPicture(picname);
+            user.setPicture(picname);
         }
-        user.setName(upUser.getName());
-        user.setSurname(upUser.getSurname());
-        user.setAge(upUser.getAge());
-        user.setCity(upUser.getCity());
-        if (upUser.getPicture() != null) {
-            user.setPicture(upUser.getPicture());
+        if (user.getPicture() != null) {
+            user.setPicture(user.getPicture());
         }
-        if (upUser.getPassword() != null && !upUser.getPassword().equals("")
-                & oldPassword != null && !oldPassword.equals("")) {
-            StringBuilder sb = new StringBuilder();
+
+
+        if ((oldPassword.equals("") && !user.getPassword().equals("")) || (!oldPassword.equals("") && user.getPassword().equals(""))) {
+            sb.append("Please input old psssword or new password");
+            return "redirect:/settingPage?message=" + sb.toString();
+
+        }
+        if (user.getPassword() != null && !user.getPassword().equals("")
+                && oldPassword != null && !oldPassword.equals("")) {
             String pattern = "(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{8,}";
 
-            if (result.hasErrors()) {
+            if (passwordEncoder.matches(oldPassword, userRepository.findOne(user.getId()).getPassword())) {
 
 
-                if (!upUser.getPassword().matches(pattern))
-//            if (false)
-                {
+//                if (!user.getPassword().matches(pattern))
+                if (false) {
 
                     String passwordValidStr;
                     passwordValidStr = "Password will be<br>  -a digit must occur at least once<br>" +
@@ -265,15 +269,21 @@ public class UserController {
                     return "redirect:/settingPage?message=" + sb.toString();
                 }
 
-            }
-            boolean matches = passwordEncoder.matches(oldPassword, user.getPassword());
-            if (matches) {
+                user.setPassword(passwordEncoder.encode(user.getPassword()));
+            }else {
+                sb.append("Old password is not valid");
+                return "redirect:/settingPage?message=" + sb.toString();
 
-                user.setPassword(passwordEncoder.encode(upUser.getPassword()));
             }
+       }
+
+
+
+        if (user.getPassword().equals("")) {
+
+            user.setPassword(userRepository.findOne(user.getId()).getPassword());
+
         }
-
-
         userRepository.save(user);
 
         return "redirect:/userPage";

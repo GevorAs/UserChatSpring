@@ -155,13 +155,13 @@
             inter(id);
             x = setInterval(function () {
                 inter(id)
-            }, 3000);
+            }, 1000);
         }
         else {
             inter(id);
             x = setInterval(function () {
                 inter(id)
-            }, 3000);
+            }, 1000);
         }
         getFriendProfile(id);
     }

@@ -28,7 +28,7 @@
             <div class="">
 
 
-                <spring:form action="/updateUser" method="post" modelAttribute="upUser" enctype="multipart/form-data">
+                <spring:form action="/updateUser" method="post" modelAttribute="user" enctype="multipart/form-data">
 
 
 

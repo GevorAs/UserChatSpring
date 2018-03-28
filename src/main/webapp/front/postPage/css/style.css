@@ -12,6 +12,8 @@ html, body {
   padding: 0;
   border: 0;
   box-sizing: content-box;
+    text-align: center;
+
 }
 ::selection {background: #08C;color: #FFF;}
 ::-webkit-selection {background: #08C;color: #FFF;}
@@ -678,19 +680,29 @@ footer {
   padding: 20px 0 0;
   text-align: center;
 }
-footer .row {
-  display: block;
-  padding: 20px;
+/*footer .row {*/
+  /*display: block;*/
+  /*padding: 20px;*/
+/*}*/
+/*footer .row {width: 100%;}*/
+/*#parallax {*/
+  /*position: relative;*/
+  /*padding-bottom: 39%;*/
+  /*height: 0;*/
+  /*overflow: hidden;*/
+  /*background-size: cover;*/
+  /*margin-bottom: 35px;*/
+  /*z-index: 1;*/
+/*}*/
+.row{
+  margin: 0 auto;
+  text-align: center;
+    padding: 0px 400px 0px 400px;
 }
-footer .row {width: 100%;}
-#parallax {
-  position: relative;
-  padding-bottom: 39%;
-  height: 0;
-  overflow: hidden;
-  background-size: cover;
-  margin-bottom: 35px;
-  z-index: 1;
+.row input{
+    color: black;
+background-color: #1d8ce0;
+    border-radius: 25px;
 }
 .visibility-mobil {display: block !important;}
 #move-to-top:not(.filling) {opacity: 0;visibility: hidden;}

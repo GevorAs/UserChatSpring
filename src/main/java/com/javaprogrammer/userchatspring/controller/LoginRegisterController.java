@@ -49,6 +49,7 @@ public class LoginRegisterController {
                         getContext().
                         getAuthentication()
                         .getPrincipal();
+        principal.getUser().setPassword("");
 
         if (principal.getUser().getUserType() == UserType.ADMIN) {
             map.addAttribute("user", principal.getUser());

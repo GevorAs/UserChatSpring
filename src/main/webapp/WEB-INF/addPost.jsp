@@ -166,7 +166,7 @@
 </html>
 
 
-<script src="../past_form/js/index.js"></script>
+<script src="../front/past_form/js/index.js"></script>
 
 
 </body>
