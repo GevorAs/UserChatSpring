@@ -120,34 +120,23 @@
             </h1>
 
             <ul class="profile-options horizontal-list">
-                <li><a class="comments" href="#40"><p><span class="icon fontawesome-comment-alt scnd-font-color"></span>23
-                </li>
-                </p></a>
-                <li><a class="views" href="#41"><p><span class="icon fontawesome-eye-open scnd-font-color"></span>841
-                </li>
-                </p></a>
-                <li><a class="likes" href="#42"><p><span class="icon fontawesome-heart-empty scnd-font-color"></span>49
-                </li>
-                </p></a>
+                <li><a class="views" href="#41"><p><span class="icon fontawesome-eye-open scnd-font-color"></span>${userVisit}
+                </p></a></li>
+                <li><a class="likes" href="#42"><p><span class="icon fontawesome-heart-empty scnd-font-color"></span>${rating}
+                </p></a></li>
             </ul>
         </div>
 
-        <div class="tweets block"> <!-- TWEETS (MIDDLE-CONTAINER) -->
-            <h2 class="titular"><span class="icon zocial-twitter"></span>LATEST TWEETS</h2>
-            <div class="tweet first">
-                <p>Ice-cream trucks only play music when out of ice-cream. Well played dad. On <a class="tweet-link"
-                                                                                                  href="#17">@Quora</a>
-                </p>
-                <p><a class="time-ago scnd-font-color" href="#18">3 minutes ago</a></p>
-            </div>
+        <div class="tweets block" style="overflow: scroll ;height: 500px" > <!-- TWEETS (MIDDLE-CONTAINER) -->
+            <h2 class="titular"><span class="icon zocial-twitter"></span>POSTS</h2>
 
 
             <c:forEach items="${allPostOtherUser}" var="post">
-                <div class="tweet">
-                    <p>${post.text}
-                        <a class="tweet-link" href="fullPost">Full Post</a>
+                <div class="tweet first">
+                    <p style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${post.text}
                     </p>
-                    <p class="scnd-font-color">${post.createdDate}</p>
+                    <p style="text-align: center"><a class="tweet-link" href="/seePost?postId=${post.id}">See post</a></p>
+                    <p style="text-align: center"><a class="time-ago scnd-font-color" href="#18">${post.createdDate}</a></p>
                 </div>
             </c:forEach>
         </div>

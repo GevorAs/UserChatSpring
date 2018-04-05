@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.8.2/css/lightbox.min.css">
 
 
-    <link rel="stylesheet" href="../nkrner/css/style.css">
+    <link rel="stylesheet" href="../front/nkrner/css/style.css">
 
 
   

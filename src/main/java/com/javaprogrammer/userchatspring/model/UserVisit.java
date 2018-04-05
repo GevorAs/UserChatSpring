@@ -17,11 +17,14 @@ public class UserVisit {
     @GeneratedValue
     @Column
     private int id;
+    @Column(name = "to_id")
+    private int toId;
     @ManyToOne
     @NotNull
    private User user;
 
-    public UserVisit(User user) {
+    public UserVisit(int toId, User user) {
+        this.toId = toId;
         this.user = user;
     }
 }

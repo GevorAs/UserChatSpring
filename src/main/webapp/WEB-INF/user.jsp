@@ -73,28 +73,9 @@
             <h2 class="titular">MENU BOX</h2>
             <ul class="menu-box-menu">
                 <li>
-                    <a class="menu-box-tab" href="/guestImage?otherUser=${otherUser.id}"><span class="icon fontawesome-envelope scnd-font-color"></span>Images
-                        <div class="menu-box-number">24</div>
+                    <a class="menu-box-tab" href="/guestImage?otherUser=${otherUser.id}"><span class="icon entypo-calendar scnd-font-color"></span>Images
+                        <div class="menu-box-number"></div>
                     </a>
-                </li>
-                <li>
-                    <a class="menu-box-tab" href="#8"><span class="icon entypo-paper-plane scnd-font-color"></span>Invites
-                        <div class="menu-box-number">3</div>
-                    </a>
-                </li>
-                <li>
-                    <a class="menu-box-tab" href="#10"><span class="icon entypo-calendar scnd-font-color"></span>Events
-                        <div class="menu-box-number">5</div>
-                    </a>
-                </li>
-                <li>
-                    <a class="menu-box-tab" href="#12"><span class="icon entypo-cog scnd-font-color"></span>Account
-                        Settings</a>
-                </li>
-                <li>
-                    <a class="menu-box-tab" href="#13">
-                        <sapn class="icon entypo-chart-line scnd-font-color"></sapn>
-                        Statistics</a>
                 </li>
             </ul>
         </div>
@@ -125,16 +106,15 @@
             <h1 class="user-name">${otherUser.name} ${otherUser.surname}
             </h1>
 
+            <div class="profile-description">
+                <p class="scnd-font-color">Age: ${otherUser.age}&nbsp &nbsp City: ${otherUser.city}</p>
+            </div>
             <ul class="profile-options horizontal-list">
-                <li><a class="comments" href="#40"><p><span class="icon fontawesome-comment-alt scnd-font-color"></span>23
-                </li>
-                </p></a>
+
                 <li><a class="views" href="#41"><p><span class="icon fontawesome-eye-open scnd-font-color"></span>${userVisit}
-                </li>
-                </p></a>
+                </p></a></li>
                 <li><a class="likes" href="#42"><p><span class="icon fontawesome-heart-empty scnd-font-color"></span>${rating}
-                </li>
-                </p></a>
+                </p></a></li>
             </ul>
         </div>
 
@@ -156,11 +136,11 @@
 
     <!-- RIGHT-CONTAINER -->
     <div class="right-container container">
-
         <div id="frame">
             <div id="sidepanel">
 
                 <div id="contacts">
+                    <h3 style="text-align: center">Friends</h3>
 
                     <ul>
                         <c:forEach items="${otherUsersFriends}" var="otherUser">

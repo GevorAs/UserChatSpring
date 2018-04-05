@@ -1,21 +1,19 @@
 package com.javaprogrammer.userchatspring.controller;
 
-import com.javaprogrammer.userchatspring.model.ActiveStatus;
-import com.javaprogrammer.userchatspring.model.MessageStatus;
-import com.javaprogrammer.userchatspring.model.User;
-import com.javaprogrammer.userchatspring.model.UserType;
+import com.javaprogrammer.userchatspring.model.*;
 import com.javaprogrammer.userchatspring.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.web.ServerProperties;
+import org.springframework.security.core.session.SessionInformation;
+import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -52,7 +50,6 @@ public class AdminController {
         return "redirect:/admin";
     }
 
-    //-----chi ashxati----
     @GetMapping("/getDeletedUser")
     public String getDeletedUser(ModelMap map) {
         List<User> allByActiveStatusDeleted = userRepository.findAllByActiveStatus(ActiveStatus.DELETED);
@@ -63,12 +60,14 @@ public class AdminController {
 
         return "adminDeletedAjax";
     }
+
     @GetMapping("/blockUser")
     public HttpServletResponse blockUser(HttpServletResponse response,@RequestParam("userId")int userId){
          User user = userRepository.getOne(userId);
         user.setActiveStatus(ActiveStatus.DELETED);
+        user.setUserStatus(UserStatus.OFFLINE);
         userRepository.save(user);
-        return response;
+               return response;
     }
 
     @GetMapping("/removeUser")

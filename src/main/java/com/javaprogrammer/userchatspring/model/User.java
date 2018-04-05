@@ -48,4 +48,8 @@ public class User {
     private ActiveStatus activeStatus;
     @Column
     boolean verify;
+    @Column
+    int age;
+    @Column
+    String city;
 }
