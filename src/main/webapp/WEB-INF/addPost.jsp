@@ -5,7 +5,6 @@
 <html lang="en">
 
 
-
 <html>
 <head>
 
@@ -34,11 +33,16 @@
 </head>
 <body>
 
-<!-- Written by Amit Agarwal amit@labnol.org -->
-
-
-
-<spring:form class="main" id="form"  action="/savePost" novalidate="novalidate" style="max-width: 480px;margin: 40px auto;" enctype="multipart/form-data" modelAttribute="addPost" method="post">
+<div class="row">
+    <div class="input-field col s6">
+        <a href="/userPage"> <button class="waves-effect waves-light btn submit-btn" type="submit">
+            Home
+        </button>
+        </a>
+    </div>
+<spring:form class="main" id="form" action="/savePost" novalidate="novalidate"
+             style="max-width: 480px;margin: 40px auto;" enctype="multipart/form-data" modelAttribute="addPost"
+             method="post">
     <div id="forminner">
         <div class="row">
             <div class="col s12">
@@ -48,7 +52,7 @@
         <div class="row">
             <div class="input-field col s12">
                 <spring:textarea id="name" type="text" path="text" class="validate" required=""
-                          aria-required="true"></spring:textarea>
+                                 aria-required="true"></spring:textarea>
                 <label for="name">Description</label>
             </div>
         </div>
@@ -61,7 +65,7 @@
                     <input id="files" type="file" name="postFile">
                 </div>
                 <div class="file-path-wrapper">
-                    <input class="file-path validate" type="text"  placeholder="Select a file on your computer">
+                    <input class="file-path validate" type="text" placeholder="Select a file on your computer">
                 </div>
             </div>
         </div>
@@ -93,8 +97,8 @@
     <!--<div id="success" style="display:block">-->
     <!--<h5 class="left-align teal-text">File Uploaded</h5>-->
     <!--<p>Your file has been successfully uploaded.</p>-->
-    <!--<p>The <a href="http://www.labnol.org/internet/file-upload-google-forms/29170/">pro version</a> (see <a href="http://j.mp/GoogleFormsDemo">demo form</a>) includes a visual drag-n-drop form builder, CAPTCHAs, the form responses are saved in a Google Spreadsheet and respondents can upload multiple files of any size.</p>    -->
-    <!--<p class="center-align"><a  class="btn btn-large" href="https://gum.co/GA14?wanted=true" target="_blank">Upgrade to Pro</a></p>-->
+    <!--<p>The <a href="http://www.labnol.org/internet/file-upload-google-forms/29170/">pro version</a> (see <a href="http://j.mp/GoogleFormsDemo">demo form</a>) includes a visual drag-n-drop form builder, CAPTCHAs, the form responses are saved in a Google Spreadsheet and respondents can upload multiple files of any size.</p> -->
+    <!--<p class="center-align"><a class="btn btn-large" href="https://gum.co/GA14?wanted=true" target="_blank">Upgrade to Pro</a></p>-->
     <!--</div>-->
 </spring:form>
 
@@ -145,7 +149,6 @@
         }
 
         showMessage("Uploading file..");
-
 
 
     }

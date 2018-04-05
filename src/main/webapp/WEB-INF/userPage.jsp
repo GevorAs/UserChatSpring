@@ -72,30 +72,25 @@
             <ul class="menu-box-menu">
                 <li>
                     <a class="menu-box-tab" href="/myImages"><span
-                            class="icon fontawesome-envelope scnd-font-color"></span>Images
-                        <div class="menu-box-number">24</div>
+                            class="icon entypo-calendar scnd-font-color"></span>Images
+                        <div class="menu-box-number"></div>
                     </a>
                 </li>
                 <li>
                     <a class="menu-box-tab" href="/addPost"><span
-                            class="icon entypo-paper-plane scnd-font-color"></span>Add Post
-                        <div class="menu-box-number">3</div>
+                            class="icon entypo-chart-line scnd-font-color"></span>Add Post
+                        <div class="menu-box-number"></div>
                     </a>
                 </li>
                 <li>
-                    <a class="menu-box-tab" href="#10"><span class="icon entypo-calendar scnd-font-color"></span>Events
-                        <div class="menu-box-number">5</div>
+                    <a class="menu-box-tab" href="/allFriends"><span class="icon fontawesome-user scnd-font-color" ></span>Friends
+                        <div class="menu-box-number"></div>
                     </a>
                 </li>
                 <li>
-                    <a class="menu-box-tab" href="#12"><span class="icon entypo-cog scnd-font-color"></span>Account
-                        Settings</a>
+                    <a class="menu-box-tab" href="/contactTheAdminPage"><span class="icon entypo-cog scnd-font-color"></span>Contact the Admin</a>
                 </li>
-                <li>
-                    <a class="menu-box-tab" href="#13">
-                        <sapn class="icon entypo-chart-line scnd-font-color"></sapn>
-                        Statistics</a>
-                </li>
+
             </ul>
         </div>
 
@@ -119,11 +114,10 @@
             <h1 class="user-name">${user.name} ${user.surname}
             </h1>
             <div class="profile-description">
-                <p class="scnd-font-color">Lorem ipsum dolor sit amet consectetuer adipiscing</p>
+                <p class="scnd-font-color">Age: ${user.age}&nbsp &nbsp City: ${user.city}</p>
             </div>
             <ul class="profile-options horizontal-list">
-                <li><a class="comments" href="#40"><p><span class="icon fontawesome-comment-alt scnd-font-color"></span>23
-                </p></a></li>
+
                 <li><a class="views" href="#41"><p><span class="icon fontawesome-eye-open scnd-font-color"></span>${userVisit}
                 </p></a></li>
                 <li><a class="likes" href="#42"><p><span class="icon fontawesome-heart-empty scnd-font-color"></span>${rating}

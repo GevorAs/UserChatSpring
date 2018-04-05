@@ -41,7 +41,8 @@ public class LoginRegisterController {
     @Autowired
     JwtTokenUtil jwtTokenUtil;
     @Value("${our.url}")
-     String ourUrl;
+    String ourUrl;
+
     @GetMapping("/loginSuccess")
     public String loginSucces(ModelMap map) {
         CurrentUser principal = (CurrentUser)
@@ -56,7 +57,10 @@ public class LoginRegisterController {
 
             return "redirect:/admin";
 
-        } else if (principal.getUser().getUserType() == UserType.USER) {
+        } else if (principal.getUser().getUserType() == UserType.USER && principal.getUser().getActiveStatus() != ActiveStatus.DELETED) {
+            User user = userRepository.findUserByEmail(principal.getUser().getEmail());
+            user.setUserStatus(UserStatus.ONLINE);
+            userRepository.save(user);
             map.addAttribute("user", principal.getUser());
             return "redirect:/userPage";
 
@@ -105,28 +109,29 @@ public class LoginRegisterController {
         user.setVerify(false);
         userRepository.save(user);
         emailService.sendSimpleMessage(user.getEmail(), "verification",
-                String.format(ourUrl+"/verification?token=%s", jwtTokenUtil.generateToken(new CurrentUser(user))));
+                String.format(ourUrl + "/verification?token=%s", jwtTokenUtil.generateToken(new CurrentUser(user))));
         user.setPassword(null);
         map.addAttribute("user", user);
         return "redirect:/";
 
     }
 
+
     @GetMapping("/verification")
     public String getVerification(@RequestParam("token") String token, ModelMap modelMap) {
-       try {
-           User userByEmail = userRepository.findUserByEmail(jwtTokenUtil.getUsernameFromToken(token));
-        userByEmail.setVerify(true);
-        String pass = userByEmail.getPassword();
-        userByEmail.setPassword(passwordEncoder.encode(userByEmail.getPassword()));
-        userRepository.save(userByEmail);
-        modelMap.addAttribute("vEmail", userByEmail.getEmail());
-        modelMap.addAttribute("userRegister", new User());
-        modelMap.addAttribute("vPassword", pass);
-        return "index";
-       }catch (Exception e){
-           return "redirect:http://www.designernews.co/404";
-       }
+        try {
+            User userByEmail = userRepository.findUserByEmail(jwtTokenUtil.getUsernameFromToken(token));
+            userByEmail.setVerify(true);
+            String pass = userByEmail.getPassword();
+            userByEmail.setPassword(passwordEncoder.encode(userByEmail.getPassword()));
+            userRepository.save(userByEmail);
+            modelMap.addAttribute("vEmail", userByEmail.getEmail());
+            modelMap.addAttribute("userRegister", new User());
+            modelMap.addAttribute("vPassword", pass);
+            return "index";
+        } catch (Exception e) {
+            return "redirect:http://www.designernews.co/404";
+        }
     }
 
 

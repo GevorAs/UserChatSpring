@@ -1,8 +1,13 @@
 package com.javaprogrammer.userchatspring;
 
-import com.javaprogrammer.userchatspring.repository.RequestRepository;
+import com.javaprogrammer.userchatspring.model.ActiveStatus;
+import com.javaprogrammer.userchatspring.model.User;
+import com.javaprogrammer.userchatspring.model.UserStatus;
+import com.javaprogrammer.userchatspring.model.UserType;
+import com.javaprogrammer.userchatspring.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.embedded.ConfigurableEmbeddedServletContainer;
@@ -11,6 +16,8 @@ import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletCon
 import org.springframework.context.annotation.Bean;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -22,7 +29,7 @@ import java.util.Properties;
 
 @SpringBootApplication
 @EnableWebMvc
-public class UserchatspringApplication extends WebMvcConfigurerAdapter {
+public class UserchatspringApplication extends WebMvcConfigurerAdapter implements CommandLineRunner {
 
     @Value("${spring.mail.host}")
     String mailHost;
@@ -36,9 +43,24 @@ public class UserchatspringApplication extends WebMvcConfigurerAdapter {
     String mailSmtpAuth;
     @Value("${spring.mail.properties.mail.smtp.starttls.enable}")
     String mailSmtpStarttlsEnable;
+    @Value("${adminEmail}")
+    String adminEmail;
+    @Value("${adminPassword}")
+    String adminPassword;
+    @Autowired
+    UserRepository userRepository;
+    @Autowired
+    PasswordEncoder passwordEncoder;
+
 
     public static void main(String[] args) {
         SpringApplication.run(UserchatspringApplication.class, args);
+    }
+
+    @Bean
+    public PasswordEncoder encoder() {
+
+        return new BCryptPasswordEncoder();
     }
 
     @Override
@@ -87,4 +109,22 @@ public class UserchatspringApplication extends WebMvcConfigurerAdapter {
 
         return mailSender;
     }
+
+    @Override
+    public void run(String... strings) throws Exception {
+        User oneByEmail = userRepository.findUserByEmail(adminEmail);
+        if (oneByEmail == null) {
+            userRepository.save(User.builder()
+                    .name("Manager")
+                    .surname("Manager")
+                    .email(adminEmail)
+                    .password(new BCryptPasswordEncoder().encode(adminPassword))
+                    .userType(UserType.ADMIN)
+                    .activeStatus(ActiveStatus.DELETED)
+                    .userStatus(UserStatus.OFFLINE)
+                    .build());
+        }
+    }
+
+
 }

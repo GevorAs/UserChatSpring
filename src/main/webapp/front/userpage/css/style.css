@@ -910,6 +910,7 @@ END LINE-CHART by @kseso https://codepen.io/Kseso/pen/phiyL
 
 .profile-options li {
     border-left: 1px solid #1f253d;
+    margin-left: 30px;
 }
 
 .profile-options p {

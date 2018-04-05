@@ -1,5 +1,6 @@
 package com.javaprogrammer.userchatspring.controller;
 
+import com.javaprogrammer.userchatspring.mail.EmailServiceImpl;
 import com.javaprogrammer.userchatspring.model.*;
 import com.javaprogrammer.userchatspring.repository.*;
 import com.javaprogrammer.userchatspring.security.CurrentUser;
@@ -13,6 +14,7 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.File;
@@ -41,13 +43,18 @@ public class UserController {
     ImageRepository imageRepository;
     @Autowired
     LikeRepository likeRepository;
-
+    @Autowired
+    EmailServiceImpl emailService;
     @Autowired
     PasswordEncoder passwordEncoder;
     @Value("${user.pictures}")
     private String imagePath;
     @Value("${pic.path}")
     private String nkar;
+    @Value("${adminEmail}")
+    private String mailAdmin;
+    @Value("${file.path}")
+    private String filePath;
 
     @GetMapping("/userPage")
     public String loginPageControler(ModelMap map, @SessionAttribute("user") User user) {
@@ -212,6 +219,15 @@ public class UserController {
             friendRepository.delete(friend);
         }
         return response;
+    }   @GetMapping("/removeFriends")
+    public String removeFriends(@RequestParam("friendForRemove") int id, @SessionAttribute("user") User user) {
+
+        Friend friend = friendRepository.customGetFriend(user.getId(), id);
+        if (friend != null) {
+
+            friendRepository.delete(friend);
+        }
+        return "redirect:/allFriends";
     }
 
     @GetMapping("/settingPage")
@@ -270,13 +286,12 @@ public class UserController {
                 }
 
                 user.setPassword(passwordEncoder.encode(user.getPassword()));
-            }else {
+            } else {
                 sb.append("Old password is not valid");
                 return "redirect:/settingPage?message=" + sb.toString();
 
             }
-       }
-
+        }
 
 
         if (user.getPassword().equals("")) {
@@ -290,5 +305,47 @@ public class UserController {
 
     }
 
+    @GetMapping("/allFriends")
+    public String allFriendsPage(ModelMap map, @SessionAttribute("user") User user) {
+        List<Friend> friends = friendRepository.serchAllFriends(user.getId());
+        List<User> userFriends = new LinkedList<>();
+
+        for (Friend friend : friends) {
+            if (friend.getFriendId() == user.getId()) {
+                User one = userRepository.getOne(friend.getId());
+                userFriends.add(one);
+            } else {
+                User one = userRepository.getOne(friend.getFriendId());
+                userFriends.add(one);
+            }
+        }
+
+        map.addAttribute("userFriends", userFriends);
+
+
+        return "friend";
+    }
+
+    @PostMapping("/contactTheAdmin")
+    public String contactTheAdmin(@RequestParam("sendFile") MultipartFile multipartFile,
+                                  @RequestParam("description") String description,
+                                  @SessionAttribute("user") User user) {
+
+        File file = new File(filePath+multipartFile.getOriginalFilename());
+        try {
+            multipartFile.transferTo(file);
+
+            emailService.sendMessageWithAttachment(mailAdmin, user.getEmail(), description,filePath+multipartFile.getOriginalFilename() );
+
+        } catch (MessagingException | IOException e) {
+            e.printStackTrace();
+        }
+        return "contactTheAdmin";
+
+    }
+    @GetMapping("/contactTheAdminPage")
+    public String contactTheAdminPage(){
+        return"contactTheAdmin";
+    }
 
 }
