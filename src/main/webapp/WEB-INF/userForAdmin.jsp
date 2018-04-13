@@ -8,7 +8,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Chat</title>
+    <title>MGGM</title>
 
     <link rel="stylesheet" href="../front/userpage/css/style.css">
     <link rel="stylesheet" href="../front/userpage/css/style1.css">

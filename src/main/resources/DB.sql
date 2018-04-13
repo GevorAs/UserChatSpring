@@ -1,6 +1,6 @@
 /*
 SQLyog Ultimate v12.09 (64 bit)
-MySQL - 5.7.21-0ubuntu0.17.10.1 : Database - user_chat_spring
+MySQL - 5.7.18-log : Database - user_chat_spring
 *********************************************************************
 */
 
@@ -31,9 +31,10 @@ CREATE TABLE `comment_post` (
   PRIMARY KEY (`id`),
   KEY `comment_post_ibfk_1` (`user_id`),
   KEY `comment_post_ibfk_2` (`post_id`),
+  CONSTRAINT `FKm6m9geaf4s6bt1bdm8sf41f6y` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
   CONSTRAINT `comment_post_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE,
   CONSTRAINT `comment_post_ibfk_2` FOREIGN KEY (`post_id`) REFERENCES `post` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Table structure for table `friend` */
 
@@ -48,7 +49,7 @@ CREATE TABLE `friend` (
   KEY `friend_ibfk_2` (`friend_id`),
   CONSTRAINT `friend_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE,
   CONSTRAINT `friend_ibfk_2` FOREIGN KEY (`friend_id`) REFERENCES `user` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Table structure for table `image` */
 
@@ -64,8 +65,9 @@ CREATE TABLE `image` (
   `dislike_count` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `image_ibfk_1` (`user_id`),
+  CONSTRAINT `FKlxnnh0ir05khn8iu9tgwh1yyk` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
   CONSTRAINT `image_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Table structure for table `like_all` */
 
@@ -81,8 +83,11 @@ CREATE TABLE `like_all` (
   KEY `like_posts_ibfk_1` (`post_id`),
   KEY `like_posts_ibfk_2` (`user_id`),
   KEY `image_id` (`image_id`),
-  CONSTRAINT `like_all_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+  CONSTRAINT `FK3opcj9r8gseha1e4eltwty3ko` FOREIGN KEY (`image_id`) REFERENCES `image` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `FK5ktrevh07r7afxplf9amna1t3` FOREIGN KEY (`post_id`) REFERENCES `post` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `FKsyqmejg9ekabh0teq1b6sgta5` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
+  CONSTRAINT `like_all_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Table structure for table `message` */
 
@@ -120,8 +125,21 @@ CREATE TABLE `post` (
   `dislike_count` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `post_ibfk_1` (`user_id`),
+  CONSTRAINT `FK72mt33dhhs48hf9gcqrq4fxte` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
   CONSTRAINT `post_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Table structure for table `post_visit` */
+
+DROP TABLE IF EXISTS `post_visit`;
+
+CREATE TABLE `post_visit` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `post_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FKbcp84dd5hjp19v96hpjwoaj3y` (`post_id`),
+  CONSTRAINT `FKbcp84dd5hjp19v96hpjwoaj3y` FOREIGN KEY (`post_id`) REFERENCES `post` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Table structure for table `request` */
 
@@ -136,7 +154,7 @@ CREATE TABLE `request` (
   KEY `request_ibfk_2` (`to_id`),
   CONSTRAINT `request_ibfk_1` FOREIGN KEY (`from_id`) REFERENCES `user` (`id`) ON DELETE CASCADE,
   CONSTRAINT `request_ibfk_2` FOREIGN KEY (`to_id`) REFERENCES `user` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Table structure for table `user` */
 
@@ -153,9 +171,25 @@ CREATE TABLE `user` (
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `type` enum('USER','MODERATOR','ADMIN') NOT NULL,
   `status_active` enum('ACTIVE','DELETED') NOT NULL,
+  `verify` tinyint(1) NOT NULL DEFAULT '0',
+  `age` int(11) DEFAULT NULL,
+  `city` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=223 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=252 DEFAULT CHARSET=utf8;
+
+/*Table structure for table `user_visit` */
+
+DROP TABLE IF EXISTS `user_visit`;
+
+CREATE TABLE `user_visit` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `to_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FKkw2nh4sd8s9nosnlnmscdyym3` (`user_id`),
+  CONSTRAINT `FKkw2nh4sd8s9nosnlnmscdyym3` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
