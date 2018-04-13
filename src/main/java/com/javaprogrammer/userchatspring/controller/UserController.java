@@ -3,20 +3,16 @@ package com.javaprogrammer.userchatspring.controller;
 import com.javaprogrammer.userchatspring.mail.EmailServiceImpl;
 import com.javaprogrammer.userchatspring.model.*;
 import com.javaprogrammer.userchatspring.repository.*;
-import com.javaprogrammer.userchatspring.security.CurrentUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -219,7 +215,9 @@ public class UserController {
             friendRepository.delete(friend);
         }
         return response;
-    }   @GetMapping("/removeFriends")
+    }
+
+    @GetMapping("/removeFriends")
     public String removeFriends(@RequestParam("friendForRemove") int id, @SessionAttribute("user") User user) {
 
         Friend friend = friendRepository.customGetFriend(user.getId(), id);
@@ -271,8 +269,7 @@ public class UserController {
             if (passwordEncoder.matches(oldPassword, userRepository.findOne(user.getId()).getPassword())) {
 
 
-//                if (!user.getPassword().matches(pattern))
-                if (false) {
+                if (!user.getPassword().matches(pattern)) {
 
                     String passwordValidStr;
                     passwordValidStr = "Password will be<br>  -a digit must occur at least once<br>" +
@@ -331,21 +328,22 @@ public class UserController {
                                   @RequestParam("description") String description,
                                   @SessionAttribute("user") User user) {
 
-        File file = new File(filePath+multipartFile.getOriginalFilename());
+        File file = new File(filePath + multipartFile.getOriginalFilename());
         try {
             multipartFile.transferTo(file);
 
-            emailService.sendMessageWithAttachment(mailAdmin, user.getEmail(), description,filePath+multipartFile.getOriginalFilename() );
+            emailService.sendMessageWithAttachment(mailAdmin, user.getEmail(), description, filePath + multipartFile.getOriginalFilename());
 
         } catch (MessagingException | IOException e) {
-            e.printStackTrace();
+            return "redirect:http://www.designernews.co/404";
         }
         return "contactTheAdmin";
 
     }
+
     @GetMapping("/contactTheAdminPage")
-    public String contactTheAdminPage(){
-        return"contactTheAdmin";
+    public String contactTheAdminPage() {
+        return "contactTheAdmin";
     }
 
 }

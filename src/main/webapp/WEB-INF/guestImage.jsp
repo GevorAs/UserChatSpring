@@ -8,7 +8,7 @@
 
     <meta charset="UTF-8">
 
-    <title>WEB TEMPLATE: Image Gallary Bootstrap & Lightbox 2.</title>
+    <title>MGGM</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
           integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.8.2/css/lightbox.min.css">
@@ -17,16 +17,11 @@
     <link rel="stylesheet" href="../front/nkrner/css/style.css">
 
 
-  
-
-
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
-
-
 
 
 <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
@@ -63,10 +58,12 @@
                                                                                          src="/getUserPic?filename=${im.picture}"
                                                                                          width="400"/></a>
                 <a href="/likeForImage?imageId=${im.id}"><span
-                        style="float:left;color: #14d921; font-weight:500;font-size: 35px"><span class="glyphicon glyphicon-star"></span>${im.likeCount}</span></a>
+                        style="float:left;color: #14d921; font-weight:500;font-size: 35px"><span
+                        class="glyphicon glyphicon-star"></span>${im.likeCount}</span></a>
 
                 <a href="/dislikeForImage?imageId=${im.id}"><span
-                        style="float: right; color: #f60707; font-weight:500;font-size: 35px">${im.dislikeCount} <span class="glyphicon glyphicon-star-empty"></span></a>
+                        style="float: right; color: #f60707; font-weight:500;font-size: 35px">${im.dislikeCount} <span
+                        class="glyphicon glyphicon-star-empty"></span></a>
 
             </div>
 

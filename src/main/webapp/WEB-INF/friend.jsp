@@ -4,8 +4,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>User list with image thumb and css style, made in bootstrap</title>
-
+    <title>MGGM</title>
 
     <link rel='stylesheet prefetch' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css'>
 

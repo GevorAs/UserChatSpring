@@ -66,14 +66,6 @@ public class MessageController {
         int friendId = Integer.parseInt(idStr);
         List<Message> chat = messageRepository.customGetMessagesByUserAndFriend(user.getId(), friendId);
         for (Message message : chat) {
-            //----------timestamp i menak timen e vercrac---------
-//            String timestamp = message.getTimestamp();
-//            StringTokenizer tk = new StringTokenizer(timestamp);
-//            String date = tk.nextToken();
-//            String time = tk.nextToken();
-//            String substring = time.substring(0, 8);
-//            message.setTimestamp(timestamp);
-            //---------------------------------
             if ((message.getToId() == user.getId()) && message.getMessageStatus().equals(MessageStatus.NEW)) {
                 message.setMessageStatus(MessageStatus.OLD);
                 messageRepository.save(message);

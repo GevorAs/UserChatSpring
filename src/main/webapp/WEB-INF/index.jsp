@@ -6,7 +6,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>login</title>
+    <title>MGGM</title>
     <link rel="stylesheet" href="../front/login/css/style.css">
 </head>
 

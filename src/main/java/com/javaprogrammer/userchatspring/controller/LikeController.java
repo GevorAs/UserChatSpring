@@ -10,26 +10,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import javax.servlet.http.HttpServletResponse;
-
 @Controller
 @SessionAttributes("user")
 public class LikeController {
 
 
     @Autowired
-    private UserRepository userRepository;
-    @Autowired
     private PostRepository postRepository;
     @Autowired
-    private FriendRepository friendRepository;
-    @Autowired
-    private RequestRepository requestRepository;
-    @Autowired
-    private CommentRepository commentRepository;
-    @Autowired
     private ImageRepository imageRepository;
-
     @Autowired
     private LikeRepository likeRepository;
 
@@ -50,7 +39,7 @@ public class LikeController {
             likeRepository.save(like);
         }
 
-        map.addAttribute("otherUser",image.getUser().getId());
+        map.addAttribute("otherUser", image.getUser().getId());
         return "redirect:/guestImage";
 
     }
@@ -83,7 +72,7 @@ public class LikeController {
 
 
         if (byUserIdAndPostId != null) {
-              byUserIdAndPostId.setLikeStatus(LikeStatus.LIKE);
+            byUserIdAndPostId.setLikeStatus(LikeStatus.LIKE);
             likeRepository.save(byUserIdAndPostId);
         } else {
             Like like = new Like();

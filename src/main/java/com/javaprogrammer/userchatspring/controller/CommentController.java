@@ -20,18 +20,9 @@ import java.io.IOException;
 @Controller
 public class CommentController {
 
-    @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private PostRepository postRepository;
-    @Autowired
-    private FriendRepository friendRepository;
-    @Autowired
-    private RequestRepository requestRepository;
+
     @Autowired
     private CommentRepository commentRepository;
-    @Autowired
-    private ImageRepository imageRepository;
     @Value("${pic.path}")
     private String nkar;
     @Value("${file.path}")

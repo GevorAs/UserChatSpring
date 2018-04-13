@@ -69,7 +69,7 @@ public class MainController {
         try (InputStream inputStream = new FileInputStream(nkar + filename)) {
             response.setContentType(MediaType.ALL_VALUE);
             IOUtils.copy(inputStream, response.getOutputStream());
-        }catch (IOException e){
+        }catch (IOException ignored){
 
         }
 
@@ -80,7 +80,7 @@ public class MainController {
         try (InputStream inputStream = new FileInputStream(userPicPath + filename)) {
             response.setContentType(MediaType.ALL_VALUE);
             IOUtils.copy(inputStream, response.getOutputStream());
-        }catch (IOException e){
+        }catch (IOException ignored){
 
         }
 
@@ -91,7 +91,7 @@ public class MainController {
         try (InputStream inputStream = new FileInputStream(filePath + filename)) {
             response.setContentType(MediaType.ALL_VALUE);
             IOUtils.copy(inputStream, response.getOutputStream());
-        }catch (IOException e){
+        }catch (IOException ignored){
 
         }
 
