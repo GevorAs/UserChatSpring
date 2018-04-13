@@ -16,18 +16,10 @@ import java.io.IOException;
 @Controller
 public class PostController {
 
-    @Autowired
-    private UserRepository userRepository;
-    @Autowired
+   @Autowired
     private PostRepository postRepository;
-    @Autowired
-    private FriendRepository friendRepository;
-    @Autowired
-    private RequestRepository requestRepository;
-    @Autowired
+   @Autowired
     private CommentRepository commentRepository;
-    @Autowired
-    private ImageRepository imageRepository;
     @Autowired
     private LikeRepository likeRepository;
     @Autowired

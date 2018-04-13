@@ -8,7 +8,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Guest</title>
+    <title>Chat</title>
 
     <link rel="stylesheet" href="../front/userpage/css/style.css">
     <link rel="stylesheet" href="../front/userpage/css/style1.css">
@@ -30,24 +30,7 @@
             </li>
 
 
-            <li>
-                <a class="header-menu-tab" href="#1"><span class="icon entypo-cog scnd-font-color"></span>Settings</a>
-            </li>
 
-            <li>
-                <a class="header-menu-tab" href="/messages"><span
-                        class="icon fontawesome-envelope scnd-font-color"></span>Messages</a>
-                <a class="header-menu-number" href="#4">${newMessage}</a>
-            </li>
-
-            <li>
-                <a class="header-menu-tab" href="#"><span
-                        class="icon fontawesome-star-empty scnd-font-color"></span>Request</a>
-                <a class="header-menu-number" href="#4"></a>
-            </li>
-            <%--<li>--%>
-            <%--<a class="header-menu-tab" href="#5"><span class="icon fontawesome-star-empty scnd-font-color"></span>Favorites</a>--%>
-            <%--</li>--%>
             <li>
                 <a class="header-menu-tab" href="/logout"><span
                         class="icon entypo-paper-plane scnd-font-color"></span>Logout</a>
@@ -74,28 +57,13 @@
             <ul class="menu-box-menu">
                 <li>
                     <a class="menu-box-tab" href="#" onclick="blockUser(${otherUser.id})"><span class="icon fontawesome-envelope scnd-font-color"></span>Block User
-                        <div class="menu-box-number">24</div>
                     </a>
                 </li>
                 <li>
                     <a class="menu-box-tab" href="/removeUser?userId=${otherUser.id}"><span class="icon entypo-paper-plane scnd-font-color"></span>Remove User
-                        <div class="menu-box-number">3</div>
                     </a>
                 </li>
-                <li>
-                    <a class="menu-box-tab" href="#10"><span class="icon entypo-calendar scnd-font-color"></span>Events
-                        <div class="menu-box-number">5</div>
-                    </a>
-                </li>
-                <li>
-                    <a class="menu-box-tab" href="#12"><span class="icon entypo-cog scnd-font-color"></span>Account
-                        Settings</a>
-                </li>
-                <li>
-                    <a class="menu-box-tab" href="#13">
-                        <sapn class="icon entypo-chart-line scnd-font-color"></sapn>
-                        Statistics</a>
-                </li>
+
             </ul>
         </div>
 

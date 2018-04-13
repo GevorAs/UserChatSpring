@@ -6,7 +6,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Home</title>
+    <title>Chat</title>
 
     <link rel="stylesheet" href="../front/userpage/css/style.css">
     <link rel="stylesheet" href="../front/userpage/css/style1.css">

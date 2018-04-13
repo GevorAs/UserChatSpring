@@ -6,7 +6,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>post blog</title>
+    <title>Chat</title>
     <script src="//s.codepen.io/assets/libs/modernizr.js" type="text/javascript"></script>
 
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">

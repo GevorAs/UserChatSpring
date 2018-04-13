@@ -6,7 +6,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Settings</title>
+    <title>Chat</title>
 
 
     <link rel="stylesheet" href="../front/settings/css/style.css">

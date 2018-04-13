@@ -6,7 +6,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Freebie Interactive Flat Design UI / Only HTML5 & CSS3</title>
+    <title>Chat</title>
 
     <link rel="stylesheet" href="../front/userpage/css/style.css">
     <link rel="stylesheet" href="../front/userpage/css/style1.css">
@@ -32,19 +32,11 @@
             </li>
 
 
-            <li>
-                <a class="header-menu-tab" href="#1"><span class="icon entypo-cog scnd-font-color"></span>Settings</a>
-            </li>
 
-            <li>
-                <a class="header-menu-tab" href="/messagesForAdmin"><span class="icon fontawesome-envelope scnd-font-color"></span>Messages</a>
-                <a class="header-menu-number" href="#4">${newMessage}</a>
-            </li>
 
-            <li>
-                <a class="header-menu-tab" href="/requests"><span class="icon fontawesome-star-empty scnd-font-color"></span>Request</a>
-                <a class="header-menu-number" href="#4"></a>
-            </li>
+
+
+
             <%--<li>--%>
             <%--<a class="header-menu-tab" href="#5"><span class="icon fontawesome-star-empty scnd-font-color"></span>Favorites</a>--%>
             <%--</li>--%>
@@ -76,45 +68,11 @@
 
                     </a>
                 </li>
-                <li>
-                    <a class="menu-box-tab" href="#8"><span class="icon entypo-paper-plane scnd-font-color"></span>Invites
-                        <div class="menu-box-number">3</div>
-                    </a>
-                </li>
-                <li>
-                    <a class="menu-box-tab" href="#10"><span class="icon entypo-calendar scnd-font-color"></span>Events
-                        <div class="menu-box-number">5</div>
-                    </a>
-                </li>
-                <li>
-                    <a class="menu-box-tab" href="#12"><span class="icon entypo-cog scnd-font-color"></span>Account
-                        Settings</a>
-                </li>
-                <li>
-                    <a class="menu-box-tab" href="#13">
-                        <sapn class="icon entypo-chart-line scnd-font-color"></sapn>
-                        Statistics</a>
-                </li>
+
             </ul>
         </div>
 
-        <div class="tweets block"> <!-- TWEETS (MIDDLE-CONTAINER) -->
-            <h2 class="titular"><span class="icon zocial-twitter"></span>LATEST TWEETS</h2>
-            <div class="tweet first">
-                <p>Ice-cream trucks only play music when out of ice-cream. Well played dad. On <a class="tweet-link"
-                                                                                                  href="#17">@Quora</a>
-                </p>
-                <p><a class="time-ago scnd-font-color" href="#18">3 minutes ago</a></p>
-            </div>
-            >
-            <div class="tweet">
-                <p>
-                    <a class="tweet-link" href="fullPost">Full Post</a>
-                </p>
-                <p class="scnd-font-color"></p>
-            </div>
 
-        </div>
 
     </div>
 
